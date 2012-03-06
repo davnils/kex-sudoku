@@ -4,9 +4,9 @@
     http://www.sudokuoftheday.com/pages/techniques-7.php 
     Considers the following
 
-    - TODO: Single-Candidate
+    - Single-Candidate
         Squares with only one candidate
-    - TODO: Single-Position
+    - Single-Position
         Squares which have a candidate unique to its row/column/box
     - TODO: Candidate lines
         If a box have a candidate that must be on a certain row/column
@@ -22,7 +22,9 @@
         Two-Three squares limited to two/three candidates. All other 
         of those candidates in the squares common row/column/box and 
         all other candidates within those squares can be deleted.
-    - TODO: 
+    - TODO: X-wing/swordfish/jellyfish
+        All these are the same thing but generalized to different
+        loop size. TODO bättre förklaring
     - TODO: whatIf
         Attempts proof by contradiction. Assumes one number for
         a specific square and shows that it leads to a contradiction.
@@ -41,6 +43,7 @@ using namespace std;
 
 void output(vector< vector<int> > puzzle);
 bool singleCandidate(vector< vector<int> >& puzzle, vector< vector< vector<int> > >& poss);
+bool singlePosition(vector< vector<int> >& puzzle, vector< vector< vector<int> > >& poss);
 void adjustPoss(int i,int j,vector< vector< vector<int> > >& poss,vector< vector<int> >& puzzle);
 vector< vector<int> > applyRules(vector< vector<int> > puzzle, vector< vector< vector<int> > > poss);
 vector< vector< vector<int> > > createPoss(vector< vector<int> > puzzle);
@@ -63,9 +66,7 @@ int main(){
     return 0;
 }
 
-vector< vector<int> > rulebased_solve(vector< vector< int > > puzzle){
-    vector< vector< vector<int> > > poss; //Possibilities for each square
-    poss = createPoss(puzzle);
+void printPoss(vector< vector< vector<int> > > poss){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
             for(int k=0;k<poss[i][j].size();k++)
@@ -74,7 +75,12 @@ vector< vector<int> > rulebased_solve(vector< vector< int > > puzzle){
         }
         cout <<  endl;
     }
+}
 
+vector< vector<int> > rulebased_solve(vector< vector< int > > puzzle){
+    vector< vector< vector<int> > > poss; //Possibilities for each square
+    poss = createPoss(puzzle);
+    //printPoss(poss);    
     vector< vector<int> > solution;
     solution = applyRules(puzzle,poss); 
     return solution;
@@ -82,11 +88,13 @@ vector< vector<int> > rulebased_solve(vector< vector< int > > puzzle){
 
 vector< vector<int> > applyRules(vector< vector<int> > puzzle, vector< vector< vector<int> > > poss){
     bool change=true;
-    while(change == true){
+    while(change){
         change=false;
+        //cout<<"varv"<<endl;
         change = change || singleCandidate(puzzle,poss);
-        //change = change || singlePosition(puzzle,poss);
+        change = change || singlePosition(puzzle,poss);
     }
+    //printPoss(poss);
     return puzzle;
 }
 
@@ -101,30 +109,102 @@ bool singleCandidate(vector< vector<int> >& puzzle, vector< vector< vector<int> 
             }
         }
     }
+    //if(match)
+    //cout<<"Match on singleCandidate"<<endl;
     return match;
 }
-/*
+
 bool singlePosition(vector< vector<int> >& puzzle, vector< vector< vector<int> > >& poss){
     bool match = false;
     vector<int> counter;
     for(int i=0;i<9;i++)
         counter.push_back(0);
-
+    //Kolla rader
     for(int i=0;i<9;i++){
         for(int a=0;a<9;a++)
             counter[a]=0; 
         for(int j=0;j<9;j++){
-            counter[puzzle[i][j]-1]++;    
+            for(int a=0;a<poss[i][j].size();a++){
+                counter[poss[i][j][a]-1]++;    
+            }
         }
         for(int a=0;a<9;a++){
             if(counter[a]==1){
-                
+                match = true;
+                for(int j2=0;j2<9;j2++){
+                    for(int a2=0;a2<poss[i][j2].size();a2++){
+                        if(poss[i][j2][a2]==a+1){
+                            puzzle[i][j2]=a+1;
+                            adjustPoss(i,j2,poss,puzzle);
+                        }
+                    }
+                }
+            }
+        }
     }
+    //Kolla kolumner
+    for(int j=0;j<9;j++){
+        for(int a=0;a<9;a++)
+            counter[a]=0; 
+
+        for(int i=0;i<9;i++){
+            for(int a=0;a<poss[i][j].size();a++){
+                counter[poss[i][j][a]-1]++;    
+            }
+        }
+        for(int a=0;a<9;a++){
+            if(counter[a]==1){
+                match = true;
+                for(int i2=0;i2<9;i2++){
+                    for(int a2=0;a2<poss[i2][j].size();a2++){
+                        if(poss[i2][j][a2]==a+1){
+                            puzzle[i2][j]=a+1;
+                            adjustPoss(i2,j,poss,puzzle);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    for(int jshift=0;jshift<9;jshift+=3){
+        for(int ishift=0;ishift<9;ishift+=3){
+            for(int a=0;a<9;a++)
+                counter[a]=0; 
+            for(int i=0;i<3;i++){
+                for(int j=0;j<3;j++){
+                    for(int a=0;a<poss[i+ishift][j+jshift].size();a++){
+                        counter[poss[i+ishift][j+jshift][a]-1]++;    
+                    }
+                }
+            }
+            for(int a=0;a<9;a++){
+                if(counter[a]==1){
+                    match = true;
+                    for(int i2=0;i2<3;i2++){
+                        for(int j2=0;j2<3;j2++){
+                            for(int a2=0;a2<poss[i2+ishift][j2+jshift].size();a2++){
+                                if(poss[i2+ishift][j2+jshift][a2]==a+1){
+                                    puzzle[i2+ishift][j2+jshift]=a+1;
+                                    adjustPoss(i2+ishift,j2+jshift,poss,puzzle);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    /*
+    if(match)
+    cout<<"Match on singlePosition"<<endl;
+    output(puzzle);
+    */
     return match;
 }
-   */ 
 
 void adjustPoss(int i,int j,vector< vector< vector<int> > >& poss,vector< vector<int> >& puzzle){
+        poss[i][j]=vector<int>();
         //Remove row candidates
         for(int col=0;col<9;col++){
             for(int a=0;a<poss[i][col].size();a++){

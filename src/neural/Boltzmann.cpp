@@ -1,10 +1,12 @@
 #include <vector>
 #include <cstdint>
 
+#include "Square.h"
 #include "Boltzmann.h"
 
 Boltzmann::Boltzmann(grid_t assigned)
 {
+  temperature = MAX_TEMPERATURE;
 }
 
 grid_t Boltzmann::getGrid()
@@ -24,12 +26,17 @@ void Boltzmann::simulate(bool step)
 
 void Boltzmann::updateNode(group_t & row, Square & square)
 {
-  //Accumulate values for all 4 checks
+  std::vector<int> digits(9, 0);
+
   //Check row
+  group_t rowIt = row.begin();
+  for(; rowIt != row.end(); rowIt++) {
+    digits = square.sum(digits); 
+  }
+  
   //Check column
   //Check for multiple digits
   //Check quadrant
-  //
-  //Deliver values to method in square, which calculates probability and new state
-  //Update probability and flip state
+
+  square.update(digits, temperature);
 }

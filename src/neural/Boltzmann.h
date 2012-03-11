@@ -6,6 +6,8 @@ typedef std::vector<Square> group_t;
 typedef std::vector<group_t> internal_grid_t;
 
 const uint8_t NOT_ASSIGNED = 0;
+const int MAX_TEMPERATURE = 100;
+const int ITERATIONS = 100000;
 
 class Boltzmann
 {
@@ -17,6 +19,7 @@ class Boltzmann
 
   private:
     internal_grid_t grid;
+    float temperature;
 };
 
 #endif

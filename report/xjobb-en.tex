@@ -9,9 +9,8 @@
 \title{A comparison of sudoku solving algorithms}
 
 \subtitle{by ability in solving, generation and difficulty rating of sudoku puzzles.}
-\foreigntitle{En jämförelse av sudokulösnings algoritmer}
-\author{Patrik Berggren}
-\author{David Nilsson}
+\foreigntitle{En jämförelse av algoritmer för lösning av sudokupussel}
+\author{Patrik Berggren \and David Nilsson}
 \date{April 2012}
 \blurb{Bachelor's Thesis at NADA\\Supervisor: Alexander Baltatzis\\Examiner: Mårten Björkman}
 \trita{TRITA xxx yyyy-nn}
@@ -49,7 +48,8 @@ solve and rate such puzzles by the help of computers.
 \section{Problem specification}
 To generate and solve sudokus one can choose from several different algorithms. 
 Some might be limited to only generation or only solving whilst other could be used for both. 
-The main goal of this project is to explore different aspects of sudoku solving and generation. To be able to compare different ideas, several algorithms will be used in the comparison. 
+The main goal of this project is to explore different aspects of sudoku solving and generation.
+To be able to compare different ideas, several algorithms will be used in the comparison. 
 The project will not only try to identify which algorithm seems to fit best for 
 a specific aspect of sudoku, but also conclude how each algorithm performs itself and why.
 \newline
@@ -195,25 +195,45 @@ There are other rules that could be used but due to limitations these are the on
 
 \subsection{Cultural genetic}
 
-A cultural genetic algorithm is a basic genetic algorithm with additional inputs determining properties of the search for a solution. There are some basic components that are common to all genetic appropaches.
-\newline
-When dealing with a problem space with many possible solutions it is common to define a population which consists of individuals. Every individual represents a single possible sudoku puzzle solution. (6) Every individual has 47 integers that represent the yet to be filled sudoku grid, and therefore every integer is limited to the range between one and nine. All these integers are known as genes and describes the solution proposed by a certain individual.
-\newline
-Given the search space representation there is also a method of successively building up better individuals and a population that, overall, achieves better sudoku solutions. In order to determine how good any individual is in relation to another a fitness function is defined. This is simply the number of reused or missing integers, giving a good measure of the quality of a proposed solution. During simulation the fitness function is evaluated for every individual. The best individuals are then chosen for a tournament process. This will reduce the number of candidates available for coming populations, and determine which individuals that are combined. Finally a few individuals are combined in a process known as crossover. This simply selects genes from both candidates and constructs a new individual. After constructing the final candidate there might also be mutations in the genes, allowing the search to avoid a local minima. The process is repeated until a proper puzzle candidate has been found. The reader might note that a correct solution will have minimize the fitness function.
-\newline
-The cultural part of ``cultural genetic`` implies that the environment in some way controls how the search goes on. The cultural effects are labeled belief space and makes sure that gene selection only takes valid values and that repetition is avoided. This can be seen as a way of introducting constraints.
+A cultural genetic algorithm is a basic genetic algorithm with additional inputs determining properties of the search for a solution.
+ There are some basic components that are common to all genetic appropaches. \newline
+When dealing with a problem space with many possible solutions it is common to define a population which consists of individuals.
+Every individual represents a single possible sudoku puzzle solution.
+Every individual has a single integer for every not given square, that represent the yet to be filled sudoku grid, and therefore every integer is limited to the range between one and nine.
+All these integers are known as genes and describes the solution proposed by a certain individual. \newline
+Given the search space representation there is also a method of successively building up better individuals and a population that, overall, achieves better sudoku solutions.
+In order to determine how good any individual is in relation to another a fitness function is defined.
+This is simply the number of reused or missing integers, giving a good measure of the quality of a proposed solution.
+During simulation the fitness function is evaluated for every individual.
+The best individuals are then chosen for a tournament process.
+This will reduce the number of candidates available for coming populations, and determine which individuals that are combined.
+Finally a few individuals are combined in a process known as crossover.
+This simply selects genes from both candidates and constructs a new individual.
+After constructing the final candidate there might also be mutations in the genes, allowing the search to avoid a local minima.
+The process is repeated until a proper puzzle candidate has been found.
+The reader might note that a correct solution will have minimize the fitness function. \newline
+The cultural part of ``cultural genetic`` implies that the environment in some way controls how the search goes on.
+The cultural effects are labeled belief space and makes sure that gene selection only takes valid values and that repetition is avoided.
+This can be seen as a way of introducting constraints.
 
 \subsection{Artificial neural network}
 In order to fully understand the artifical neural network approach of solving sudoku puzzles, it is necessary to have some basic theoretical background before introducting the implementation.
 
 \subsubsection{Artificial neural network - theory}
-The artificial neural network solver is based on reccurrent stochastic networks that encode all properties of sudoku. In the core there is a boltzmann network, which can be seen as a network of fully connected nodes, as pictured below.
+The artificial neural network solver is based on reccurrent stochastic networks that encode all properties of sudoku. In the core there is a Boltzmann machine, which can be seen as a network of fully connected nodes, as pictured below.
 
 \includegraphics{images/neural1.png}
 
-In the case of sudoku there are a total of 81*9 nodes; for every number being placed on the grid, there is nine possible assignments. When a solution is present in the network there will only be one node active in every group and the solution can be extracted by simply assigning the node index within the group as the resulting grid number.
+The recurrent property implies that output connections are fed back into to neurons, or in this case, all nodes are fully connected.
+This definition often implies a hopfield network which is a somewhat limited version of the Boltzmann machine.
+What differentiates them and makes the latter more powerfull is the stochatic property, meaning state transitions of individual nodes are stochastic.
 
-Given that a network of nodes has been defined it is also required to encode constraints. This is done by introducing weights on all edges in the fully connected network. All weights are stored in a weight matrix that satisfies the following conditions:
+In the case of sudoku there are a total of 81*9 nodes; for every number being placed on the grid, there is nine possible assignments.
+When a solution is present in the network there will only be one node active in every group and the solution can be extracted by simply assigning the node index within the group as the resulting grid number.
+
+Given that a network of nodes has been defined it is also required to encode constraints.
+This is done by introducing weights on all edges in the fully connected network.
+All weights are stored in a weight matrix that satisfies the following conditions:
 
 \[
 w_{ii} = 0 \quad \forall i
@@ -222,12 +242,20 @@ w_{ii} = 0 \quad \forall i
 w_{ij} = w_{ji} \quad \forall i,j
 \]
 
-At any moment in the simulation there is a state present in the network, which is coded separately. Each node has a binary state s\_i of either on or off. This also translates to solutions, where only one of every nine neurons in groups will be in the state on. With weights and the state associated with every node of the network it is also useful to define an energy measure which is used to determine if the state of single neuron should be flipped. The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter (17):
+At any moment in the simulation there is a state present in the network, which is coded separately.
+Each node has a binary state s\_i of either on or off.
+This also translates to solutions, where only one of every nine neurons in groups will be in the state on.
+With weights and the state associated with every node of the network it is also useful to define an energy measure which is used to determine if the state of single neuron should be flipped.
+The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter (17):
 \[
 \Delta E_{i} = \sum_{j} w_{ij} s_{j} - \theta
 \]
 
-Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step (17). Here another adjustable performance parameter is introduced, T. In order to have convergence in the network towards a valid sudoku solution it is necessary to control the probablity of state flipping as the simulation goes on. This is done by utilising simulated annealing which controls the temperature T over time. By lowering the value in a controlled fashion it is possible to maximize the probability of a final correct solution.
+Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step (17).
+Here another adjustable performance parameter is introduced, T.
+In order to have convergence in the network towards a valid sudoku solution it is necessary to control the probablity of state flipping as the simulation goes on.
+This is done by utilising simulated annealing which controls the temperature T over time.
+By lowering the value in a controlled fashion it is possible to maximize the probability of a final correct solution.
 \[
 p_{i=on} = \frac{1}{1+e^{-\frac{\Delta E_{i}}{T}}}
 \]
@@ -237,15 +265,24 @@ p_{i=on} = \frac{1}{1+e^{-\frac{\Delta E_{i}}{T}}}
 Using the previously introduced expressions it is now possible to describe the actual implemenation and the steps necessary to solve sudoku puzzles.
 \newline
 
-The first step is to take initialize a random weight matrix and random states for all 81*9 nodes in the neural network. Then all given grid values are inserted as activiations of states in the associated groups of neurons, with all others being set to the off state. This ensures that only the given activations are active.
+The first step is to take initialize a random weight matrix and random states for all 81*9 nodes in the neural network.
+Then all given grid values are inserted as activiations of states in the associated groups of neurons, with all others being set to the off state.
+This ensures that only the given activations are active.
 \newline
 
-The second step is to encode sudoku restrictions into the weight matrix. Negative connections are introduced between different digits on within the same group, in other words only one digit should be active on every place in the grid at the same time. The other properties of unique rows, unique columns and unique subsquares are encoded in the same way but processed with the whole weight matrix.
+The second step is to encode sudoku restrictions into the weight matrix.
+Negative connections are introduced between different digits on within the same group, in other words only one digit should be active on every place in the grid at the same time.
+The other properties of unique rows, unique columns and unique subsquares are encoded in the same way but processed with the whole weight matrix.
 \newline
 
-With all configuration done it is then time to launch the simulation, which is run in discrete time steps. At every time step the energy function is evaluated at all nodes. The energies are then processed which renders the probablities of nodes flipping state, which is then performed to varying degrees. Since simulated annealing is used with a lowered temperature T there also small adjustments at certain intervals. This is done in a timely manner which allows all puzzles to be solved but still doesn't waste any time for uneccessary computation.
+With all configuration done it is then time to launch the simulation, which is run in discrete time steps.
+At every time step the energy function is evaluated at all nodes.
+The energies are then processed which renders the probablities of nodes flipping state, which is then performed to varying degrees.
+Since simulated annealing is used with a lowered temperature T there also small adjustments at certain intervals.
+This is done in a timely manner which allows all puzzles to be solved but still doesn't waste any time for uneccessary computation.
 \newline
-A valid solution can be found by simple looking at all states and insepecting the requirements of sudoku. Commonly the solution will appear in the end of the simulation when temperaure has been lowered to its minimum.
+A valid solution can be found by simple looking at all states and insepecting the requirements of sudoku.
+Commonly the solution will appear in the end of the simulation when temperaure has been lowered to its minimum.
 \section{Comparison}
 
 At this point, the conclusions that can be drawn are very limited. This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented. Some tests so far however show that the ruledbased solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules. Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most sudoku puzzles probably are easy. An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems. Backtracking algorithms with some variations have also been tested, but at a smaller scale. It seems so far that backtracking seems to be a less fit algorithm for solving 17-clue puzzles, but some optimization are yet to be done. 

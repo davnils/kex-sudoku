@@ -25,7 +25,7 @@ class Boltzmann
 
   private:
     std::vector<int> checkQuadrant(std::vector<int> digits,
-      internal_grid_t::const_iterator row, internal_grid_t::iterator square);
+      internal_grid_t::iterator row, group_t::iterator square);
     void updateNode(internal_grid_t::iterator row,
       group_t::iterator square);
 

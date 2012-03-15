@@ -15,10 +15,10 @@ Boltzmann::Boltzmann(grid_t assigned, float maxTemperature)
     group_t row;
     for(int j = 0; j < 9; j++) {
       if(assigned.grid[i][j] == 0) {
-        row.push_back(new Square());
+        row.push_back(Square());
       }
       else {
-        row.push_back(new Square(assigned.grid[i][j]));
+        row.push_back(Square(assigned.grid[i][j]));
       }
     }
     grid.push_back(row);
@@ -30,6 +30,14 @@ Boltzmann::Boltzmann(grid_t assigned, float maxTemperature)
  */
 grid_t Boltzmann::getGrid()
 {
+  grid_t g;
+  internal_grid_t::iterator rowIt;
+  for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
+    group_t::iterator squareIt;
+    for(squareIt = rowIt->begin(); squareIt != rowIt->end(); squareIt++) {
+      g.grid[][] = squareIt;
+    }
+  }
 }
 
 /*
@@ -62,30 +70,25 @@ void Boltzmann::updateNode(internal_grid_t::iterator row,
     }
   }
   
-  //Check column
+  //Check column, also counts the reference square (for multiple digits).
   internal_grid_t::iterator colIt = grid.begin();
   int pos = square - row->begin();
   for(; colIt != grid.end(); colIt++) {
-    if(colIt->at(pos) != *square) {
-      digits = colIt->at(pos).sum(digits); 
-    }
+    digits = colIt->at(pos).sum(digits); 
   }
 
-  //Check for multiple digits on the same square
-  digits = square->sum(digits);
-
   //Check quadrant
-  digits = checkQuadrant(row, square);
+  digits = checkQuadrant(digits, row, square);
 
   //Update current failure offset and state
-  digits = square->update(digits, temperature);
+  square->update(digits, temperature);
 }
 
 /*
  *
  */
 std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
-  internal_grid_t::const_iterator row, group_t::iterator square)
+  internal_grid_t::iterator row, group_t::iterator square)
 {
   internal_grid_t::difference_type firstX, firstY;
 
@@ -96,7 +99,7 @@ std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
     firstY = 3;
   }
 
-  if(std::distance(square, row.begin()) < 3) {
+  if(std::distance(square, row->begin()) < 3) {
     firstX = 0;
   }
   else {
@@ -113,9 +116,11 @@ std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
     std::advance(firstColumn, firstX);
 
     for(columnIt = firstColumn;
-      std::distance(squareIt, rowIt->end()) % 3 && columnIt != firstColumn;
+      std::distance(square, rowIt->end()) % 3 && columnIt != firstColumn;
       columnIt++) {
       digits = columnIt->sum(digits);
     }
   }
+
+  return(digits);
 }

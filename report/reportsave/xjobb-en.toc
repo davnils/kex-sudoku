@@ -1,0 +1,35 @@
+\changetocdepth {2}
+\select@language {english}
+\select@language {english}
+\select@language {swedish}
+\select@language {english}
+\contentsline {chapter}{\chapternumberline {1}Introduction}{1}
+\contentsline {section}{\numberline {1.1}Problem specification}{1}
+\contentsline {section}{\numberline {1.2}Scope}{2}
+\contentsline {section}{\numberline {1.3}Purpose}{2}
+\contentsline {section}{\numberline {1.4}Background}{3}
+\contentsline {chapter}{\chapternumberline {2}Method}{5}
+\contentsline {section}{\numberline {2.1}Chosen algorithms}{5}
+\contentsline {section}{\numberline {2.2}Benchmark puzzles}{6}
+\contentsline {section}{\numberline {2.3}Comparison methods}{6}
+\contentsline {subsection}{\numberline {2.3.1}Solving}{7}
+\contentsline {subsection}{\numberline {2.3.2}Generation}{7}
+\contentsline {subsection}{\numberline {2.3.3}Parallelising}{7}
+\contentsline {subsection}{\numberline {2.3.4}Difficulty rating}{7}
+\contentsline {section}{\numberline {2.4}Implementation}{7}
+\contentsline {subsection}{\numberline {2.4.1}Backtracking}{8}
+\contentsline {subsection}{\numberline {2.4.2}Ruledbased}{8}
+\contentsline {subsection}{\numberline {2.4.3}Cultural genetic}{10}
+\contentsline {subsection}{\numberline {2.4.4}Artificial neural network}{11}
+\contentsline {subsubsection}{Artificial neural network - theory}{11}
+\contentsline {subsection}{\numberline {2.4.5}Artificial neural network - implementation}{13}
+\contentsline {section}{\numberline {2.5}Comparison}{14}
+\contentsline {subsection}{\numberline {2.5.1}Solving}{14}
+\contentsline {section}{\numberline {2.6}Generation}{14}
+\contentsline {section}{\numberline {2.7}Parallelising}{14}
+\contentsline {section}{\numberline {2.8}Difficulty ratings}{14}
+\contentsline {section}{\numberline {2.9}Conclusion}{14}
+\contentsline {section}{\numberline {2.10}References}{14}
+\contentsline {chapter}{Bibliography}{15}
+\contentsline {chapter}{Appendices}{16}
+\contentsline {chapter}{\chapternumberline {A}RDF}{17}

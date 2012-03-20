@@ -30,5 +30,6 @@
 \contentsline {section}{\numberline {2.8}Difficulty ratings}{14}
 \contentsline {section}{\numberline {2.9}Conclusion}{14}
 \contentsline {section}{\numberline {2.10}References}{14}
-\contentsline {chapter}{Appendices}{14}
-\contentsline {chapter}{\chapternumberline {A}RDF}{15}
+\contentsline {chapter}{Bibliography}{15}
+\contentsline {chapter}{Appendices}{16}
+\contentsline {chapter}{\chapternumberline {A}RDF}{17}

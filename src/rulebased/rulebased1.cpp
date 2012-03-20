@@ -48,7 +48,7 @@ void adjustPoss(int i,int j,vector< vector< vector<int> > >& poss,vector< vector
 vector< vector<int> > applyRules(vector< vector<int> > puzzle, vector< vector< vector<int> > > poss);
 vector< vector< vector<int> > > createPoss(vector< vector<int> > puzzle);
 vector< vector<int> > rulebased_solve(vector< vector< int > > puzzle);
-
+bool isSolved(vector< vector<int> > puzzle);
 int main(){
     string s;
     cin >> s;
@@ -63,7 +63,20 @@ int main(){
     vector< vector<int> > sol;
     sol = rulebased_solve(puzzle);
     output(sol);
+    if(!isSolved(sol))
+    cout<<"UNSOLVED"<<endl;
     return 0;
+}
+
+bool isSolved(vector< vector<int> > puzzle){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(puzzle[i][j]==0){
+                return false;
+            }
+        }
+    }
+    return true;
 }
 
 void printPoss(vector< vector< vector<int> > > poss){
@@ -113,8 +126,75 @@ bool singleCandidate(vector< vector<int> >& puzzle, vector< vector< vector<int> 
     //cout<<"Match on singleCandidate"<<endl;
     return match;
 }
+bool nakedPair(vector< vector<int> >& puzzle, vector< vector< vector<int> > >& poss){
+    bool match;
+ 
+    vector<int> count;
+    for(int a=0;a<9;a++){
+        count.push_back(0);
+    }
+    for(int row=0;row<9;row++){
+        for(int a=0;a<8;a++){
+            for(int b=a+1;b<9;b++){
+                for(int i=0;i<9;i++){
+                    count[i]=0;
+                }
+                for(int i=0;i<poss[row][b].size();i++){
+                    count[poss[row][b][i]--]++;
+                }
+                for(int i=0;i<poss[row][a].size();i++){
+                    count[poss[row][a][i]--]++;
+                }
+                vector<int> t;
+                for(int i=0;i<9;i++){
+                    if(count[i]>0){
+                        t.push_back(i+1);
+                    }
+                }
+                if(t.size()<=2){
+                    match = true;
+                    for(int i=0;i<t.size();i++){
+                        for(int col=0;col<9;col++){
+                            if(col!=a && col!=b){
+                                for(int i2=0;i2<poss[row][col].size();i2++){
+                                    if(poss[row][col][i2]==t[i]){
+                                        poss[row][col].erase(poss[row][col].begin()+i2);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+            
+
+
+    for(int s=2;s<3;s++){//This will be extended to generalize for triples..
+        vector< vector<int> > koords;
+        for(int a=0;a<s;a++){
+            koords.push_back(vector<int>());
+            koords[a].push_back(-1);
+            koords[a].push_back(-1);
+        }
+         
+        // so that it also checks for triples/quadruples/quintuples.
+    }
+    
+    //check columns
+    //check boxes
+
+
+        
+    return match;
+}
+
+
 
 bool singlePosition(vector< vector<int> >& puzzle, vector< vector< vector<int> > >& poss){
+
     bool match = false;
     vector<int> counter;
     for(int i=0;i<9;i++)

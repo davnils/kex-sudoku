@@ -1,3 +1,8 @@
+/*
+    Trivial backtrack. Tries squares in order or in random and
+    goes digits 1 through 9. Valid checking is trivial and slow.
+*/
+
 #include<iostream>
 #include<vector>
 #include<math.h>

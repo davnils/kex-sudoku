@@ -194,22 +194,12 @@ This algorithm relies on the logic rules that humans use to solve sudoku. Those 
 There are other rules that could be used but due to limitations these are the only implemented ones. There are several different aspects that are interesting to note about this algorithm. First of all the time complexity of the algorithm will be polynomial given that a solution can be found using these rules. This is a simple consequence of the fact that each rule only take polynomial time to check and there are only polynomial many squares to fill in. There are however no guarantee that a solution will be found and if no rule match it is impossible for the algorithm to continue. One way around this is to combine this algorithm with the backtracking algorithm. Other aspects that shall be studied are which rules shall be applied in which order and even if some rules are to time consuming to check compared to the extra puzzles that can be solved. The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
 
 \subsection{Cultural genetic}
-A cultural genetic algorithm is a basic genetic algorithm with additional inputs determining properties of the search for a solution. There are some basic components that are common to all genetic appropaches.
-\newline
-When dealing with a problem space with many possible solutions it is common to define a population which consists of individuals. Every individual represents a single possible sudoku puzzle solution. \cite{stochastic} Every individual has 47 integers that represent the yet to be filled sudoku grid, and therefore every integer is limited to the range between one and nine. All these integers are known as genes and describes the solution proposed by a certain individual.
-\newline
-Given the search space representation there is also a method of successively building up better individuals and a population that, overall, achieves better sudoku solutions. In order to determine how good any individual is in relation to another a fitness function is defined. This is simply the number of reused or missing integers, giving a good measure of the quality of a proposed solution. During simulation the fitness function is evaluated for every individual. The best individuals are then chosen for a tournament process. This will reduce the number of candidates available for coming populations, and determine which individuals that are combined. Finally a few individuals are combined in a process known as crossover. This simply selects genes from both candidates and constructs a new individual. After constructing the final candidate there might also be mutations in the genes, allowing the search to avoid a local minima. The process is repeated until a proper puzzle candidate has been found. The reader might note that a correct solution will have minimize the fitness function.
-\newline
-The cultural part of ``cultural genetic`` implies that the environment in some way controls how the search goes on. The cultural effects are labeled belief space and makes sure that gene selection only takes valid values and that repetition is avoided. This can be seen as a way of introducting constraints.
-
 A cultural genetic algorithm is a basic genetic algorithm with additional inputs determining properties of the search for a solution.
- There are some basic components that are common to all genetic appropaches. 
- \newline
+ There are some basic components that are common to all genetic appropaches. \newline
 When dealing with a problem space with many possible solutions it is common to define a population which consists of individuals.
-Every individual represents a single possible sudoku puzzle solution.
+Every individual represents a single possible sudoku puzzle solution. \cite{stochastic}
 Every individual has a single integer for every not given square, that represent the yet to be filled sudoku grid, and therefore every integer is limited to the range between one and nine.
-All these integers are known as genes and describes the solution proposed by a certain individual. 
-\newline
+All these integers are known as genes and describes the solution proposed by a certain individual. \newline
 Given the search space representation there is also a method of successively building up better individuals and a population that, overall, achieves better sudoku solutions.
 In order to determine how good any individual is in relation to another a fitness function is defined.
 This is simply the number of reused or missing integers, giving a good measure of the quality of a proposed solution.
@@ -251,22 +241,21 @@ w_{ii} = 0 \quad \forall i
 w_{ij} = w_{ji} \quad \forall i,j
 \]
 
-At any moment in the simulation there is a state present in the network, which is coded separately. Each node has a binary state s\_i of either on or off. This also translates to solutions, where only one of every nine neurons in groups will be in the state on. With weights and the state associated with every node of the network it is also useful to define an energy measure which is used to determine if the state of single neuron should be flipped. The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter \cite{boltzmann2}:
 At any moment in the simulation there is a state present in the network, which is coded separately.
 Each node has a binary state s\_i of either on or off.
 This also translates to solutions, where only one of every nine neurons in groups will be in the state on.
 With weights and the state associated with every node of the network it is also useful to define an energy measure which is used to determine if the state of single neuron should be flipped.
-The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter (17):
+The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter \cite{boltzmann2}:
 \[
 \Delta E_{i} = \sum_{j} w_{ij} s_{j} - \theta
 \]
 
-Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step \cite{boltzmann2}. Here another adjustable performance parameter is introduced, T. In order to have convergence in the network towards a valid sudoku solution it is necessary to control the probablity of state flipping as the simulation goes on. This is done by utilising simulated annealing which controls the temperature T over time. By lowering the value in a controlled fashion it is possible to maximize the probability of a final correct solution.
-Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step (17).
+Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step. \cite{boltzmann2}
 Here another adjustable performance parameter is introduced, T.
 In order to have convergence in the network towards a valid sudoku solution it is necessary to control the probablity of state flipping as the simulation goes on.
 This is done by utilising simulated annealing which controls the temperature T over time.
 By lowering the value in a controlled fashion it is possible to maximize the probability of a final correct solution.
+
 \[
 p_{i=on} = \frac{1}{1+e^{-\frac{\Delta E_{i}}{T}}}
 \]

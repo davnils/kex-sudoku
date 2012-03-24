@@ -2,17 +2,14 @@
 #include <string>
 #include <vector>
 
-#include "Boltzmann.h"
-//...
-
+#include "../cultural/Cultural.h"
 #include "TestFramework.h"
-
 
 int main()
 {
   TestFramework framework;
   
-  framework.addSolver(new Boltzmann);
+  framework.addSolver(new Cultural);
   //...
 
   std::vector<result_t> res = framework.runTests();

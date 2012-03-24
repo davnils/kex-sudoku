@@ -1,6 +1,11 @@
 #ifndef TESTFRAMEWORK_H_
 #define TESTFRAMEWORK_H_
 
+#include <string>
+#include <vector>
+
+#include "SudokuSolver.h"
+
 typedef struct
 {
   std::string algorithm;

@@ -1,20 +1,24 @@
 #ifndef CULTURAL_H_
 #define CULTURAL_H_
 
-typedef struct
-{
-  uint8_t grid[9][9];
-} grid_t;
+#include <cstdint>
+#include <string>
+#include <vector>
+
+#include "../test/SudokuSolver.h"
+#include "Individual.h"
 
 /*
  *
  */
-class Cultural
+class Cultural : public SudokuSolver
 {
   public:
-    Cultural(grid_t g);
-    void simulate();
+    Cultural();
+    void addPuzzle(grid_t puzzle);
     grid_t getGrid();
+    void runStep(bool forever);
+    std::string getName() { return("Cultural genetic solver"); }
 
   private:
     void tournament();

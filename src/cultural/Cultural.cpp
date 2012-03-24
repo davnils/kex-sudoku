@@ -1,20 +1,16 @@
-#include <cstdint>
-#include <vector>
-
-#include "Individual.h"
 #include "Cultural.h"
 
 /*
  *
  */
-Cultural::Cultural(grid_t g)
+Cultural::Cultural()
 {
 }
 
 /*
  *
  */
-void Cultural::simulate()
+void Cultural::addPuzzle(grid_t puzzle)
 {
 }
 
@@ -22,6 +18,13 @@ void Cultural::simulate()
  *
  */
 grid_t Cultural::getGrid()
+{
+}
+
+/*
+ *
+ */
+void Cultural::runStep(bool forever)
 {
 }
 

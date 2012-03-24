@@ -1,12 +1,18 @@
-#include <cstdint>
 #include "Individual.h"
 
 /*
  *
  */
-Individual::Individual(int size)
+Individual::Individual(grid_t given)
 {
-  assigned = new uint8_t[size];
+  genes = new uint8_t[9][9];
+  memset(genes, 0, 81);
+
+  for(int row = 0; row < 9; row++) {
+    for(int column = 0; column < 9; column++) {
+      genes[][] = given[][];
+    }
+  }
 }
 
 /*
@@ -15,4 +21,32 @@ Individual::Individual(int size)
 Individual::~Individual()
 {
   delete [] assigned;
+}
+
+/*
+ *
+ */
+void Individual::initialize()
+{
+}
+
+/*
+ *
+ */
+unsigned int Individual::fitness()
+{
+}
+
+/*
+ *
+ */
+Individual Individual::crossover()
+{
+}
+
+/*
+ *
+ */
+void Individual::mutate()
+{
 }

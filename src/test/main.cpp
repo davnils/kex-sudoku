@@ -7,7 +7,7 @@
 
 int main()
 {
-  TestFramework framework;
+  TestFramework framework("../../testdata/minlex");
   
   framework.addSolver(new Cultural);
   //...

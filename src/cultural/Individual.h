@@ -14,13 +14,14 @@ class Individual
     Individual(grid_t given);
     ~Individual();
     unsigned int fitness();
-    Individual crossover();
+    Individual crossover(Individual & p);
     void mutate();
 
   private:
     void initialize();
 
-    uint8_t ** assigned;
+    grid_t given;
+    uint8_t assigned[9][9];
 };
 
 #endif

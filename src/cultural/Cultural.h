@@ -8,6 +8,9 @@
 #include "../test/SudokuSolver.h"
 #include "Individual.h"
 
+const int POPULATION_SIZE = 50;
+const int PASSED_ON = POPULATION_SIZE/10;
+
 /*
  *
  */
@@ -23,6 +26,7 @@ class Cultural : public SudokuSolver
   private:
     void tournament();
     std::vector<Individual> population;
+    grid_t grid;
 };
 
 #endif

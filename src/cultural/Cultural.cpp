@@ -12,6 +12,12 @@ Cultural::Cultural()
  */
 void Cultural::addPuzzle(grid_t puzzle)
 {
+  grid = puzzle;
+
+  for(int i = 0; i < POPULATION_SIZE; i++) {
+    Individual i(puzzle);
+    population.push_back(i);
+  }
 }
 
 /*
@@ -19,6 +25,7 @@ void Cultural::addPuzzle(grid_t puzzle)
  */
 grid_t Cultural::getGrid()
 {
+  return(grid);
 }
 
 /*
@@ -26,6 +33,13 @@ grid_t Cultural::getGrid()
  */
 void Cultural::runStep(bool forever)
 {
+  do {
+    //sort by fitness
+    //select PASSED_ON individuals
+    //crossover after tournament
+    //mutate the resulting individuals
+    //return if candidate has fitness zero
+  } while(forever);
 }
 
 /*

@@ -1,0 +1,38 @@
+Det jag kan komma på är i huvudsak tre saker
+man vill använda statistik till.
+
+Först och främst och även det enklaste är att konstruera själva fördelningarna
+i ett diagram. Detta kan enkelt göras genom ett så kallat histogram i matlab.
+För att skapa ett histogram så utförs följande:
+
+hist(times,100)
+
+genererar ett diagram med 100 intervall av tiderna i vektorn times. hist kan
+även användas på andra sätt, men det verkar vara ungefär det ovan som vi vill göra.
+
+hist(n,xout) är också intressant och retunerar frekvenserna och positionerna
+för varje bar i n respektive xout. Kan till exempelt ligga till grund för
+att skapa en mera smooth graf med tex polynomanpassning.
+
+Polyfit/polyval är intressanta kommandon för polynomanpassning
+
+standardavvikelse och medelvärde är också intressant och kan tas fram med
+kommandona std och mean används för detta
+
+Det andra som är intressant att göra är att se om de följer någon given
+sannolikhetsfördelning och göra hypotestest mot detta med Chi test.
+
+Detta kan man göra med kommandot chi2gof.
+
+Det tredje man vill göra är att jämföra de olika intervallen. Detta steg
+beror lite på vad man fick för resultat av att undersöka vilken fördelning
+det skulle kunna vara. Med antagandet att det inte fanns någon sådan fördelning så verkar det vara Wilcoxons rangsummetest som är aktuellt (sid 340 i sannstatboken).
+
+För att göra det testet så gör man följande kommando
+[p,h] = ranksum(x,y) returns the result of the test in h. h = 1 indicates a rejection of the null hypothesis at the 5% significance level. h = 0 indicates a failure to reject the null hypothesis at the 5% significance level.
+
+[p,h] = ranksum(x,y,'alpha',alpha) performs the test at the (100*alpha)% significance level. The default, when unspecified, is alpha = 0.05.
+
+
+
+Finns möjligen något mera test som skulle kunna vara intressant, men som jag förstår det så beror det en hel del på hur fördelningarna ser ut så vi kan ju vänta och se. 

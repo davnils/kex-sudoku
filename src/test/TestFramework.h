@@ -27,9 +27,11 @@ class TestFramework
     std::vector<result_t> runTests();
 
   private:
-    result_t runSampledSolver(SudokuSolver * solver, grid_t puzzle);
+    void readPuzzles();
+    float runSampledSolver(SudokuSolver * solver, grid_t puzzle);
 
     std::vector<SudokuSolver*> solvers;
+    std::vector<grid_t> puzzles;
     std::string puzzlePath;
 };
 

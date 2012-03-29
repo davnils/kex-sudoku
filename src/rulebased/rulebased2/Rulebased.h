@@ -17,7 +17,8 @@ class Rulebased{
         bool naked();
         bool naked(vector<int> * [] );
         bool single();
-        bool guess();
+        int guess();
+        int applyRules();
 };
 
 

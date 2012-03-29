@@ -16,9 +16,13 @@ class Board{
         void printBoard(string);
         void printRegions();
         void printPossibilities();
+        void printPossibilities1();
         void remove(int,int);
-        void remove(vector<int> * [],int);
         bool valid();
+        Board operator= (Board b);
+    private:
+        void createReferences();
+        void remove(vector<int> * [],int);
 };
 
 #endif

@@ -12,10 +12,20 @@ Rulebased::Rulebased(int grid[9][9]){
 }
 
 Rulebased::Rulebased(Board b){
-    board = *(new Board(b));
+    board = b;
 }
 
 void Rulebased::solve(){
+    int solutions = applyRules();
+    cout<<"solutions: "<<solutions<<endl;
+    if(solutions >= 1 && board.valid()){
+        board.printBoard();
+        cout<<endl;
+    }
+}
+
+int Rulebased::applyRules(){
+    /*
     while(true){
         //The easy rules first.
         if(single())
@@ -24,14 +34,18 @@ void Rulebased::solve(){
             continue;
         break;
     }
-    bool unique = guess();
-    bool solved = true;
-    for(int i=0;i<9;i++){
-        for(int j=0;j<9;j++){
-            if(board.board[i][j][0]==0)
-                solved = false;
-        }
+    */
+    int g = guess();
+    /*
+    if(g==1){
+        board.printBoard();
+    }else if(g==2){
+        cout<<"AMBIGOUS WITH SOLUTION"<<endl;
+        board.printBoard();
     }
+    */
+   /*
+    if(!solved 
     if(!board.valid()){
         cout<<"UNVALID"<<endl;
     }else if(!solved){
@@ -41,16 +55,18 @@ void Rulebased::solve(){
         cout<<"AMBIGOUS"<<endl;
     }
     else{
-        board.printBoard();//"SIMPLE");
-    }
+    */
+    //    board.printBoard();//"SIMPLE");
+    //}
+    return g;
 } 
 
 /*
-    Returns true if unique solution was found
-    Returns false if the solution doesnt exist or if the solution
-    was amibous.
+    Returns 1 if unique solution was found
+    Returns 0 if none solution exists
+    Returns >1 if more than one solution exists
 */
-bool Rulebased::guess(){
+int Rulebased::guess(){
     //Find square with least possibilities
     int min[3] = {100,0,0};//[min,i,j]
     for(int i=0;i<9;i++){
@@ -62,37 +78,68 @@ bool Rulebased::guess(){
             }
         }
     }
-    cout<<"Minsta: "<<min[0]<<" "<<min[1]<<" "<<min[2]<<endl;
+    /*
+    cout<<"Minsta:  size: "<<min[0]<<" i: "<<min[1]<<" j: "<<min[2]<<endl;
+    cout<<"Possibilities: ";
+    for(int i=0;i<board.board[min[1]][min[2]].size();i++){
+        cout<<board.board[min[1]][min[2]][i]<<" ";
+    }
+    cout<<endl;
+    board.printPossibilities();
+    */
     if(min[0]==100){
-        return true;
+        return 1;
     }
     if(board.board[min[1]][min[2]].size()==1){
-        return false;
+        return 0;
     }
-    vector<int> correctGuesses;
-    for(int g_index=1;g_index<board.board[min[1]][min[2]].size();g_index++){
+    vector<Board> correctGuesses;
+    for(int g_index=1;g_index<
+                board.board[min[1]][min[2]].size();g_index++){
+
         int g = board.board[min[1]][min[2]][g_index];
-        Board tmp = board;
+        //cout<<endl<<"Guess"<<g<<endl;
+        Board tmp;
+        tmp.operator=(board);
         vector<int> * tmpvector = &tmp.board[min[1]][min[2]];
+        /*
+        cout<<"board"<<&board<<endl;
+        cout<<"tmp"<<&tmp<<endl;
+        cout<<"board.board: "<<&board.board[min[1]][min[2]]<<endl;
+        cout<<"board.regions: "<<board.regions[min[1]][min[2]]<<endl;
+        cout<<"&tmp.board: "<<&tmp.board[min[1]][min[2]]<<endl;
+        cout<<"tmp.region: "<<tmp.regions[min[1]][min[2]]<<endl;
+        cout<<"tmpvector: "<<tmpvector<<endl;
+        */
+        //cout<<"guessändringscheck";
+        //tmp.printPossibilities();
         (*tmpvector)[0] = g;
+        //tmp.printPossibilities();
         (*tmpvector).erase((*tmpvector).begin()+1,(*tmpvector).end());
+        //cout<<"before and after remove"<<endl;
+        //tmp.printPossibilities();
+        //cout<<endl;
         tmp.remove(min[1],min[2]);
+        //tmp.printPossibilities();
         Rulebased solver(tmp);
-        solver.solve();
-        tmp = solver.getBoard();
-        if(tmp.valid()){
-           correctGuesses.push_back(g);
+        int ok = solver.applyRules();
+        if(ok>0){
+           correctGuesses.push_back(solver.getBoard());
         }
     }
     if(correctGuesses.size()==0){
-        return false;
+        return 0;
     }else{
+        board.operator=(correctGuesses[0]);
+        /*
         board.board[min[1]][min[2]].clear();
         board.board[min[1]][min[2]].push_back(correctGuesses[0]);
         board.remove(min[1],min[2]);
-        if(correctGuesses.size()>2){
-            return false;
-        }
+        */
+        //cout<<"Returning"<<endl;
+        //board.printPossibilities();
+        //cout<<"returning:"<<endl;
+        return correctGuesses.size();
     }
         
 }
@@ -130,7 +177,8 @@ bool Rulebased::naked(){
 bool Rulebased::naked(vector<int> * region[]){
     bool match = false;
     vector<int> n;
-    for(int i=0;i<9;i++){ if((*region[i])[0] == 0){
+    for(int i=0;i<9;i++){ 
+        if((*region[i])[0] == 0){
             n.push_back(i);
         }
     }
@@ -228,11 +276,13 @@ int main(){
         for(int j=0;j<9;j++){
             char x;
             cin >> x;
+            if(x=='\n'){
+                j--;
+            }
             grid[i][j] = (int) (x-'0');
         }
     }
     Rulebased solver(grid);
     solver.solve();
 }
-
 

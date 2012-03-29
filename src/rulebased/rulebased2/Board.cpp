@@ -13,6 +13,23 @@ void Board::printPossibilities(){
     }
 }
 
+void Board::printPossibilities1(){
+    cout<<"print from regions"<<endl;
+    for(int s=0;s<3;s++){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            cout<<"[";
+            for(int k=0;k<(*regions[i+s*9][j]).size();k++){
+                cout<<(*regions[i+s*9][j])[k];
+            }
+            cout<<"], ";
+        }
+        cout<<endl;
+    }
+    cout<<endl;
+    }
+    cout<<"end print from regions"<<endl;
+}
 void Board::printBoard(){
     printBoard("NORMAL");
 }
@@ -65,7 +82,7 @@ bool Board::valid(){
         }
         for(int j=0;j<9;j++){
             if((*regions[i][j])[0]==0){
-                continue;
+                return false; 
             }else if(numbers[(*regions[i][j])[0]-1]){
                 return false;
             }else{
@@ -112,17 +129,35 @@ void Board::analysePossibilities(){
         }
     }
 }
-     
 
-void Board::setBoard(int grid[9][9]){
+/*
+    Overloads = operator. This has to be done
+    due to the use of references in regions, rows, columns and boxes.
+    The difference is that the references will not be copied but rather
+    reassigned to the new board created.
+*/
+Board Board::operator= (Board b){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
-            board[i][j] = vector<int>();
-            board[i][j].push_back(grid[i][j]);
+            (*this).board[i][j] = b.board[i][j];
+        }
+    }
+    (*this).createReferences();
+    /*
+    cout<<"this: "<<this<<endl;
+    cout<<"b: "<<&b<<endl;
+    */
+    return *this;
+}
+
+void Board::createReferences(){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
             rows[i][j] = &board[i][j];
             columns[j][i] = &board[i][j];
             regions[i][j] = &board[i][j];
             regions[j+9][i] = &board[i][j];
+            //cout<<"i: "<<i<<" j: "<<j<<" adress: "<<&board[i][j]<<endl;
         }
     }
     for(int b=0;b<9;b++){
@@ -135,7 +170,32 @@ void Board::setBoard(int grid[9][9]){
             }
         }
     }
+}
+
+void Board::setBoard(int grid[9][9]){
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            board[i][j] = vector<int>();
+            board[i][j].push_back(grid[i][j]);
+        }
+    }
+    createReferences();
     analysePossibilities();
+/*
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            if(&board[i][j]!=regions[i][j]){
+                cout<<i<<" "<<j<<" KAOS"<<endl;
+            }
+            if(&board[i][j]!=regions[j+9][i]){
+                cout<<i<<" "<<j<<" KAOS2"<<endl;
+            }
+            if(&board[i][j]!=regions[18+3*(i/3)+j/3][3*(i%3)+j%3]){
+                cout<<i<<" "<<j<<" KAOS3"<<endl;
+            }
+        }
+    }
+    */
     /*
     printRegions(); 
     cout << endl;
@@ -146,6 +206,9 @@ void Board::setBoard(int grid[9][9]){
 }
 
 void Board::remove(int i,int j){
+    //cout<<"Remove: "<<i<<" "<<j<<endl;
+    //printPossibilities();cout<<endl;
+    //printPossibilities1();cout<<endl;
     remove(regions[i],board[i][j][0]);
     remove(regions[j+9],board[i][j][0]);
     remove(regions[18+3*(i/3)+(j/3)],board[i][j][0]);
@@ -153,12 +216,23 @@ void Board::remove(int i,int j){
 
 void Board::remove(vector<int> * region [],int nr){
     for(int i=0;i<9;i++){
+        //cout<<"    "<<(*region[i])[0]<<"[";
         for(int j=1;j<(*region[i]).size();j++){
+            //cout<<(*region[i])[j];
             if((*region[i])[j]==nr){
+                //cout<<"*";
                 (*region[i]).erase((*region[i]).begin()+j);
+                /*cout<<"(";
+                for(int t=0;t<(*region[i]).size();t++){
+                    cout<<(*region[i])[t];
+                }
+                */
+                //cout<<")";
                 break; 
             }
         }
+        //cout<<"] ";
     }
+    //cout<<endl;
 }
 

@@ -9,8 +9,8 @@ typedef struct
   uint8_t grid[9][9];
 } grid_t;
 
-/*
- * Abstract parent class for sudoku solvers.
+/**
+ * Parent class for sudoku solvers.
  */
 class SudokuSolver
 {
@@ -20,6 +20,11 @@ class SudokuSolver
     virtual grid_t getGrid() = 0;
     virtual std::string getName() = 0;
     virtual void runStep(bool forever) = 0;
+    bool isValidSolution(const grid_t & grid);
+
+  protected:
+    unsigned int countRowColumnConflicts(const grid_t & grid);
+    unsigned int countSubSquareConflicts(const grid_t & grid);
 };
 
 #endif

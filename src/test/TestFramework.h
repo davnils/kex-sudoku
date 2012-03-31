@@ -6,6 +6,11 @@
 
 #include "SudokuSolver.h"
 
+const long MAX_TRIES = 1000;
+const long MIN_MEASUREMENT = 4;
+const float UNSTABLE_MEASUREMENT = -1;
+const float STD_DEVIATION_LIMIT = 2.0f;
+
 /*
  * 
  */
@@ -29,6 +34,8 @@ class TestFramework
   private:
     void readPuzzles();
     float runSampledSolver(SudokuSolver * solver, grid_t puzzle);
+    float sampledStdDeviation(const std::vector<float> & data, float avg);
+    float sampledAverage(const std::vector<float> & data);
 
     std::vector<SudokuSolver*> solvers;
     std::vector<grid_t> puzzles;

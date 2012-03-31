@@ -1,5 +1,7 @@
 #include "TestFramework.h"
 
+#include <cmath>
+#include <ctime>
 #include <fstream>
 
 /*
@@ -25,7 +27,7 @@ void TestFramework::readPuzzles()
     grid_t puzzle;
 
     for(int i = 0; i < 81; i++) {
-      puzzle.grid[i/9][i%9] = line[i];
+      puzzle.grid[i/9][i%9] = line[i] - '0';
     }
 
     puzzles.push_back(puzzle);
@@ -57,11 +59,7 @@ std::vector<result_t> TestFramework::runTests()
       res.timeStamps.push_back(runSampledSolver(*itSolver, *itPuzzle));
     }
 
-    std::vector<float>::iterator it = res.timeStamps.begin();
-    res.avg = 0;
-    for(; it != res.timeStamps.end(); it++) {
-      res.avg += *it / res.timeStamps.size();
-    }
+    res.avg = sampledAverage(res.timeStamps);
   }
 
   return(results);
@@ -72,12 +70,53 @@ std::vector<result_t> TestFramework::runTests()
  */
 float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
 {
-  //Solve the given puzzle several times
-  float avg, variance;
-  solver->addPuzzle(puzzle);
-  float runtime;
-  //TODO: Start timer
-  solver->runStep(true);
-  //TODO: Stop timer
-  return(avg);
+  std::vector<float> samples;
+  long measurement;
+
+  for(measurement = 0; measurement < MAX_TRIES; measurement++) {
+    float runtime;
+    solver->addPuzzle(puzzle);
+
+    clock_t reference = clock();
+    solver->runStep(true);
+    runtime = (clock() - reference)/(float)CLOCKS_PER_SEC;
+    samples.push_back(runtime);
+
+    float avg = sampledAverage(samples);
+    if(avg/sampledStdDeviation(samples, avg) <= STD_DEVIATION_LIMIT
+        && measurement >= MIN_MEASUREMENT) {
+      return(avg);
+    }
+  }
+
+  return(UNSTABLE_MEASUREMENT);
+}
+
+/*
+ * 
+ */
+float TestFramework::sampledStdDeviation(const std::vector<float> & data, float avg)
+{
+  std::vector<float>::const_iterator it;
+  float variance = 0;
+  for(it = data.begin(); it != data.end(); it++) {
+    variance += pow(*it - avg, 2);
+  }
+
+  variance /= data.size() - 1;
+
+  return(sqrt(variance));
+}
+
+/*
+ * 
+ */
+float TestFramework::sampledAverage(const std::vector<float> & data)
+{
+    std::vector<float>::const_iterator it;
+    float avg = 0.0f;
+
+    for(it = data.begin(); it != data.end(); it++) {
+      avg += *it / data.size();
+    }
 }

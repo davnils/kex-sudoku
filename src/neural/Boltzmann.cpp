@@ -1,24 +1,26 @@
-#include <vector>
-#include <cstdint>
-
-#include "Square.h"
 #include "Boltzmann.h"
 
 /*
  *
  */
-Boltzmann::Boltzmann(grid_t assigned, float maxTemperature)
+Boltzmann::Boltzmann(float maxTemperature)
 {
   temperature = maxTemperature;
+}
 
+/*
+ *
+ */
+void Boltzmann::addPuzzle(grid_t puzzle)
+{
   for(int i = 0; i < 9; i++) {
     group_t row;
     for(int j = 0; j < 9; j++) {
-      if(assigned.grid[i][j] == 0) {
+      if(puzzle.grid[i][j] == 0) {
         row.push_back(Square());
       }
       else {
-        row.push_back(Square(assigned.grid[i][j]));
+        row.push_back(Square(puzzle.grid[i][j]));
       }
     }
     grid.push_back(row);
@@ -35,7 +37,7 @@ grid_t Boltzmann::getGrid()
   for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
     group_t::iterator squareIt;
     for(squareIt = rowIt->begin(); squareIt != rowIt->end(); squareIt++) {
-      g.grid[][] = squareIt;
+      //g.grid[][] = squareIt;
     }
   }
 }
@@ -43,7 +45,7 @@ grid_t Boltzmann::getGrid()
 /*
  *
  */
-void Boltzmann::simulate(bool step)
+void Boltzmann::runStep(bool forever)
 {
   internal_grid_t::iterator rowIt;
   for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {

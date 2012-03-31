@@ -2,14 +2,16 @@
 #include <string>
 #include <vector>
 
-#include "../cultural/Cultural.h"
+//#include "../cultural/Cultural.h"
+#include "../neural/Boltzmann.h"
 #include "TestFramework.h"
 
 int main()
 {
   TestFramework framework("../../testdata/minlex");
   
-  framework.addSolver(new Cultural);
+  //framework.addSolver(new Cultural);
+  framework.addSolver(new Boltzmann);
   //...
 
   std::vector<result_t> res = framework.runTests();

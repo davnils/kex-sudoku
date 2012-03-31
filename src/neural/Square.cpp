@@ -1,6 +1,5 @@
 #include <cmath>
 #include <cstdlib>
-#include <vector>
 
 #include "Square.h"
 
@@ -72,4 +71,22 @@ std::vector<int> Square::sum(std::vector<int> values)
 bool Square::isResolved()
 {
   return(resolved);
+}
+
+/*
+ *
+ */
+uint8_t Square::bestMatch()
+{
+  uint8_t chosen;
+  float maxVal;
+
+  std::vector<Node>::const_iterator it = digits.begin();
+  for(; it != digits.end(); it++) {
+    if(it->used) {
+      return(chosen);
+    }
+  }
+
+  return(0);
 }

@@ -37,7 +37,9 @@ grid_t Boltzmann::getGrid()
   for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
     group_t::iterator squareIt;
     for(squareIt = rowIt->begin(); squareIt != rowIt->end(); squareIt++) {
-      //g.grid[][] = squareIt;
+      int xpos = std::distance(rowIt, grid.begin());
+      int ypos = std::distance(squareIt, rowIt->end());
+      g.grid[xpos][ypos] = squareIt->bestMatch();
     }
   }
 }
@@ -47,13 +49,21 @@ grid_t Boltzmann::getGrid()
  */
 void Boltzmann::runStep(bool forever)
 {
-  internal_grid_t::iterator rowIt;
-  for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
-    group_t::iterator squareIt;
-    for(squareIt = rowIt->begin(); squareIt != rowIt->end(); squareIt++) {
-      updateNode(rowIt, squareIt);
+  do {
+    internal_grid_t::iterator rowIt;
+    for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
+      group_t::iterator squareIt;
+      for(squareIt = rowIt->begin(); squareIt != rowIt->end(); squareIt++) {
+        if(!squareIt->isResolved()) {
+          updateNode(rowIt, squareIt);
+        }
+      }
     }
-  }
+
+    if(isValidSolution(getGrid())) {
+      break;
+    }
+  } while(forever);
 }
 
 /*

@@ -1,4 +1,6 @@
 #include "Board.h"
+#include<iostream>
+using namespace std;
 
 void Board::printPossibilities(){
     for(int i=0;i<9;i++){
@@ -30,6 +32,8 @@ void Board::printPossibilities1(){
     }
     cout<<"end print from regions"<<endl;
 }
+
+
 void Board::printBoard(){
     printBoard("NORMAL");
 }

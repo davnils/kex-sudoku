@@ -9,7 +9,7 @@
 const long MAX_TRIES = 1000;
 const long MIN_MEASUREMENT = 4;
 const float UNSTABLE_MEASUREMENT = -1;
-const float STD_DEVIATION_LIMIT = 2.0f;
+const float STD_DEVIATION_LIMIT = 0.1f;
 
 /*
  * 

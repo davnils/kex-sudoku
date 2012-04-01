@@ -3,6 +3,7 @@
 #include <cmath>
 #include <ctime>
 #include <fstream>
+#include <iostream>
 
 /*
  * 
@@ -70,10 +71,12 @@ std::vector<result_t> TestFramework::runTests()
  */
 float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
 {
+  std::cout << "runSampledSolver with new puzzle\n";
   std::vector<float> samples;
   long measurement;
 
   for(measurement = 0; measurement < MAX_TRIES; measurement++) {
+    std::cout << "Running measurement #" << measurement << std::endl;
     float runtime;
     solver->addPuzzle(puzzle);
 
@@ -83,8 +86,11 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
     samples.push_back(runtime);
 
     float avg = sampledAverage(samples);
-    if(avg/sampledStdDeviation(samples, avg) <= STD_DEVIATION_LIMIT
+    //std::cout << "(avg, stddev) = (" << avg << ", "
+      //<< sampledStdDeviation(samples, avg) << ")" << std::endl;
+    if(sampledStdDeviation(samples, avg) / avg <= STD_DEVIATION_LIMIT
         && measurement >= MIN_MEASUREMENT) {
+      std::cout << "Valid measurement performed.\n";
       return(avg);
     }
   }
@@ -103,8 +109,14 @@ float TestFramework::sampledStdDeviation(const std::vector<float> & data, float 
     variance += pow(*it - avg, 2);
   }
 
-  variance /= data.size() - 1;
+  if(data.size() > 1) {
+    variance /= data.size() - 1;
+  }
+  else {
+    variance = 0;
+  }
 
+  
   return(sqrt(variance));
 }
 
@@ -115,6 +127,10 @@ float TestFramework::sampledAverage(const std::vector<float> & data)
 {
     std::vector<float>::const_iterator it;
     float avg = 0.0f;
+
+    if(data.size() == 0) {
+        return(0);
+    }
 
     for(it = data.begin(); it != data.end(); it++) {
       avg += *it / data.size();

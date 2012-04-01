@@ -11,21 +11,50 @@ Rulebased::Rulebased(int grid[9][9]){
     board.setBoard(grid);
 }
 
+void Rulebased::addPuzzle(grid_t puzzle){
+    int newgrid[9][9];
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            newgrid[i][j] = puzzle.grid[i][j];
+        }
+    }
+    board = *(new Board());
+    board.setBoard(newgrid);
+}  
+
+grid_t Rulebased::getGrid(){
+    grid_t returngrid;
+    for(int i=0;i<9;i++){
+        for(int j=0;j<9;j++){
+            returngrid.grid[i][j] = (uint8_t) board.board[i][j][0];
+        }
+    }
+    return returngrid;
+} 
+
 Rulebased::Rulebased(Board b){
     board = b;
 }
 
+void Rulebased::runStep(bool forever){
+    solve();
+}
+
 void Rulebased::solve(){
     int solutions = applyRules();
-    cout<<"solutions: "<<solutions<<endl;
+    /*
     if(solutions >= 1 && board.valid()){
+    	cout<<"solutions: "<<solutions<<endl;
         board.printBoard();
         cout<<endl;
+    }else{
+	    cout<<"UNSOLVED"<<endl;
+        board.printBoard();
     }
+    */
 }
 
 int Rulebased::applyRules(){
-    /*
     while(true){
         //The easy rules first.
         if(single())
@@ -34,31 +63,8 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
-    */
-    int g = guess();
-    /*
-    if(g==1){
-        board.printBoard();
-    }else if(g==2){
-        cout<<"AMBIGOUS WITH SOLUTION"<<endl;
-        board.printBoard();
-    }
-    */
-   /*
-    if(!solved 
-    if(!board.valid()){
-        cout<<"UNVALID"<<endl;
-    }else if(!solved){
-        cout<<"UNSOLVED"<<endl;
-        board.printBoard();
-    }else if(!unique){
-        cout<<"AMBIGOUS"<<endl;
-    }
-    else{
-    */
-    //    board.printBoard();//"SIMPLE");
-    //}
-    return g;
+
+    return guess();
 } 
 
 /*
@@ -183,7 +189,7 @@ bool Rulebased::naked(vector<int> * region[]){
         }
     }
     //Loop through naked pair, triple, quadruple
-    //TODO change to r=4 when r=2 functions properly
+    //This also includes hidden single, pair, triple, quad ...
     for(int r=2;r<=8;r++){
         vector< vector<int> > comb = findCombinations(n,r,0);
         for(int c=0;c<comb.size();c++){
@@ -268,7 +274,7 @@ vector< vector<int> > Rulebased::findCombinations(
     return combinations;
 }
 
-
+/*
 int main(){
     //cout<<"START:"<<endl;
     int grid[9][9];
@@ -285,4 +291,4 @@ int main(){
     Rulebased solver(grid);
     solver.solve();
 }
-
+*/

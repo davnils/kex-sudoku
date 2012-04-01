@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-cat ../../../testdata/minlex > inputTests 
+head -n 10000 ../../../testdata/minlex > inputTests 
 while read line
 do
 echo -e "$line\n" | ./main

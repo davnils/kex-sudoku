@@ -8,10 +8,15 @@
 /*
  * 
  */
-TestFramework::TestFramework(std::string puzzlePath)
+TestFramework::TestFramework(std::string puzzlePath, std::string matlabPath) : of(matlabPath)
 {
   this->puzzlePath = puzzlePath;
   readPuzzles();
+}
+
+TestFramework::~TestFramework()
+{
+    of.close();
 }
 
 
@@ -55,10 +60,14 @@ std::vector<result_t> TestFramework::runTests()
   for(; itSolver != solvers.end(); itSolver++) {
     result_t res;
     res.algorithm = (*itSolver)->getName();
+    of << res.algorithm << " = [";
 
     for(; itPuzzle != puzzles.end(); itPuzzle++) {
       res.timeStamps.push_back(runSampledSolver(*itSolver, *itPuzzle));
+      of << res.timeStamps.back() << " ";
     }
+    
+    of << "];\n";
 
     res.avg = sampledAverage(res.timeStamps);
   }
@@ -81,9 +90,10 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
     solver->addPuzzle(puzzle);
 
     clock_t reference = clock();
-    solver->runStep(true);
+    std::cout<<"clock(): "<<clock()<<" clocks-per-sc"<<CLOCKS_PER_SEC;
+    bool ret = solver->runStep(clock()+CLOCKS_PER_SEC*MAX_EXECUTION_TIME);
     runtime = (clock() - reference)/(float)CLOCKS_PER_SEC;
-    samples.push_back(runtime);
+    samples.push_back(ret ? runtime : NO_SOLUTION_FOUND);
 
     float avg = sampledAverage(samples);
     //std::cout << "(avg, stddev) = (" << avg << ", "

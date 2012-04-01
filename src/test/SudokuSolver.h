@@ -1,6 +1,7 @@
 #ifndef SUDOKUSOLVER_H_
 #define SUDOKUSOLVER_H_
 
+#include <ctime>
 #include <cstdint>
 #include <string>
 
@@ -19,7 +20,7 @@ class SudokuSolver
     virtual void addPuzzle(grid_t puzzle) = 0;
     virtual grid_t getGrid() = 0;
     virtual std::string getName() = 0;
-    virtual void runStep(bool forever) = 0;
+    virtual bool runStep(clock_t lastClock) = 0;
     bool isValidSolution(const grid_t & grid);
 
   protected:

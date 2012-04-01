@@ -1,7 +1,7 @@
 #include<vector>
 #include<string>
 #include<iostream>
-
+#include<ctime>
 #include "Rulebased.h"
 
 using namespace std;
@@ -36,12 +36,19 @@ Rulebased::Rulebased(Board b){
     board = b;
 }
 
-void Rulebased::runStep(bool forever){
-    solve();
+bool Rulebased::runStep(clock_t stoppTime){
+    cout<<"YALA"<<endl;
+    endTime = stoppTime;
+    return solve();
 }
 
-void Rulebased::solve(){
+bool Rulebased::solve(){
     int solutions = applyRules();
+    if(solutions == 0){
+        return false;
+    }else{
+        return true;
+    }
     /*
     if(solutions >= 1 && board.valid()){
     	cout<<"solutions: "<<solutions<<endl;
@@ -55,6 +62,11 @@ void Rulebased::solve(){
 }
 
 int Rulebased::applyRules(){
+    cout<<"clock(): "<<clock()<<" endTime: "<<endTime<<endl;
+    if(clock()>endTime){
+        return 0;
+    }
+    /*
     while(true){
         //The easy rules first.
         if(single())
@@ -63,6 +75,7 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
+    */
 
     return guess();
 } 

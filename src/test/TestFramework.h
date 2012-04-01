@@ -1,6 +1,7 @@
 #ifndef TESTFRAMEWORK_H_
 #define TESTFRAMEWORK_H_
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -10,7 +11,8 @@ const long MAX_TRIES = 1000;
 const long MIN_MEASUREMENT = 4;
 const float UNSTABLE_MEASUREMENT = -1;
 const float STD_DEVIATION_LIMIT = 0.1f;
-
+const clock_t MAX_EXECUTION_TIME = 1;
+const float NO_SOLUTION_FOUND = -2;
 /*
  * 
  */
@@ -27,7 +29,8 @@ typedef struct
 class TestFramework
 {
   public:
-    TestFramework(std::string puzzlePath);
+    TestFramework(std::string puzzlePath, std::string matlabPath);
+    ~TestFramework();
     void addSolver(SudokuSolver * solver);
     std::vector<result_t> runTests();
 
@@ -40,6 +43,7 @@ class TestFramework
     std::vector<SudokuSolver*> solvers;
     std::vector<grid_t> puzzles;
     std::string puzzlePath;
+    std::ofstream of;
 };
 
 #endif

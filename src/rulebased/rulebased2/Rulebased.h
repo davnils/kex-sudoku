@@ -5,6 +5,7 @@
 
 class Rulebased:public SudokuSolver{
     private:
+        clock_t endTime;
         Board board;
         vector< vector<int> > findCombinations(vector<int> n,int r,int i);
     public:
@@ -15,10 +16,10 @@ class Rulebased:public SudokuSolver{
         grid_t getGrid();
         string getName(){ return "RuleBasedSolver"; }
         Board getBoard(){ return board; }
-        void runStep(bool);
+        bool runStep(clock_t);
         void printBoard();
         void printRegions();
-        void solve(); 
+        bool solve(); 
         bool naked();
         bool naked(vector<int> * [] );
         bool single();

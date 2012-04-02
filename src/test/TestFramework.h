@@ -9,9 +9,9 @@
 
 const long MAX_TRIES = 1000;
 const long MIN_MEASUREMENT = 4;
-const float UNSTABLE_MEASUREMENT = -1;
 const float STD_DEVIATION_LIMIT = 0.1f;
-const clock_t MAX_EXECUTION_TIME = 20;
+const clock_t MAX_EXECUTION_TIME = 2;
+const float UNSTABLE_MEASUREMENT = -1;
 const float NO_SOLUTION_FOUND = -2;
 const float CONFIDENCE = 0.95;
 /*
@@ -21,6 +21,7 @@ typedef struct
 {
   std::string algorithm;
   float avg;
+  unsigned int errorCount;
   std::vector<float> timeStamps;
 } result_t;
 

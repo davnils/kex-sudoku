@@ -5,7 +5,7 @@
 #include <fstream>
 #include <iostream>
 
-/*
+/**
  * 
  */
 TestFramework::TestFramework(std::string puzzlePath, std::string matlabPath) : of(matlabPath)
@@ -19,8 +19,7 @@ TestFramework::~TestFramework()
     of.close();
 }
 
-
-/*
+/**
  * 
  */
 void TestFramework::readPuzzles()
@@ -40,7 +39,7 @@ void TestFramework::readPuzzles()
   }
 }
 
-/*
+/**
  * 
  */
 void TestFramework::addSolver(SudokuSolver * solver)
@@ -48,7 +47,7 @@ void TestFramework::addSolver(SudokuSolver * solver)
   solvers.push_back(solver);
 }
 
-/*
+/**
  * 
  */
 std::vector<result_t> TestFramework::runTests()
@@ -60,11 +59,20 @@ std::vector<result_t> TestFramework::runTests()
   for(; itSolver != solvers.end(); itSolver++) {
     result_t res;
     res.algorithm = (*itSolver)->getName();
+    res.errorCount = 0;
     of << res.algorithm << " = [";
 
     for(; itPuzzle != puzzles.end(); itPuzzle++) {
-      res.timeStamps.push_back(runSampledSolver(*itSolver, *itPuzzle));
-      of << res.timeStamps.back() << " ";
+      float result = runSampledSolver(*itSolver, *itPuzzle);
+      if(result > 0) {
+        res.timeStamps.push_back(result);
+        of << res.timeStamps.back() << " ";
+      }
+      else {
+        std::cerr << "Warning: Invalid measurement with solver: "
+          << res.algorithm << ", code: " << result << std::endl;
+        res.errorCount++;
+      }
     }
     
     of << "];\n";
@@ -75,7 +83,7 @@ std::vector<result_t> TestFramework::runTests()
   return(results);
 }
 
-/*
+/**
  * 
  */
 float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
@@ -90,29 +98,17 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
     solver->addPuzzle(puzzle);
 
     clock_t reference = clock();
-    //std::cout<<"clock(): "<<clock()<<" clocks-per-sc"<<CLOCKS_PER_SEC
-    //    <<std::endl;
     bool ret = solver->runStep(clock()+CLOCKS_PER_SEC*MAX_EXECUTION_TIME);
-    //TODO här måste vi väl kolla att det är ett giltigt sudoku man har
-    //genererat. Om inte så ska det väl markeras som unsolved.
+
+    if(!ret) {
+      return(NO_SOLUTION_FOUND);
+    }
+
     runtime = (clock() - reference)/(float)CLOCKS_PER_SEC;
-    //TODO Om ret är false så ska väl pusslet markeras som unsolved.
-    //Det går ju inte att veta saker som mean och std om
-    //lösaren en gång misslyckas så då måste vi istället markera det som unsolvable.
-    //NO_SOLUTION_FOUND är väl dessutom ett negativt tal så det kommer verkligen
-    //göra average funktionen konstig som den ser ut nu. Ingen koll finns. Dock
-    //så är det som sagt ändå inte så lyckat eftersom man inte bara kan ta bort
-    //okänd data.
-    samples.push_back(ret ? runtime : NO_SOLUTION_FOUND);
+    samples.push_back(runtime);
 
     float avg = sampledAverage(samples);
-    //std::cout << "(avg, stddev) = (" << avg << ", "
-      //<< sampledStdDeviation(samples, avg) << ")" << std::endl;
-    //TODO Ändrade ifsatsen här. I och med att vi ändå inte kan räkna ut
-    //konfidenceintervall för tillfället så känns det inte så meningsfullt
-    //att sätta upp en randomvillkor för avg. Så nu körs testet 4a ggr för alla.
-    if(true//bootstrap(samples,CONFIDENCE)//sampledStdDeviation(samples, avg) / avg <= STD_DEVIATION_LIMIT
-        && measurement >= MIN_MEASUREMENT) {
+    if(bootstrap(samples, CONFIDENCE) && measurement >= MIN_MEASUREMENT) {
       std::cout << "Valid measurement performed.\n";
       return(avg);
     }
@@ -121,7 +117,11 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
   return(UNSTABLE_MEASUREMENT);
 }
 
-bool TestFramework::bootstrap(const std::vector<float> & data, float confidence){
+/**
+ *
+ */
+bool TestFramework::bootstrap(const std::vector<float> & data, float confidence)
+{
     std::vector<float> meanvalues;
     int n = data.size();
     std::vector<int> tmp;
@@ -147,9 +147,10 @@ bool TestFramework::bootstrap(const std::vector<float> & data, float confidence)
     //confidence. This is because the unknown distribution is
     //poorly represented by the four datapoints.
 
-    
+    return(true);
 }
-/*
+
+/**
  * 
  */
 float TestFramework::sampledStdDeviation(const std::vector<float> & data, float avg)
@@ -166,12 +167,11 @@ float TestFramework::sampledStdDeviation(const std::vector<float> & data, float 
   else {
     variance = 0;
   }
-
   
   return(sqrt(variance));
 }
 
-/*
+/**
  * 
  */
 float TestFramework::sampledAverage(const std::vector<float> & data)
@@ -186,5 +186,6 @@ float TestFramework::sampledAverage(const std::vector<float> & data)
     for(it = data.begin(); it != data.end(); it++) {
       avg += *it / data.size();
     }
-    //TODO Ska det inte vara return avg här?
+
+    return(avg);
 }

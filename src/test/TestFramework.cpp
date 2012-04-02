@@ -1,9 +1,10 @@
-#include "TestFramework.h"
-
+#include <algorithm>
 #include <cmath>
 #include <ctime>
 #include <fstream>
 #include <iostream>
+
+#include "TestFramework.h"
 
 /**
  * 
@@ -74,7 +75,7 @@ std::vector<result_t> TestFramework::runTests()
         res.errorCount++;
       }
     }
-    
+
     of << "];\n";
 
     res.avg = sampledAverage(res.timeStamps);
@@ -88,7 +89,6 @@ std::vector<result_t> TestFramework::runTests()
  */
 float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
 {
-  std::cout << "runSampledSolver with new puzzle\n";
   std::vector<float> samples;
   long measurement;
 
@@ -109,7 +109,6 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
 
     float avg = sampledAverage(samples);
     if(bootstrap(samples, CONFIDENCE) && measurement >= MIN_MEASUREMENT) {
-      std::cout << "Valid measurement performed.\n";
       return(avg);
     }
   }
@@ -117,37 +116,33 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
   return(UNSTABLE_MEASUREMENT);
 }
 
-/**
- *
- */
-bool TestFramework::bootstrap(const std::vector<float> & data, float confidence)
+bool compareFloat(const float a, const float b)
 {
-    std::vector<float> meanvalues;
-    int n = data.size();
-    std::vector<int> tmp;
-    for(int i=0;i<n;i++){
-        tmp.push_back(0);
-    }
-    for(int testfall=0;testfall<100;testfall++){
-        for(int i=0;i<n;i++){
-            int r = rand()%n;
-            tmp[i] = data[r];
-        }
-        int sum = 0;
-        for(int i=0;i<n;i++){
-            sum += tmp[i];
-        }
-        float avg = sum/n;
-        meanvalues.push_back(avg); 
-    }
-    //TODO calculate the confidence and compare to the required
-    //confidence. Return true/false depending on the result.
-    //One problem seems to be that with n only equal to 4
-    //the bootstrapping will have a hard time producing high
-    //confidence. This is because the unknown distribution is
-    //poorly represented by the four datapoints.
+  return(a < b);
+}
 
+/**
+ * Percentile bootstrap implementation.
+ * www.public.iastate.edu/~vardeman/stat511/BootstrapPercentile.pdf
+ */
+bool TestFramework::bootstrap(std::vector<float> data, float confidence)
+{
+  if(data.size() <= 1) {
+    return(false);
+  }
+
+  std::sort(data.begin(), data.end(), compareFloat);
+
+  float inv = 1 - confidence;
+  float firstPercentile = (inv / 2)*(data.size() - 1);
+  float secondPercentile = ((1 - inv / 2))*(data.size() - 1);
+
+  if(data[round(secondPercentile)] - data[round(firstPercentile)]
+      <= BOOTSTRAP_INTERVAL) {
     return(true);
+  }
+
+  return(false);
 }
 
 /**

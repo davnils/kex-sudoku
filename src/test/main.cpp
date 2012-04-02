@@ -9,7 +9,7 @@
 
 int main()
 {
-  TestFramework framework("../../testdata/sample1000", "out.m");//../../testdata/minlex");
+  TestFramework framework("../../testdata/sample10", "out.m");//../../testdata/minlex");
   
   //framework.addSolver(new Cultural);
   //framework.addSolver(new Boltzmann);

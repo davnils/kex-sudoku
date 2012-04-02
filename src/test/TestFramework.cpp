@@ -93,6 +93,8 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
     //std::cout<<"clock(): "<<clock()<<" clocks-per-sc"<<CLOCKS_PER_SEC
     //    <<std::endl;
     bool ret = solver->runStep(clock()+CLOCKS_PER_SEC*MAX_EXECUTION_TIME);
+    //TODO här måste vi väl kolla att det är ett giltigt sudoku man har
+    //genererat. Om inte så ska det väl markeras som unsolved.
     runtime = (clock() - reference)/(float)CLOCKS_PER_SEC;
     //TODO Om ret är false så ska väl pusslet markeras som unsolved.
     //Det går ju inte att veta saker som mean och std om

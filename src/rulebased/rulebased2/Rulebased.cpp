@@ -46,6 +46,7 @@ bool Rulebased::solve(){
     if(solutions == 0){
         return false;
     }else{
+        board.printBoard("SIMPLE");
         return true;
     }
     /*

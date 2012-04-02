@@ -11,8 +11,9 @@ const long MAX_TRIES = 1000;
 const long MIN_MEASUREMENT = 4;
 const float UNSTABLE_MEASUREMENT = -1;
 const float STD_DEVIATION_LIMIT = 0.1f;
-const clock_t MAX_EXECUTION_TIME = 1;
+const clock_t MAX_EXECUTION_TIME = 20;
 const float NO_SOLUTION_FOUND = -2;
+const float CONFIDENCE = 0.95;
 /*
  * 
  */
@@ -39,6 +40,7 @@ class TestFramework
     float runSampledSolver(SudokuSolver * solver, grid_t puzzle);
     float sampledStdDeviation(const std::vector<float> & data, float avg);
     float sampledAverage(const std::vector<float> & data);
+    bool bootstrap(const std::vector<float> & data, float confidence);
 
     std::vector<SudokuSolver*> solvers;
     std::vector<grid_t> puzzles;

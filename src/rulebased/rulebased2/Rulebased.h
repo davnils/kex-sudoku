@@ -25,6 +25,7 @@ class Rulebased:public SudokuSolver{
         bool single();
         int guess();
         int applyRules();
+        void setTime(clock_t newTime){endTime = newTime;}
 };
 
 

@@ -37,7 +37,6 @@ Rulebased::Rulebased(Board b){
 }
 
 bool Rulebased::runStep(clock_t stoppTime){
-    cout<<"YALA"<<endl;
     endTime = stoppTime;
     return solve();
 }
@@ -62,7 +61,6 @@ bool Rulebased::solve(){
 }
 
 int Rulebased::applyRules(){
-    cout<<"clock(): "<<clock()<<" endTime: "<<endTime<<endl;
     if(clock()>endTime){
         return 0;
     }
@@ -141,6 +139,7 @@ int Rulebased::guess(){
         tmp.remove(min[1],min[2]);
         //tmp.printPossibilities();
         Rulebased solver(tmp);
+        solver.setTime(endTime);
         int ok = solver.applyRules();
         if(ok>0){
            correctGuesses.push_back(solver.getBoard());

@@ -60,7 +60,7 @@ std::vector<result_t> TestFramework::runTests()
   for(; itSolver != solvers.end(); itSolver++) {
     result_t res;
     res.algorithm = (*itSolver)->getName();
-    res.errorCount = 0;
+    res.unstableCount = res.unsolvedCount = 0;
     of << res.algorithm << " = [";
 
     for(; itPuzzle != puzzles.end(); itPuzzle++) {
@@ -68,17 +68,27 @@ std::vector<result_t> TestFramework::runTests()
       if(result > 0) {
         res.timeStamps.push_back(result);
         of << res.timeStamps.back() << " ";
+        of.flush();
       }
       else {
         std::cerr << "Warning: Invalid measurement with solver: "
           << res.algorithm << ", code: " << result << std::endl;
-        res.errorCount++;
+        if(result == UNSTABLE_MEASUREMENT) {
+            res.unstableCount++;
+        }
+        else {
+            res.unsolvedCount++;
+        }
       }
     }
 
     of << "];\n";
 
     res.avg = sampledAverage(res.timeStamps);
+    std::cerr << "Unstable measurements: "
+        << res.unstableCount
+        << ", Unsolved puzzles: " << res.unsolvedCount
+        << ", total: " << puzzles.size() << std::endl;
   }
 
   return(results);
@@ -92,7 +102,7 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
   std::vector<float> samples;
   long measurement;
 
-  for(measurement = 0; measurement < MAX_TRIES; measurement++) {
+  for(measurement = 1; measurement <= MAX_TRIES; measurement++) {
     std::cout << "Running measurement #" << measurement << std::endl;
     float runtime;
     solver->addPuzzle(puzzle);

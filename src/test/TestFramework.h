@@ -7,14 +7,14 @@
 
 #include "SudokuSolver.h"
 
-const long MAX_TRIES = 1000;
+const long MAX_TRIES = 100;
 const long MIN_MEASUREMENT = 4;
 const float STD_DEVIATION_LIMIT = 0.1f;
 const clock_t MAX_EXECUTION_TIME = 20;
 const float UNSTABLE_MEASUREMENT = -1;
 const float NO_SOLUTION_FOUND = -2;
-const float CONFIDENCE = 0.90;
-const float BOOTSTRAP_INTERVAL = 0.02;
+const float CONFIDENCE = 0.95;
+const float BOOTSTRAP_INTERVAL = 0.05;
 
 /**
  * 
@@ -23,7 +23,7 @@ typedef struct
 {
   std::string algorithm;
   float avg;
-  unsigned int errorCount;
+  unsigned int unstableCount, unsolvedCount;
   std::vector<float> timeStamps;
 } result_t;
 

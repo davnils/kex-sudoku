@@ -46,7 +46,7 @@ bool Rulebased::solve(){
     if(solutions == 0){
         return false;
     }else{
-        board.printBoard("SIMPLE");
+        //board.printBoard("SIMPLE");
         return true;
     }
     /*
@@ -70,7 +70,7 @@ int Rulebased::applyRules(){
     if(clock()>endTime){
         return 0;
     }
-    /*
+/*
     while(true){
         //The easy rules first.
         if(single())
@@ -79,7 +79,7 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
-    */
+*/
     return guess();
 } 
 

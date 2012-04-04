@@ -70,6 +70,7 @@ int Rulebased::applyRules(){
     if(clock()>endTime){
         return 0;
     }
+    /*
     while(true){
         //The easy rules first.
         if(single())
@@ -78,7 +79,7 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
-
+    */
     return guess();
 } 
 

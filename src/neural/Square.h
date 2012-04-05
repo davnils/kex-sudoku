@@ -6,6 +6,7 @@
 
 const int COLLISION_OFFSET = -2;
 const int COLLISION_GIVEN_OFFSET = -20;
+const float BIAS = 1.0f;
 
 struct Node
 {

@@ -1,9 +1,10 @@
 #include <cmath>
 #include <cstdlib>
+#include <iostream>
 
 #include "Square.h"
 
-/*
+/**
  *
  */
 Square::Square()
@@ -16,26 +17,23 @@ Square::Square()
   resolved = false;
 }
 
-/*
+/**
  *
  */
 Square::Square(int digit)
 {
-  Node n = {false, 0};
   for(int i = 0; i < 9; i++) {
+    Node n = {false, 0};
     if(i == digit - 1) {
       n.used = true;
-      digits.push_back(n);
     }
-    else {
-      digits.push_back(n);
-    }
+    digits.push_back(n);
   }
 
   resolved = true;
 }
 
-/*
+/**
  *
  */
 void Square::update(std::vector<int> values, float temperature)
@@ -43,14 +41,17 @@ void Square::update(std::vector<int> values, float temperature)
   std::vector<int>::const_iterator itValues = values.begin();
   std::vector<Node>::iterator itNode = digits.begin();
 
+  std::cout << "use vector: ";
   for(; itValues != values.end(); itValues++, itNode++) {
-    itNode->offset = *itValues;
+    itNode->offset = *itValues + BIAS;
     float probability = 1.0 / (1.0 + exp(-itNode->offset/temperature));
     itNode->used = (rand() % 1000) < (probability * 1000);
+    std::cout << itNode->used << " (" << probability << ") ";
   }
+  std::cout << std::endl;
 }
 
-/*
+/**
  *
  */
 std::vector<int> Square::sum(std::vector<int> values)
@@ -59,7 +60,12 @@ std::vector<int> Square::sum(std::vector<int> values)
   std::vector<Node>::const_iterator itStored = digits.begin();
 
   for(; itAcc != values.end(); itAcc++, itStored++) {
-    *itAcc += itStored->used * COLLISION_OFFSET;
+    if(isResolved()) {
+      *itAcc += itStored->used * COLLISION_GIVEN_OFFSET;
+    } 
+    else {
+      *itAcc += itStored->used * COLLISION_OFFSET;
+    } 
   }
 
   return(values);
@@ -78,15 +84,10 @@ bool Square::isResolved()
  */
 uint8_t Square::bestMatch()
 {
-  uint8_t chosen;
-  float maxVal;
-
-  std::vector<Node>::const_iterator it = digits.begin();
-  for(; it != digits.end(); it++) {
-    if(it->used) {
-      return(chosen);
+  for(int i = 0; i < 9; i++) {
+    if(digits[i].used) {
+      return(i);
     }
   }
-
   return(0);
 }

@@ -9,6 +9,8 @@
 
 const uint8_t NOT_ASSIGNED = 0;
 const int MAX_TEMPERATURE = 100;
+const float dTEMPERATURE = 0.01;
+const float MIN_TEMPERATURE = 0.01;
 const int ITERATIONS = 100000;
 
 typedef std::vector<Square> group_t;
@@ -27,6 +29,8 @@ class Boltzmann : public SudokuSolver
     bool runStep(clock_t endTime);
 
   private:
+    void printGrid(grid_t g);
+    void printDigits(std::vector<int> digits);
     std::vector<int> checkQuadrant(std::vector<int> digits,
         internal_grid_t::iterator row, group_t::iterator square);
     void updateNode(internal_grid_t::iterator row,

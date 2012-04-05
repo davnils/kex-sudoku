@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string.h>
 #include "SudokuSolver.h"
 
@@ -6,25 +7,27 @@
  */
 unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
 {
+  std::cout << "countRowColumnConflicts() \n";
   unsigned int conflicts = 0;
 
   for(int i = 0; i < 9; i++) {
-    int used[2][9];
+    uint8_t used[2][9];
     memset(&used[0], 0, 9);
     memset(&used[1], 0, 9);
 
     for(int j = 0; j < 9; j++) {
-      if(used[0][grid.grid[j][i]]) {
+      if(used[0][grid.grid[j][i] - 1]) {
         conflicts++;
       }
       else {
-        used[0][grid.grid[j][i]] = 1;
+        used[0][grid.grid[j][i] - 1] = 1;
       }
-      if(used[1][grid.grid[i][j]]) {
+
+      if(used[1][grid.grid[i][j] - 1]) {
         conflicts++;
       }
       else {
-        used[1][grid.grid[i][j]] = 1;
+        used[1][grid.grid[i][j] - 1] = 1;
       }
     }
   }
@@ -37,6 +40,7 @@ unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
  */
 unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
 {
+  std::cout << "countSubSquareConflicts() \n";
   unsigned int conflicts = 0;
 
   for(int square = 0; square < 9; square++) {
@@ -47,7 +51,7 @@ unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
       int x = (i % 3) + ((square * 3) % 9);
       int y = (i / 3) + ((square / 3) * 3);
       
-      if(used[grid.grid[x][y]] - 1) {
+      if(used[grid.grid[x][y] - 1]) {
         conflicts++;
       }
       else {
@@ -64,6 +68,11 @@ unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
  */
 bool SudokuSolver::isValidSolution(const grid_t & grid)
 {
-  return(countRowColumnConflicts(grid) == 0
-      && countSubSquareConflicts(grid) == 0);
+  std::cout << "isValidSolution() \n" << std::endl;
+  int a, b;
+  a = countRowColumnConflicts(grid);
+  b = countSubSquareConflicts(grid);
+  std::cout << "rowcolumns: " << a << std::endl;
+  std::cout << "squares: " << b << std::endl;
+  return(a == 0 && b == 0);
 }

@@ -24,7 +24,7 @@ class Boltzmann : public SudokuSolver
     void addPuzzle(grid_t puzzle);
     grid_t getGrid();
     std::string getName() { return("Boltzmann machine"); }
-    void runStep(bool forever);
+    bool runStep(clock_t endTime);
 
   private:
     std::vector<int> checkQuadrant(std::vector<int> digits,

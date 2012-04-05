@@ -47,7 +47,7 @@ grid_t Boltzmann::getGrid()
 /*
  *
  */
-void Boltzmann::runStep(bool forever)
+bool Boltzmann::runStep(clock_t endTime)
 {
   do {
     internal_grid_t::iterator rowIt;
@@ -61,9 +61,11 @@ void Boltzmann::runStep(bool forever)
     }
 
     if(isValidSolution(getGrid())) {
-      break;
+      return(true);
     }
-  } while(forever);
+  } while(clock() < endTime);
+
+  return(false);
 }
 
 /*

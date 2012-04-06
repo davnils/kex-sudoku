@@ -24,6 +24,7 @@ class SudokuSolver
     bool isValidSolution(const grid_t & grid);
     virtual bool reducedComplexity() { return(false); }
     virtual int puzzleComplexity() { return(0); }
+    virtual int puzzleFactor() { return(0); }
 
   protected:
     unsigned int countRowColumnConflicts(const grid_t & grid);

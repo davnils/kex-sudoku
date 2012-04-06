@@ -28,11 +28,10 @@ void TestFramework::readPuzzles(SudokuSolver * solver)
   puzzles.clear();
   this->puzzlePath = puzzlePath;
   std::ifstream input(puzzlePath, std::ifstream::in);
+  std::vector<std::string> lines;
 
   std::string line;
   while(std::getline(input, line)) {
-    grid_t puzzle;
-
     std::string solved;
     std::getline(input, solved);
 
@@ -40,13 +39,21 @@ void TestFramework::readPuzzles(SudokuSolver * solver)
       Randomizer r;
       r.reference(solved, line);
       r.setMutationRate(solver->puzzleComplexity());
-      line = r.generateCandidate();
+      for(int i = 0; i < solver->puzzleFactor(); i++) {
+        lines.push_back(r.generateCandidate());
+      }
     }
+    else {
+      lines.push_back(line);
+    }
+  }
 
+  std::vector<std::string>::iterator it;
+  for(it = lines.begin(); it != lines.end(); it++) {
+    grid_t puzzle;
     for(int i = 0; i < 81; i++) {
-      puzzle.grid[i/9][i%9] = line[i] - '0';
+      puzzle.grid[i/9][i%9] = (*it)[i] - '0';
     }
-
     puzzles.push_back(puzzle);
   }
 }

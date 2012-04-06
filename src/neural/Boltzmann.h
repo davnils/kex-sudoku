@@ -12,6 +12,7 @@ const int MAX_TEMPERATURE = 100;
 const float dTEMPERATURE = 0.0004;
 const float MIN_TEMPERATURE = 0.01;
 const int REDUCED_PUZZLE_RATE = 30;
+const int REDUCED_PUZZLE_FACTOR = 10;
 
 typedef std::vector<Square> group_t;
 typedef std::vector<group_t> internal_grid_t;
@@ -29,6 +30,7 @@ class Boltzmann : public SudokuSolver
     bool runStep(clock_t endTime);
     bool reducedComplexity() { return(true); }
     int puzzleComplexity() { return(REDUCED_PUZZLE_RATE); }
+    int puzzleFactor() { return(REDUCED_PUZZLE_FACTOR); }
 
   private:
     void printGrid(grid_t g);

@@ -1,12 +1,20 @@
 #include "Boltzmann.h"
+#include <cstdlib>
 #include <iostream>
 
 /**
  *
  */
-Boltzmann::Boltzmann(float maxTemperature)
+Boltzmann::Boltzmann()
 {
-  temperature = maxTemperature;
+  reset();
+}
+
+void Boltzmann::reset()
+{
+  srand(time(0));
+  temperature = MAX_TEMPERATURE;
+  grid.clear();
 }
 
 /**
@@ -14,7 +22,7 @@ Boltzmann::Boltzmann(float maxTemperature)
  */
 void Boltzmann::addPuzzle(grid_t puzzle)
 {
-  std::cout << "addPuzzle()\n";
+  reset();
   for(int i = 0; i < 9; i++) {
     group_t row;
     for(int j = 0; j < 9; j++) {
@@ -27,8 +35,6 @@ void Boltzmann::addPuzzle(grid_t puzzle)
     }
     grid.push_back(row);
   }
-
-  printGrid(getGrid());
 }
 
 /**
@@ -36,7 +42,6 @@ void Boltzmann::addPuzzle(grid_t puzzle)
  */
 grid_t Boltzmann::getGrid()
 {
-  std::cout << "getGrid()\n";
   grid_t g;
   internal_grid_t::iterator rowIt;
   for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
@@ -66,9 +71,11 @@ void Boltzmann::printGrid(grid_t g)
  */
 bool Boltzmann::runStep(clock_t endTime)
 {
-  std::cout << "runStep()" << std::endl;
+  /jstd::cout << "runStep()" << std::endl;
   do {
-    std::cout << "New iteration with temperature: " << temperature << std::endl;
+    /*if(rand() % 5000 < 10) {
+      std::cout << "New iteration with temperature: " << temperature << std::endl;
+    }*/
     internal_grid_t::iterator rowIt;
     for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
       group_t::iterator squareIt;
@@ -85,7 +92,6 @@ bool Boltzmann::runStep(clock_t endTime)
     }
 
     temperature = std::max(temperature - dTEMPERATURE, MIN_TEMPERATURE);
-    printGrid(getGrid());
   } while(clock() < endTime);
 
   return(false);
@@ -102,40 +108,33 @@ void Boltzmann::printDigits(std::vector<int> digits)
 /**
  *
  */
-void Boltzmann::updateNode(internal_grid_t::iterator row,
+bool Boltzmann::updateNode(internal_grid_t::iterator row,
   group_t::iterator square)
 {
-  //std::cout << "updateNode()\n";
   std::vector<int> digits(9, 0);
 
   //Check row
   group_t::iterator rowIt = row->begin();
   for(; rowIt != row->end(); rowIt++) {
     if(rowIt != square) {
-      digits = rowIt->sum(digits); 
+      rowIt->sum(digits); 
     }
   }
 
-  printDigits(digits);
-  
   //Check column, doesn't count the reference square.
   internal_grid_t::iterator colIt = grid.begin();
   int pos = square - row->begin();
   for(; colIt != grid.end(); colIt++) {
     if(colIt->begin() + pos != square) {
-      digits = colIt->at(pos).sum(digits); 
+      colIt->at(pos).sum(digits); 
     }
   }
-
-  printDigits(digits);
 
   //Check quadrant
   digits = checkQuadrant(digits, row, square);
 
-  printDigits(digits);
-
   //Update current failure offset and state
-  square->update(digits, temperature);
+  return(square->update(digits, temperature));
 }
 
 /**
@@ -144,7 +143,6 @@ void Boltzmann::updateNode(internal_grid_t::iterator row,
 std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
   internal_grid_t::iterator row, group_t::iterator square)
 {
-  //std::cout << "checkQuadrant()\n";
   internal_grid_t::difference_type firstX, firstY;
 
   firstX = (std::distance(row->begin(), square) / 3) * 3;
@@ -155,7 +153,7 @@ std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
   for(int i = 0; i < 3; i++, row++) {
     square = row->begin() + firstX;
     for(int j = 0; j < 3; j++, square++) {
-      digits = square->sum(digits);
+      square->sum(digits);
     }
   }
 

@@ -7,9 +7,12 @@
 #include "TestFramework.h"
 //#include "../rulebased/rulebased2/Rulebased.h"
 
+/**
+ *
+ */
 int main()
 {
-  TestFramework framework("../../testdata/mini", "rulebased.m");//../../testdata/minlex");
+  TestFramework framework("../../testdata/mini", "boltzmann.m");//../../testdata/minlex");
   
   //framework.addSolver(new Cultural);
   framework.addSolver(new Boltzmann);

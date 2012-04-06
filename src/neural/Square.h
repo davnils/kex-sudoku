@@ -6,7 +6,7 @@
 
 const int COLLISION_OFFSET = -2;
 const int COLLISION_GIVEN_OFFSET = -20;
-const float BIAS = 1.0f;
+const float BIAS = 3.0f;
 
 struct Node
 {
@@ -19,14 +19,14 @@ class Square
   public:
     Square();
     Square(int digit);
-    void update(std::vector<int> values, float temperature);
+    bool update(std::vector<int> values, float temperature);
     bool isResolved();
-    std::vector<int> sum(std::vector<int> values);
+    void sum(std::vector<int> & values);
     uint8_t bestMatch();
 
   private:
     std::vector<Node> digits;
-    bool resolved;
+    uint8_t resolved;
 };
 
 #endif

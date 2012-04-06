@@ -7,7 +7,7 @@
  */
 unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
 {
-  std::cout << "countRowColumnConflicts() \n";
+  //std::cout << "countRowColumnConflicts() \n";
   unsigned int conflicts = 0;
 
   for(int i = 0; i < 9; i++) {
@@ -17,6 +17,7 @@ unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
 
     for(int j = 0; j < 9; j++) {
       if(used[0][grid.grid[j][i] - 1]) {
+        return(1);
         conflicts++;
       }
       else {
@@ -24,6 +25,7 @@ unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
       }
 
       if(used[1][grid.grid[i][j] - 1]) {
+        return(1);
         conflicts++;
       }
       else {
@@ -40,7 +42,7 @@ unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
  */
 unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
 {
-  std::cout << "countSubSquareConflicts() \n";
+  //std::cout << "countSubSquareConflicts() \n";
   unsigned int conflicts = 0;
 
   for(int square = 0; square < 9; square++) {
@@ -68,11 +70,10 @@ unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
  */
 bool SudokuSolver::isValidSolution(const grid_t & grid)
 {
-  std::cout << "isValidSolution() \n" << std::endl;
   int a, b;
-  a = countRowColumnConflicts(grid);
+  /*a = countRowColumnConflicts(grid);
   b = countSubSquareConflicts(grid);
   std::cout << "rowcolumns: " << a << std::endl;
-  std::cout << "squares: " << b << std::endl;
-  return(a == 0 && b == 0);
+  std::cout << "squares: " << b << std::endl;*/
+  return(!countRowColumnConflicts(grid) && !countSubSquareConflicts(grid));
 }

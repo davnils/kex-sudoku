@@ -102,7 +102,7 @@ float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
   std::vector<float> samples;
   long measurement;
 
-  for(measurement = 1; measurement <= 1 /*MAX_TRIES*/; measurement++) {
+  for(measurement = 1; measurement <= MAX_TRIES; measurement++) {
     std::cout << "Running measurement #" << measurement << std::endl;
     float runtime;
     solver->addPuzzle(puzzle);

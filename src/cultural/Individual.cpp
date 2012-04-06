@@ -1,4 +1,5 @@
 #include "Individual.h"
+#include <cstdlib>
 
 /*
  *
@@ -29,7 +30,7 @@ Individual::Individual(grid_t given)
  */
 Individual::~Individual()
 {
-  delete [] assigned;
+  delete [] genes;
 }
 
 /*
@@ -41,14 +42,14 @@ void Individual::initializeSubSquare(int row, int column)
   memset(digits, 0, 9);
 
   for(int i = 0; i < 9; i++) {
-    int val = assigned[row+i/3][column+i%3];
+    int val = assigned.grid[row+i/3][column+i%3];
     if(val) {
       digits[val-1] = 1;
     }
   }
 
   for(int i = 0; i < 9; i++) {
-    int * pVal = &assigned[row+i/3][column+i%3];
+    int * pVal = &assigned.grid[row+i/3][column+i%3];
     if(*pVal) {
       int r;
       while(digits[(r = 1 + rand() % 10)]);
@@ -62,30 +63,7 @@ void Individual::initializeSubSquare(int row, int column)
  */
 unsigned int Individual::fitness()
 {
-  int conflicts = 0;
-
-  for(int i = 0; i < 9; i++) {
-    int used[2][9];
-    memset(&used[0], 0, 9);
-    memset(&used[1], 0, 9);
-
-    for(int j = 0; j < 9; j++) {
-      if(used[0][assigned[j][i]]) {
-        conflicts++;
-      }
-      else {
-        used[assigned[j][i]] = 1;
-      }
-      if(used[1][assigned[i][j]]) {
-        conflicts++;
-      }
-      else {
-        used[assigned[i][j]] = 1;
-      }
-    }
-  }
-
-  return(conflicts);
+  return(countRowColumnConflicts(assigned));
 }
 
 /*

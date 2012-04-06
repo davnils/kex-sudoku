@@ -2,6 +2,7 @@
 #define INDIVIDUAL_H_
 
 #include <cstdint>
+#include <ctime>
 
 #include "../test/SudokuSolver.h"
 
@@ -21,7 +22,7 @@ class Individual
     void initialize();
 
     grid_t given;
-    uint8_t assigned[9][9];
+    grid_t assigned;
 };
 
 #endif

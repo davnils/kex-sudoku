@@ -1,4 +1,5 @@
 #include "Cultural.h"
+#include <pair>
 
 /*
  *
@@ -28,18 +29,39 @@ grid_t Cultural::getGrid()
   return(grid);
 }
 
+bool compareFitness(const std::pair<const unsigned int, const Individual &> a, const std::pair<const unsigned int, const Individual &> b)
+{
+  return(a.first < b.first);
+}
+
 /*
  *
  */
-void Cultural::runStep(bool forever)
+bool Cultural::runStep(clock_t endTime)
 {
   do {
     //sort by fitness
-    //select PASSED_ON individuals
-    //crossover after tournament
+    std::vector<std::pair<unsigned int, Individual &>> fitness;
+    std::vector<Individual>::iterator it;
+    for(it = population.begin(); it != population.end(); it++) {
+      if(it->fitness() == 0) {
+        return(true);
+      }
+      fitness.push_back(std::make_pair(it->fitness, *it));
+    }
+    std::sort(fitness.begin(), fitness.end(), compareFitness);
+
+    //TODO: crossover during tournament
+    std::vector<Individual &> offspring;
     //mutate the resulting individuals
-    //return if candidate has fitness zero
-  } while(forever);
+    std::vector<Individual & >::iterator itOffspring;
+    for(itOffspring = offspring.begin(); itOffspring != offspring.end();
+      itOffspring++) {
+      itOffspring->mutate();
+    }
+  } while(clock() < endTime);
+
+  return(false);
 }
 
 /*

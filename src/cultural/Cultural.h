@@ -20,7 +20,7 @@ class Cultural : public SudokuSolver
     Cultural();
     void addPuzzle(grid_t puzzle);
     grid_t getGrid();
-    void runStep(bool forever);
+    bool runStep(clock_t endTime);
     std::string getName() { return("Cultural genetic solver"); }
 
   private:

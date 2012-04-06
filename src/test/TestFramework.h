@@ -39,7 +39,7 @@ class TestFramework
     std::vector<result_t> runTests();
 
   private:
-    void readPuzzles();
+    void readPuzzles(SudokuSolver * solver);
     float runSampledSolver(SudokuSolver * solver, grid_t puzzle);
     float sampledStdDeviation(const std::vector<float> & data, float avg);
     float sampledAverage(const std::vector<float> & data);

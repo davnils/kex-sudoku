@@ -22,6 +22,8 @@ class SudokuSolver
     virtual std::string getName() = 0;
     virtual bool runStep(clock_t lastClock) = 0;
     bool isValidSolution(const grid_t & grid);
+    virtual bool reducedComplexity() { return(false); }
+    virtual int puzzleComplexity() { return(0); }
 
   protected:
     unsigned int countRowColumnConflicts(const grid_t & grid);

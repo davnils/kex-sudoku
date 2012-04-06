@@ -5,6 +5,7 @@
 #include <iostream>
 
 #include "TestFramework.h"
+#include "Randomizer.h"
 
 /**
  * 
@@ -12,7 +13,6 @@
 TestFramework::TestFramework(std::string puzzlePath, std::string matlabPath) : of(matlabPath)
 {
   this->puzzlePath = puzzlePath;
-  readPuzzles();
 }
 
 TestFramework::~TestFramework()
@@ -23,14 +23,25 @@ TestFramework::~TestFramework()
 /**
  * 
  */
-void TestFramework::readPuzzles()
+void TestFramework::readPuzzles(SudokuSolver * solver)
 {
+  puzzles.clear();
   this->puzzlePath = puzzlePath;
   std::ifstream input(puzzlePath, std::ifstream::in);
 
   std::string line;
   while(std::getline(input, line)) {
     grid_t puzzle;
+
+    std::string solved;
+    std::getline(input, solved);
+
+    if(solver->reducedComplexity()) {
+      Randomizer r;
+      r.reference(solved, line);
+      r.setMutationRate(solver->puzzleComplexity());
+      line = r.generateCandidate();
+    }
 
     for(int i = 0; i < 81; i++) {
       puzzle.grid[i/9][i%9] = line[i] - '0';
@@ -55,13 +66,15 @@ std::vector<result_t> TestFramework::runTests()
 {
   std::vector<result_t> results;
   std::vector<SudokuSolver*>::iterator itSolver = solvers.begin();
-  std::vector<grid_t>::iterator itPuzzle = puzzles.begin();
 
   for(; itSolver != solvers.end(); itSolver++) {
     result_t res;
     res.algorithm = (*itSolver)->getName();
     res.unstableCount = res.unsolvedCount = 0;
     of << res.algorithm << " = [";
+
+    readPuzzles(*itSolver);
+    std::vector<grid_t>::iterator itPuzzle = puzzles.begin();
 
     for(; itPuzzle != puzzles.end(); itPuzzle++) {
       float result = runSampledSolver(*itSolver, *itPuzzle);

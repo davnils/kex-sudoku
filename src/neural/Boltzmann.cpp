@@ -71,11 +71,7 @@ void Boltzmann::printGrid(grid_t g)
  */
 bool Boltzmann::runStep(clock_t endTime)
 {
-  /jstd::cout << "runStep()" << std::endl;
   do {
-    /*if(rand() % 5000 < 10) {
-      std::cout << "New iteration with temperature: " << temperature << std::endl;
-    }*/
     internal_grid_t::iterator rowIt;
     for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
       group_t::iterator squareIt;
@@ -87,7 +83,6 @@ bool Boltzmann::runStep(clock_t endTime)
     }
 
     if(isValidSolution(getGrid())) {
-      std::cout << "Found valid puzzle" << std::endl;
       return(true);
     }
 

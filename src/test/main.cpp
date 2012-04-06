@@ -10,9 +10,19 @@
 /**
  *
  */
-int main()
+int main(int argc, char ** argv)
 {
-  TestFramework framework("../../testdata/mini", "boltzmann.m");//../../testdata/minlex");
+  std::string inPath = "../../testdata/mini";
+  std::string outPath = "../../analysis/boltzmann";
+
+  if(argc == 2) {
+    std::string suffix = argv[1];
+    inPath += suffix;
+    outPath += suffix;
+    std::cout << "Using instance " << suffix << std::endl;
+  }
+
+  TestFramework framework(inPath, outPath);//../../testdata/minlex");
   
   //framework.addSolver(new Cultural);
   framework.addSolver(new Boltzmann);

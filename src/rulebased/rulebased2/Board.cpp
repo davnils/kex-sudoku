@@ -1,5 +1,5 @@
 #include "Board.h"
-#include<iostream>
+#include <iostream>
 using namespace std;
 
 /**

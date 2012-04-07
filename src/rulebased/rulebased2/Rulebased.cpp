@@ -101,7 +101,6 @@ int Rulebased::applyRules(){
     if(clock()>endTime){
         return 0;
     }
-    /*
     while(true){
         //The easy rules first.
         if(single())
@@ -110,7 +109,6 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
-*/
     return guess();
 } 
 
@@ -179,6 +177,7 @@ int Rulebased::guess(){
         int ok = solver.applyRules();
         if(ok>0){
            correctGuesses.push_back(solver.getBoard());
+           break; //Break if multiple solutions is unintresting
         }
     }
     if(correctGuesses.size()==0){

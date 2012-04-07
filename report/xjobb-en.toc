@@ -23,7 +23,7 @@
 \contentsline {subsection}{\numberline {2.4.4}Artificial neural network}{11}
 \contentsline {subsubsection}{Artificial neural network - theory}{11}
 \contentsline {subsection}{\numberline {2.4.5}Artificial neural network - implementation}{13}
-\contentsline {section}{\numberline {2.5}Comparison}{13}
+\contentsline {section}{\numberline {2.5}Comparison}{14}
 \contentsline {subsection}{\numberline {2.5.1}Solving}{14}
 \contentsline {section}{\numberline {2.6}Generation}{14}
 \contentsline {section}{\numberline {2.7}Parallelising}{14}

@@ -1,12 +1,17 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=latex 2012.3.11)  20 MAR 2012 14:10
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.5)  7 APR 2012 18:18
 entering extended mode
- restricted \write18 enabled.
  %&-line parsing enabled.
 **xjobb-en.tex
 (./xjobb-en.tex
 LaTeX2e <2009/09/24>
 Babel <v3.8l> and hyphenation patterns for english, usenglishmax, dumylang, noh
-yphenation, loaded.
+yphenation, farsi, arabic, croatian, bulgarian, ukrainian, russian, czech, slov
+ak, danish, dutch, finnish, french, basque, ngerman, german, german-x-2009-06-1
+9, ngerman-x-2009-06-19, ibycus, monogreek, greek, ancientgreek, hungarian, san
+skrit, italian, latin, latvian, lithuanian, mongolian2a, mongolian, bokmal, nyn
+orsk, romanian, irish, coptic, serbian, turkish, welsh, esperanto, uppersorbian
+, estonian, indonesian, interlingua, icelandic, kurmanji, slovenian, polish, po
+rtuguese, spanish, galician, catalan, swedish, ukenglish, pinyin, loaded.
 (./kth-mag.cls
 Document Class: kth-mag 2004/12/14 v2.1 Document Class for KTH Theses
 (./memoir.cls
@@ -259,15 +264,8 @@ Package: fontenc 2005/09/27 v1.99g Standard LaTeX package
 (/usr/share/texmf-texlive/tex/latex/base/t1enc.def
 File: t1enc.def 2005/09/27 v1.99g Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding T1 on input line 43.
-)
-! Font T1/cmr/m/n/10.95=ecrm1095 at 10.95pt not loadable: Metric (TFM) file not
- found.
-<to be read again> 
-                   relax 
-l.100 \fontencoding\encodingdefault\selectfont
-                                              
-? 
-) (/usr/share/texmf-texlive/tex/latex/base/textcomp.sty
+))
+(/usr/share/texmf-texlive/tex/latex/base/textcomp.sty
 Package: textcomp 2005/09/27 v1.99g Standard LaTeX package
 Package textcomp Info: Sub-encoding information:
 (textcomp)               5 = only ISO-Adobe without \textcurrency
@@ -661,7 +659,7 @@ File: ts1enc.dfu 2008/04/05 v1.1m UTF-8 support for inputenc
    defining Unicode char U+2122 (decimal 8482)
    defining Unicode char U+2423 (decimal 9251)
 ))
-(/usr/share/texmf-texlive/tex/generic/babel/babel.sty
+(/var/lib/texmf/tex/generic/babel/babel.sty
 Package: babel 2008/07/06 v3.8l The Babel package
 
 (/usr/share/texmf-texlive/tex/generic/babel/swedish.ldf
@@ -672,22 +670,14 @@ File: babel.def 2008/07/06 v3.8l Babel common definitions
 \babel@savecnt=\count127
 \U@D=\dimen130
 )
-
-Package babel Warning: No hyphenation patterns were loaded for
-(babel)                the language `Swedish'
-(babel)                I will use the patterns loaded for \language=0 instead.
-
-\l@swedish = a dialect from \language0
 Package babel Info: Making " an active character on input line 90.
-) (/usr/share/texmf-texlive/tex/generic/babel/english.ldf
+)
+(/usr/share/texmf-texlive/tex/generic/babel/english.ldf
 Language: english 2005/03/30 v3.3o English support from the babel system
-\l@british = a dialect from \language\l@english 
-\l@UKenglish = a dialect from \language\l@english 
 \l@canadian = a dialect from \language\l@american 
 \l@australian = a dialect from \language\l@british 
 \l@newzealand = a dialect from \language\l@british 
-))
-(./modifications.sty
+)) (./modifications.sty
 Package: modifications 2005/10/21
 ) (./xjobb-en.aux)
 \openout1 = `xjobb-en.aux'.
@@ -706,8 +696,7 @@ LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 17.
 LaTeX Font Info:    ... okay on input line 17.
 LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 17.
 LaTeX Font Info:    Try loading font information for TS1+cmr on input line 17.
-
-(/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
+ (/usr/share/texmf-texlive/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 17.
@@ -728,26 +717,42 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 (/etc/texmf/tex/latex/config/graphics.cfg
 File: graphics.cfg 2009/08/28 v1.8 graphics configuration of TeX Live
 )
-Package graphics Info: Driver file: dvips.def on input line 91.
+Package graphics Info: Driver file: pdftex.def on input line 91.
 
-(/usr/share/texmf-texlive/tex/latex/graphics/dvips.def
-File: dvips.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
-))
+(/usr/share/texmf-texlive/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2009/08/25 v0.04m Graphics/color for pdfTeX
+\Gread@gobject=\count130
+
+(/usr/share/texmf/tex/context/base/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count131
+\scratchdimen=\dimen131
+\scratchbox=\box26
+\nofMPsegments=\count132
+\nofMParguments=\count133
+\everyMPshowfont=\toks24
+\MPscratchCnt=\count134
+\MPscratchDim=\dimen132
+\MPnumerator=\count135
+\everyMPtoPDFconversion=\toks25
+)))
 LaTeX Font Info:    Try loading font information for T1+lmss on input line 21.
-
-(/usr/share/texmf/tex/latex/lm/t1lmss.fd
+ (/usr/share/texmf/tex/latex/lm/t1lmss.fd
 File: t1lmss.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-File: kth_svv_comp_science_comm.eps Graphic file (type eps)
- <kth_svv_comp_science_comm.eps>
-[1
+<kth_svv_comp_science_comm.pdf, id=1, 410.53375pt x 468.75125pt>
+File: kth_svv_comp_science_comm.pdf Graphic file (type pdf)
+
+<use kth_svv_comp_science_comm.pdf> [1
 
 
-] [2
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./kth_svv_comp_science_com
+m.pdf>] [2
 
 ]
 LaTeX Font Info:    Try loading font information for OT1+lmr on input line 23.
- (/usr/share/texmf/tex/latex/lm/ot1lmr.fd
+
+(/usr/share/texmf/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    Try loading font information for OML+lmm on input line 23.
@@ -817,151 +822,121 @@ Overfull \hbox (375.50911pt too wide) in paragraph at lines 151--153
 Underfull \vbox (badness 1173) has occurred while \output is active []
 
  [7]
-[8]
+[8] <images/swordfish1.png, id=58, 230.8625pt x 230.8625pt>
+File: images/swordfish1.png Graphic file (type png)
 
-! LaTeX Error: Cannot determine size of graphic in images/swordfish1.png (no Bo
-undingBox).
+<use images/swordfish1.png>
+<images/swordfish2.png, id=59, 230.8625pt x 230.8625pt>
+File: images/swordfish2.png Graphic file (type png)
 
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.188 \includegraphics{images/swordfish1.png}
-                                             
-? 
-File: images/swordfish1.png Graphic file (type eps)
-<images/swordfish1.png>
-
-! LaTeX Error: Cannot determine size of graphic in images/swordfish2.png (no Bo
-undingBox).
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.190 \includegraphics{images/swordfish2.png}
-                                             
-? 
-File: images/swordfish2.png Graphic file (type eps)
-<images/swordfish2.png>
-Underfull \vbox (badness 4582) has occurred while \output is active []
-
- [9]
+<use images/swordfish2.png>
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [10]
+ [9 <./images/swordfish1.png (PNG copy)>] [10 <./images/swordfish2.png (PNG cop
+y)>]
+<images/neural1.png, id=68, 259.97125pt x 249.93375pt>
+File: images/neural1.png Graphic file (type png)
 
-! LaTeX Error: Cannot determine size of graphic in images/neural1.png (no Bound
-ingBox).
-
-See the LaTeX manual or LaTeX Companion for explanation.
-Type  H <return>  for immediate help.
- ...                                              
-                                                  
-l.234 \includegraphics{images/neural1.png}
-                                          
-? 
-File: images/neural1.png Graphic file (type eps)
-<images/neural1.png> [11]
-Underfull \hbox (badness 10000) in paragraph at lines 276--278
-
- []
-
-[12]
-Underfull \hbox (badness 10000) in paragraph at lines 279--283
-
- []
-
-
-Underfull \hbox (badness 10000) in paragraph at lines 284--288
-
- []
-
-
+<use images/neural1.png>
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [13]
-[14]
+ [11]
+[12 <./images/neural1.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 265--267
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 268--272
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 273--277
+
+ []
+
+[13] [14]
 bibitemlist
 
-Underfull \hbox (badness 7888) in paragraph at lines 330--331
+Underfull \hbox (badness 7888) in paragraph at lines 319--320
 []\T1/lmr/m/n/10.95 Astraware Lim-ited. Tech-niques For Solv-ing Su-doku. [home
 -page on
  []
 
 
-Underfull \hbox (badness 3942) in paragraph at lines 330--331
+Underfull \hbox (badness 3942) in paragraph at lines 319--320
 \T1/lmr/m/n/10.95 the In-ter-net]. 2008 [cited 2012 Mar 8]. Avail-able from:, W
 eb site:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
+Underfull \hbox (badness 10000) in paragraph at lines 322--323
 []\T1/lmr/m/n/10.95 Ekeberg. Boltz-mann Ma-chines. [home-page on the In-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 333--334
+Underfull \hbox (badness 10000) in paragraph at lines 322--323
 \T1/lmr/m/n/10.95 net]. 2012 [cited 2012 Mar 8]. Avail-able from:, Web site:
  []
 
 
-Overfull \hbox (65.23807pt too wide) in paragraph at lines 333--334
+Overfull \hbox (65.23807pt too wide) in paragraph at lines 322--323
 \T1/lmr/m/n/10.95 http://www.csc.kth.se/utbildning/kth/kurser/DD2432/ann12/fore
 lasningsanteckningar/07-
  []
 
 
-Underfull \hbox (badness 4291) in paragraph at lines 339--340
+Underfull \hbox (badness 4291) in paragraph at lines 328--329
 []\T1/lmr/m/n/10.95 . An In-com-plete Re-view of Su-doku Solver Im-ple-men-ta-t
 ions. [home-
  []
 
 
-Underfull \hbox (badness 5893) in paragraph at lines 339--340
+Underfull \hbox (badness 5893) in paragraph at lines 328--329
 \T1/lmr/m/n/10.95 page on the In-ter-net]. 2011 [cited 2012 Mar 8]. Avail-able 
 from:,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--343
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
 []\T1/lmr/m/n/10.95 Harvey W, Gins-berg M. Lim-ited dis-crep-ancy search.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--343
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
 \T1/lmr/m/n/10.95 [home-page on the In-ter-net]. No date [cited 2012 Mar
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 342--343
+Underfull \hbox (badness 10000) in paragraph at lines 331--332
 \T1/lmr/m/n/10.95 13]. Avail-able from: Uni-ver-sity of Ore-gon, Web site:
  []
 
 
-Overfull \hbox (52.92001pt too wide) in paragraph at lines 342--343
+Overfull \hbox (52.92001pt too wide) in paragraph at lines 331--332
 \T1/lmr/m/n/10.95 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.2
 426&rep=rep1&type=pdf 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--346
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 []\T1/lmr/m/n/10.95 Cazenave Cazenave T. A search based Su-doku solver. [home-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--346
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 \T1/lmr/m/n/10.95 page on the In-ter-net]. No date [cited 2012 Mar 13]. Avail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 345--346
+Underfull \hbox (badness 10000) in paragraph at lines 334--335
 \T1/lmr/m/n/10.95 able from: Uni-ver-sité Paris, Dept. In-for-ma-tique Web site
 :
  []
 
 
-Overfull \hbox (47.44502pt too wide) in paragraph at lines 345--346
+Overfull \hbox (47.44502pt too wide) in paragraph at lines 334--335
 \T1/lmr/m/n/10.95 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.64.4
 59&rep=rep1&type=pdf 
  []
@@ -969,43 +944,43 @@ Overfull \hbox (47.44502pt too wide) in paragraph at lines 345--346
 [15
 
 ]
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 []\T1/lmr/m/n/10.95 Mantere T, Koljo-nen J. Su-doku Solv-ing with Cul-tural Swa
 rms.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 \T1/lmr/m/n/10.95 AI and Ma-chine Con-scious-ness [home-page on the In-ter-net]
 . 2008
  []
 
 
-Underfull \hbox (badness 7869) in paragraph at lines 348--349
+Underfull \hbox (badness 7869) in paragraph at lines 337--338
 \T1/lmr/m/n/10.95 [cited 2012 Mar 13]. Avail-able from: Uni-ver-sity of Vaasa, 
 De-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 348--349
+Underfull \hbox (badness 10000) in paragraph at lines 337--338
 \T1/lmr/m/n/10.95 part-ment of Elec-tri-cal En-gi-neer-ing and Au-toma-tion Web
  site:
  []
 
 
-Underfull \hbox (badness 1460) in paragraph at lines 351--352
+Underfull \hbox (badness 1460) in paragraph at lines 340--341
 []\T1/lmr/m/n/10.95 Morrow J. Gen-er-at-ing Su-doku Puz-zles as an In-verse Pro
 b-lem. [home-
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 351--352
+Underfull \hbox (badness 5302) in paragraph at lines 340--341
 \T1/lmr/m/n/10.95 page on the In-ter-net]. 2008 [cited 2012 Mar 13]. Avail-able
  from:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 351--352
+Underfull \hbox (badness 10000) in paragraph at lines 340--341
 \T1/lmr/m/n/10.95 Uni-ver-sity of Wash-ing-ton, De-part-ment of Math-e-mat-ics 
 Web site:
  []
@@ -1020,17 +995,32 @@ Web site:
 
 LaTeX Warning: There were undefined references.
 
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
  ) 
 Here is how much of TeX's memory you used:
- 4038 strings out of 495062
- 51072 string characters out of 1182644
- 126357 words of memory out of 3000000
- 7172 multiletter control sequences out of 15000+50000
- 74774 words of font info for 53 fonts, out of 3000000 for 9000
- 28 hyphenation exceptions out of 8191
- 30i,11n,24p,1799b,344s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 4409 strings out of 493848
+ 56157 string characters out of 1152824
+ 132341 words of memory out of 3000000
+ 7635 multiletter control sequences out of 15000+50000
+ 75543 words of font info for 54 fonts, out of 3000000 for 9000
+ 714 hyphenation exceptions out of 8191
+ 30i,11n,24p,1799b,346s stack positions out of 5000i,500n,10000p,200000b,50000s
+{/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/texmf/fonts/enc/dv
+ips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share
+/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm
+-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</usr/share/texmf/f
+onts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmbx9.p
+fb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf/fonts/t
+ype1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public/lm/lmmi6.pfb></u
+sr/share/texmf/fonts/type1/public/lm/lmmi8.pfb></usr/share/texmf/fonts/type1/pu
+blic/lm/lmr10.pfb></usr/share/texmf/fonts/type1/public/lm/lmr6.pfb></usr/share/
+texmf/fonts/type1/public/lm/lmr8.pfb></usr/share/texmf/fonts/type1/public/lm/lm
+ss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></usr/share/texmf/f
+onts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type1/public/lm/lmssd
+c10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></usr/share/texmf/fo
+nts/type1/public/lm/lmsy8.pfb>
+Output written on xjobb-en.pdf (23 pages, 320308 bytes).
+PDF statistics:
+ 156 PDF objects out of 1000 (max. 8388607)
+ 0 named destinations out of 1000 (max. 500000)
+ 21 words of extra memory for PDF output out of 10000 (max. 10000000)
 
-Output written on xjobb-en.dvi (23 pages, 58696 bytes).

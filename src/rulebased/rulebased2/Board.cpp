@@ -2,6 +2,11 @@
 #include<iostream>
 using namespace std;
 
+/**
+ * Prints all possibilities for all squares in the puzzle.
+ * The first number is the assigned number for that square which
+ * could either have been assigned by a rule/guess or by the default puzzle.
+ */
 void Board::printPossibilities(){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
@@ -15,6 +20,10 @@ void Board::printPossibilities(){
     }
 }
 
+/**
+ * Used for testing. Behaves the same
+ * as printPossibilities() as long as regions is initialized correctly
+ */
 void Board::printPossibilities1(){
     cout<<"print from regions"<<endl;
     for(int s=0;s<3;s++){
@@ -33,11 +42,19 @@ void Board::printPossibilities1(){
     cout<<"end print from regions"<<endl;
 }
 
-
+/**
+ * Prints the board in a normal 9 by 9 grid
+ */
 void Board::printBoard(){
     printBoard("NORMAL");
 }
 
+/**
+ * Prints the board in either a normal fashion with
+ * a 9 by 9 grid or in a simple fashion with only one line with 81 characters.
+ * @param str "NORMAL" results in normal printing 
+ * and simple results in simple one-line printing.
+ */
 void Board::printBoard(string str){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
@@ -50,6 +67,10 @@ void Board::printBoard(string str){
         cout<<endl;
 }
 
+/**
+ * print all regions. rows, columns and boxes.
+ * used to test that those are correctly initialized.
+ */ 
 void Board::printRegions(){
     cout<<"--BOXES-- --ROWS--- -COLUMNS-"<<endl;
     for(int i=0;i<9;i++){
@@ -77,6 +98,10 @@ void Board::printRegions(){
     }
 }
 
+/**
+ * Check if the board is valid and completed (solved).
+ * @return true if completely solved and false otherwise
+ */
 bool Board::valid(){
     analysePossibilities(); 
     for(int i=0;i<27;i++){
@@ -97,6 +122,14 @@ bool Board::valid(){
     return true;
 }
 
+/**
+ * Resets all possibilities and recreates those
+ * from the constraints in the puzzle. The possibilities
+ * are stored as vectors from index 1 in the board array.
+ * A square which could be either a 1 or 3 will therefore have
+ * the vector {0,1,3} assigned to it. The 0 is because the
+ * square have not yet been assigned any number.
+ */
 void Board::analysePossibilities(){
     // Erase old data
     for(int i=0;i<9;i++){
@@ -134,12 +167,14 @@ void Board::analysePossibilities(){
     }
 }
 
-/*
-    Overloads = operator. This has to be done
-    due to the use of references in regions, rows, columns and boxes.
-    The difference is that the references will not be copied but rather
-    reassigned to the new board created.
-*/
+/**
+ * Overloads = operator. This has to be done
+ * due to the use of references in regions, rows, columns and boxes.
+ * The difference is that the references will not be copied but rather
+ * reassigned to the new board created.
+ * @param b is the Board which is copied.
+ * @return the board that was written to.
+ **/
 Board Board::operator= (Board b){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
@@ -154,6 +189,10 @@ Board Board::operator= (Board b){
     return *this;
 }
 
+/**
+ * Used to create pointers to the vectors in board.
+ * Those pointers are stored in the arrays rows, columns, boxes and regions.
+ */
 void Board::createReferences(){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
@@ -176,6 +215,11 @@ void Board::createReferences(){
     }
 }
 
+/**
+ * Set the board to the specified grid.
+ * The pointers from regions is also changed.
+ * @param grid is a 9 by 9 grid which describes a puzzlegrid.
+ */
 void Board::setBoard(int grid[9][9]){
     for(int i=0;i<9;i++){
         for(int j=0;j<9;j++){
@@ -209,6 +253,12 @@ void Board::setBoard(int grid[9][9]){
     */
 }
 
+/**
+ * Removes all candidates in the same
+ * row, column and box as the specified square.
+ * @param i is the y-koordinate of the square.
+ * @param j is the x-koordinate of the square.
+ */
 void Board::remove(int i,int j){
     //cout<<"Remove: "<<i<<" "<<j<<endl;
     //printPossibilities();cout<<endl;
@@ -218,6 +268,15 @@ void Board::remove(int i,int j){
     remove(regions[18+3*(i/3)+(j/3)],board[i][j][0]);
 }
 
+/**
+ * Removes all occurences of a number in a array of int vectors.
+ * Only numbers at an index higher than 0 is removed.
+ * Used to remove possibilities from possibility vectors for each square.
+ * Since the possibilities are described by the numbers on index 1 and forward
+ * only those numbers are considered.
+ * @param region is an array consisting of 9 pointers to vector<int>
+ * @param nr is the numbered to be removed if found.
+ */
 void Board::remove(vector<int> * region [],int nr){
     for(int i=0;i<9;i++){
         //cout<<"    "<<(*region[i])[0]<<"[";

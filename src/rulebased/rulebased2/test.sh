@@ -1,8 +1,8 @@
 #!/bin/bash
 #
-head -n 10000 ../../../testdata/minlex > inputTests 
+head -n 5000 ../../../testdata/minlex | tail -n 1000 > inputTests5
 while read line
 do
 echo -e "$line\n" | ./main
-done <inputTests 
-rm inputTests
+done <inputTests5
+rm inputTests5

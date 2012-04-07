@@ -17,7 +17,7 @@ class Rulebased:public SudokuSolver{
         string getName(){ return "RuleBasedSolver"; }
         Board getBoard(){ return board; }
         bool runStep(clock_t);
-        void printBoard();
+        void printBoard(){board.printBoard("SIMPLE");}
         void printRegions();
         bool solve(); 
         bool naked();

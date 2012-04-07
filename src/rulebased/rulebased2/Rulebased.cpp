@@ -70,7 +70,6 @@ int Rulebased::applyRules(){
     if(clock()>endTime){
         return 0;
     }
-/*
     while(true){
         //The easy rules first.
         if(single())
@@ -79,7 +78,6 @@ int Rulebased::applyRules(){
             continue;
         break;
     }
-*/
     return guess();
 } 
 
@@ -291,7 +289,6 @@ vector< vector<int> > Rulebased::findCombinations(
     return combinations;
 }
 
-/*
 int main(){
     //cout<<"START:"<<endl;
     int grid[9][9];
@@ -306,6 +303,6 @@ int main(){
         }
     }
     Rulebased solver(grid);
-    solver.solve();
+    solver.runStep(clock()+CLOCKS_PER_SEC*20);
+    solver.printBoard();
 }
-*/

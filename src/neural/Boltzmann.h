@@ -9,7 +9,7 @@
 
 const uint8_t NOT_ASSIGNED = 0;
 const int MAX_TEMPERATURE = 100;
-const float dTEMPERATURE = 0.0004;
+const float dTEMPERATURE = 0.0004; //0.0004
 const float MIN_TEMPERATURE = 0.01;
 const int REDUCED_PUZZLE_RATE = 30;
 const int REDUCED_PUZZLE_FACTOR = 10;

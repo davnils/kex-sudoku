@@ -72,6 +72,7 @@ void Boltzmann::printGrid(grid_t g)
 bool Boltzmann::runStep(clock_t endTime)
 {
   do {
+    //if(rand() % 1000 < 10) std::cout << "temperature: " << temperature << std::endl;
     internal_grid_t::iterator rowIt;
     for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
       group_t::iterator squareIt;

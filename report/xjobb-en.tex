@@ -3,7 +3,6 @@
 \usepackage{textcomp}
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
-%\usepackage[latin1]{inputenc}
 \usepackage[swedish,english]{babel}
 \usepackage{modifications}
 \title{A comparison of sudoku solving algorithms}
@@ -30,13 +29,15 @@ puzzles was also compared. The results show that ...
 \end{abstract}
 \clearpage
 \begin{foreignabstract}{swedish}
-TODO: Översätt abstract från engelska när den är färdig så att det är samma sak som står.
+TODO: 
 \end{foreignabstract}
 \clearpage
 \tableofcontents*
 \mainmatter
 \pagestyle{newchap}
+
 \chapter{Introduction}
+%TODO, pabergg
 Sudoku is a game that under recent years have gained popularity throughout the world. 
 The game consists of a 9 by 9 grid which shall be filled in so that each 
 row, column and 3 by 3 square (also called a box) contains the digits 
@@ -110,11 +111,8 @@ As mentioned in the problem specification this thesis will not only be concerned
 
 One of the most important resources to this project is the puzzles used in the comparisons and those were collected from. \cite{database} There also exists some tools which was used in the analysis and those were. \cite{13,14,15,16}
 
-
-%%\part{Important Results}
-
-\chapter{Method}
-Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. Section 2.1 is devoted to explaining how and which algorithms was chosen and section 2.2 explains which puzzles are used as benchmarks and why. Section 2.3 explains how the comparison was carried out regarding the different aspects that was studied.
+\chapter{Background}
+%TODO, davnils
 
 \section{Chosen algorithms}
 There are as already mentioned in the introduction several algorithms for solving sudoku. It would be of interest to do a quantative study of those to definitely determine which ones that performs best. Due to limitations of this study and to make the study of the chosen algorithms more qualitativly, four algorithms have been chosen. The main selection criteria was that they offered a new approach in relation to the other algorithms. The algorithms that was chosen are the following:
@@ -126,37 +124,6 @@ There are as already mentioned in the introduction several algorithms for solvin
 \end{itemize}
 
 As the reader probably notices, this algorithms are quite different from each other. Both in which ideas are used but also in which algorithm constructing methods. Our hopes for this project is therefore that we will be able to determine how those algorithms could be used in several situations for either generating or solving sudokus. The implementations of those algorithms will be discussed in more detail in section 3. 
-
-\section{Benchmark puzzles}
-This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. To measure this, puzzles are needed and consideration shall therefore be taken to choose those puzzles wisely. The puzzles that have been chosen to test the solving capabilities of the algorithms are a collection consisting of 49 151 puzzles which each have 17 clues (meaning 17 squares are filled in). \cite{database} Those have been collected by Gordon Royle from different sites as well as from his own database. The reason for choosing this collection is because it is believed not to be biased towards a specific solving idea. This is because it is a collection that comes from collecting as many of the 17-clue puzzles that have been found as possible rather than using a specific generation method. The collection also have other benefits. The puzzles are all qualitativly different as no pair of puzzles is within the same equivalence class. Equivalent puzzles are defined as puzzles that could be transformed into each other using some predefined operations that doesnt change the solution. One might for instance interchange the digits in a puzzle, but the solution would then be the transformed solution and no real change to the puzzle have therefore been done. Some other operations includes interchanging rows, columns and stacks (three boxes in a row,column). The downside of choosing this collection is that some algorithms may perform poorly because of the low nr of clues given and some analysis of this will therefore be carried out. This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle. The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
-
-\section{Comparison methods}
-As already mentioned several comparisons and measurements will be carried out to 
-analyse different aspects of the algorithms. Those will include statistically tests 
-to for instance determine with what confidence one can say that one algorithm performs 
-better than another. 
-The following subsections will however explain more clearly what will be measured 
-regarding each aspect. 
-Two of the general problems one most confront when doing this kind of study is how one 
-shall make sure that the measured time for  running a algorithm is correct. 
-There might for instance be delays due to slow input and output and one must also account 
-to variations in runningtime. 
-The input/output delays can be avoided by communicating with the algorithm through a 
-direct interface. 
-Variations in runningtime is however difficult to predict, but one might however use a 
-meanvalue as a approximation. 
-To some extent the variations of the runningtimes will be reduced as the algorithms are tested against a large set of puzzles.  
-
-\subsection{Solving}
-The main interest of this thesis is the algorithms ability to solve sudokus and most focus will therefore also be on measuring their solving abilities. As already mentioned, there is a fixed collection of puzzles that shall be tested on each algorithm and also on each variation of the algorithms. The data needed for the analysis will consist of measuring the time it takes for each algorithm to solve each puzzle. This will result in quite a big data set and consideration must therefore be taken regarding what statisticall methods are used to analyse it. 
-\underline{(It is however at this point not decided which stasticall tests shall be performed so a discussion of that is yet to come).}
-
-\subsection{Generation}
-Sudoku solving algorithms may also be used to generate puzzles. One way this could be done in is by randomly placing numbers in squars and then using the solver to determine if there is a sudoku and if it is unique. Some solvers may however be better suited for this as some will for example not be vary suited for determining if a solution is unique. There are however also other methods for generating puzzles as explained in \cite{generation}. The algorithms will therefore be compared at theirs ability to generate puzzles in any way that the authors thinks suitable. The comparison will regard how correct the generated puzzles are (if there is always a unique solution) and also how fast the generation was done. As the data from the generation testing will be very similar to the data from the solving tests, the same statistical tests will be used.
-
-\subsection{Parallelising}
-
-\subsection{Difficulty rating}
 
 \section{Implementation}
 
@@ -192,28 +159,6 @@ This algorithm relies on the logic rules that humans use to solve sudoku. Those 
 \end{description}
 
 There are other rules that could be used but due to limitations these are the only implemented ones. There are several different aspects that are interesting to note about this algorithm. First of all the time complexity of the algorithm will be polynomial given that a solution can be found using these rules. This is a simple consequence of the fact that each rule only take polynomial time to check and there are only polynomial many squares to fill in. There are however no guarantee that a solution will be found and if no rule match it is impossible for the algorithm to continue. One way around this is to combine this algorithm with the backtracking algorithm. Other aspects that shall be studied are which rules shall be applied in which order and even if some rules are to time consuming to check compared to the extra puzzles that can be solved. The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
-
-\subsection{Cultural genetic}
-A cultural genetic algorithm is a basic genetic algorithm with additional inputs determining properties of the search for a solution.
- There are some basic components that are common to all genetic appropaches. \newline
-When dealing with a problem space with many possible solutions it is common to define a population which consists of individuals.
-Every individual represents a single possible sudoku puzzle solution. \cite{stochastic}
-Every individual has a single integer for every not given square, that represent the yet to be filled sudoku grid, and therefore every integer is limited to the range between one and nine.
-All these integers are known as genes and describes the solution proposed by a certain individual. \newline
-Given the search space representation there is also a method of successively building up better individuals and a population that, overall, achieves better sudoku solutions.
-In order to determine how good any individual is in relation to another a fitness function is defined.
-This is simply the number of reused or missing integers, giving a good measure of the quality of a proposed solution.
-During simulation the fitness function is evaluated for every individual.
-The best individuals are then chosen for a tournament process.
-This will reduce the number of candidates available for coming populations, and determine which individuals that are combined.
-Finally a few individuals are combined in a process known as crossover.
-This simply selects genes from both candidates and constructs a new individual.
-After constructing the final candidate there might also be mutations in the genes, allowing the search to avoid a local minima.
-The process is repeated until a proper puzzle candidate has been found.
-The reader might note that a correct solution will have minimize the fitness function. \newline
-The cultural part of ``cultural genetic`` implies that the environment in some way controls how the search goes on.
-The cultural effects are labeled belief space and makes sure that gene selection only takes valid values and that repetition is avoided.
-This can be seen as a way of introducting constraints.
 
 \subsection{Artificial neural network}
 In order to fully understand the artifical neural network approach of solving sudoku puzzles, it is necessary to have some basic theoretical background before introducting the implementation.
@@ -283,6 +228,43 @@ This is done in a timely manner which allows all puzzles to be solved but still 
 \newline
 A valid solution can be found by simple looking at all states and insepecting the requirements of sudoku.
 Commonly the solution will appear in the end of the simulation when temperaure has been lowered to its minimum.
+
+\chapter{Method}
+%TODO, pabergg
+Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. Section 2.1 is devoted to explaining how and which algorithms was chosen and section 2.2 explains which puzzles are used as benchmarks and why. Section 2.3 explains how the comparison was carried out regarding the different aspects that was studied.
+
+
+\section{Benchmark puzzles}
+This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. To measure this, puzzles are needed and consideration shall therefore be taken to choose those puzzles wisely. The puzzles that have been chosen to test the solving capabilities of the algorithms are a collection consisting of 49 151 puzzles which each have 17 clues (meaning 17 squares are filled in). \cite{database} Those have been collected by Gordon Royle from different sites as well as from his own database. The reason for choosing this collection is because it is believed not to be biased towards a specific solving idea. This is because it is a collection that comes from collecting as many of the 17-clue puzzles that have been found as possible rather than using a specific generation method. The collection also have other benefits. The puzzles are all qualitativly different as no pair of puzzles is within the same equivalence class. Equivalent puzzles are defined as puzzles that could be transformed into each other using some predefined operations that doesnt change the solution. One might for instance interchange the digits in a puzzle, but the solution would then be the transformed solution and no real change to the puzzle have therefore been done. Some other operations includes interchanging rows, columns and stacks (three boxes in a row,column). The downside of choosing this collection is that some algorithms may perform poorly because of the low nr of clues given and some analysis of this will therefore be carried out. This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle. The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
+
+\section{Comparison methods}
+As already mentioned several comparisons and measurements will be carried out to 
+analyse different aspects of the algorithms. Those will include statistically tests 
+to for instance determine with what confidence one can say that one algorithm performs 
+better than another. 
+The following subsections will however explain more clearly what will be measured 
+regarding each aspect. 
+Two of the general problems one most confront when doing this kind of study is how one 
+shall make sure that the measured time for  running a algorithm is correct. 
+There might for instance be delays due to slow input and output and one must also account 
+to variations in runningtime. 
+The input/output delays can be avoided by communicating with the algorithm through a 
+direct interface. 
+Variations in runningtime is however difficult to predict, but one might however use a 
+meanvalue as a approximation. 
+To some extent the variations of the runningtimes will be reduced as the algorithms are tested against a large set of puzzles.  
+
+\subsection{Solving}
+The main interest of this thesis is the algorithms ability to solve sudokus and most focus will therefore also be on measuring their solving abilities. As already mentioned, there is a fixed collection of puzzles that shall be tested on each algorithm and also on each variation of the algorithms. The data needed for the analysis will consist of measuring the time it takes for each algorithm to solve each puzzle. This will result in quite a big data set and consideration must therefore be taken regarding what statisticall methods are used to analyse it. 
+\underline{(It is however at this point not decided which stasticall tests shall be performed so a discussion of that is yet to come).}
+
+\subsection{Generation}
+Sudoku solving algorithms may also be used to generate puzzles. One way this could be done in is by randomly placing numbers in squars and then using the solver to determine if there is a sudoku and if it is unique. Some solvers may however be better suited for this as some will for example not be vary suited for determining if a solution is unique. There are however also other methods for generating puzzles as explained in \cite{generation}. The algorithms will therefore be compared at theirs ability to generate puzzles in any way that the authors thinks suitable. The comparison will regard how correct the generated puzzles are (if there is always a unique solution) and also how fast the generation was done. As the data from the generation testing will be very similar to the data from the solving tests, the same statistical tests will be used.
+
+\subsection{Parallelising}
+
+\subsection{Difficulty rating}
+
 \section{Comparison}
 
 At this point, the conclusions that can be drawn are very limited. This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented. Some tests so far however show that the ruledbased solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules. Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most sudoku puzzles probably are easy. An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems. Backtracking algorithms with some variations have also been tested, but at a smaller scale. It seems so far that backtracking seems to be a less fit algorithm for solving 17-clue puzzles, but some optimization are yet to be done. 
@@ -296,13 +278,14 @@ This will probably be the most extensive subsection and it will probably be divi
 
 \section{Difficulty ratings}
 
+\chapter{Analysis}
+%TODO, davnils/pabergg
 
-\section{Conclusion}
+\chapter{Conclusions}
+%TODO, davnils
 
-There is as mentioned in comparison not much to conclude at this point since the real comparison have not yet been carried out.
 
-
-\section{References}
+\chapter{References}
 
 \begin{thebibliography}{99}
 

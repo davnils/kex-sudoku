@@ -6,11 +6,20 @@
 
 using namespace std;
 
+/**
+ * Constructor which initialises the puzzle with the
+ * given grid.
+ * @param grid is the 9 by 9 puzzle.
+ */
 Rulebased::Rulebased(int grid[9][9]){
     board = *(new Board());
     board.setBoard(grid);
 }
 
+/**
+ * Changes the puzzle to the new puzzle given.
+ * @param puzzle describes the new puzzle and is a 9 by 9 int arra.
+ */ 
 void Rulebased::addPuzzle(grid_t puzzle){
     int newgrid[9][9];
     for(int i=0;i<9;i++){
@@ -22,6 +31,10 @@ void Rulebased::addPuzzle(grid_t puzzle){
     board.setBoard(newgrid);
 }  
 
+/**
+ * Returns the board in an u_int8 9 by 9 array (grid_t).
+ * @return the board used.
+ */
 grid_t Rulebased::getGrid(){
     grid_t returngrid;
     for(int i=0;i<9;i++){
@@ -32,15 +45,33 @@ grid_t Rulebased::getGrid(){
     return returngrid;
 } 
 
+/**
+ * Constructor of the class Rulebased
+ * Creates a solver with the specified puzzle.
+ * Note that it copies the board as to avoid multiple
+ * solvers using the same board.
+ * @param b is the board the solver will use.
+ */
 Rulebased::Rulebased(Board b){
     board = b;
 }
 
+/**
+ * Solves the puzzle and returns true if succesfull.
+ * There is also a timelimit which must be hold.
+ * @param the endtime which the solver must not exceed.
+ * @return true if solved within the timelimit and false otherwise.
+ */
 bool Rulebased::runStep(clock_t stoppTime){
     endTime = stoppTime;
     return solve();
 }
 
+/**
+ * Solves the puzzle stored in the solver
+ * within the endtime that is also stored within the solver.
+ * @returns true if the puzzle was solved within the specified time.
+ */
 bool Rulebased::solve(){
     int solutions = applyRules();
     if(solutions == 0){
@@ -60,11 +91,11 @@ bool Rulebased::solve(){
     }
     */
 }
+
 /**
- * 
- * @param nr
- * @param
- * @return
+ * Applies the rules that solves the puzzles.
+ * Consideres the endingtime for solutions and returns if this time is exceeded.
+ * @return the number of solutions
  */ 
 int Rulebased::applyRules(){
     if(clock()>endTime){
@@ -146,6 +177,7 @@ int Rulebased::guess(){
         int ok = solver.applyRules();
         if(ok>0){
            correctGuesses.push_back(solver.getBoard());
+           break; //Break if multiple solutions is unintresting
         }
     }
     if(correctGuesses.size()==0){
@@ -165,6 +197,12 @@ int Rulebased::guess(){
         
 }
 
+/**
+ * Applies the rule for single Candidate.
+ * This means that there is a single candidate in a square
+ * and this candidate is therefore assigned to that square.
+ * @return true if the rule was applyable.
+ */
 bool Rulebased::single(){
     bool match = false;
     for(int i=0;i<9;i++){
@@ -184,6 +222,14 @@ bool Rulebased::single(){
     return match;
 }
 
+/**
+ * Applies the rule of hidden and naked pairs, triples and up to octuples.
+ * Note that naked and hidden tuples are the same rule but in reverse.
+ * This means that if there is a set of squares that together form
+ * a hidden tuple than the other squares in that region is a naked tuple.
+ * Therefore, one only needs to check for naked tuples.
+ * @return true if the rule was applyable.
+ */
 bool Rulebased::naked(){
     bool match = false;
     for(int i=0;i<27;i++){
@@ -195,6 +241,11 @@ bool Rulebased::naked(){
     return match;
 }
 
+/**
+ * Applies the rule of naked/hidden tuples to a specific region.
+ * @param region is an 9 array of pointers to vector<int>
+ * @return true if the rule was applyable for the specific region.
+ */
 bool Rulebased::naked(vector<int> * region[]){
     bool match = false;
     vector<int> n;
@@ -263,6 +314,20 @@ bool Rulebased::naked(vector<int> * region[]){
     return match;
 }
 
+/**
+ * Finds all combinations from an int vector containing r numbers and
+ * beginning with a number with least index i.
+ * The method finds the combinations by recursively calling itself
+ * and changing i and r. The combinations are then concatenated into an
+ * vector consisting of the combinations which are of the type vector<int>.
+ * @param n is the vector from which the numbers in the combination will
+ * come from.
+ * @param r is the number of numbers that shall be picked fron n.
+ * @param i is the least index a number can have. i=0 means that any
+ * number could be picked.
+ * @return vector< vector<int> > which contains r-sized vectors in a vector
+ * containing all possible combinations found.
+ */
 vector< vector<int> > Rulebased::findCombinations(
                     vector<int> n,int r,int i){
     if(r==0){
@@ -289,6 +354,7 @@ vector< vector<int> > Rulebased::findCombinations(
     return combinations;
 }
 
+/*
 int main(){
     //cout<<"START:"<<endl;
     int grid[9][9];
@@ -306,3 +372,4 @@ int main(){
     solver.runStep(clock()+CLOCKS_PER_SEC*20);
     solver.printBoard();
 }
+*/

@@ -85,12 +85,10 @@ std::vector<result_t> TestFramework::runTests()
 
     for(; itPuzzle != puzzles.end(); itPuzzle++) {
       float result = runSampledSolver(*itSolver, *itPuzzle);
-      if(result > 0) {
-        res.timeStamps.push_back(result);
-        of << res.timeStamps.back() << " ";
-        of.flush();
-      }
-      else {
+      res.timeStamps.push_back(result);
+      of << res.timeStamps.back() << " ";
+      of.flush();
+      if(result < 0) {
         std::cerr << "Warning: Invalid measurement with solver: "
           << res.algorithm << ", code: " << result << std::endl;
         if(result == UNSTABLE_MEASUREMENT) {
@@ -202,6 +200,7 @@ float TestFramework::sampledStdDeviation(const std::vector<float> & data, float 
 float TestFramework::sampledAverage(const std::vector<float> & data)
 {
     std::vector<float>::const_iterator it;
+    std::vector<float> filtered;
     float avg = 0.0f;
 
     if(data.size() == 0) {
@@ -209,7 +208,13 @@ float TestFramework::sampledAverage(const std::vector<float> & data)
     }
 
     for(it = data.begin(); it != data.end(); it++) {
-      avg += *it / data.size();
+      if(*it >= 0) {
+        filtered.push_back(*it);
+      }
+    }
+
+    for(it = filtered.begin(); it != filtered.end(); it++) {
+      avg += *it / filtered.size();
     }
 
     return(avg);

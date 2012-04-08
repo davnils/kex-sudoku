@@ -298,20 +298,86 @@ Commonly the solution will appear in the end of the simulation when temperaure h
 %TODO, pabergg
 Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
 Those sections will also describe in detail how the results was generated. 
-Section 2.1 is devoted to explaining the test setup which includes hardware specifications but also an overview picture of the setup. 
-Section 2.2 focuses on how and what aspects of the algorithms where analysed.
-Section 2.3 explains the process of choosing test data.
-The last subsection 2.4 gives an overview of the statistical analyses which was performed on the test data.
+Section 3.1 is devoted to explaining the test setup which includes hardware specifications but also an overview picture of the setup. 
+Section 3.2 focuses on how and what aspects of the algorithms where analysed.
+Section 3.3 explains the process of choosing test data.
+The last subsection 3.4 gives an overview of the statistical analyses which was performed on the test data.
 This also includes what computational limitations was present and how this effect the results. 
 
 \section{Test setup}
+%TODO HARDWARE SPECIFICATION
+The central part of the test setup was the test framework which timed and tested each algorithm on different puzzles. 
+This was done by implementing each algorithm as separate classes that all inherited from a superclass for all sudokusolvers.
+This made sure the implementations was consistent which made the test process easier.
+The last part of the setup consisted of the test puzzles which was tested on the algorithms.
+The test consisted of timing the algorithms on each puzzle. 
+Since there might be variations in processor performance multiple tests where performed with each puzzle. 
+The mean value was then saved for each puzzle and algorithm.
+As the variance in processor performance might vary depending on the puzzle tested a confidence intervall for the mean value was calculated for the mean value using bootstraping. 
+This will be described in more detail in section 3.4.
+
 \section{Comparison Methods}
+Multiple aspects of the results was considered when analysing and comparing the algorithms. The following three subsections describes those aspects in more detail. 
 \subsection{Solving}
 \subsection{Difficulty rating}
-\subsection{Parallelising}
+One can often find difficulty ratings associated to sudoku puzzles in puzzle books etc. Those are often based on the level of human solving techniques that are needed to solve the puzzle in question. \cite{difficulty} 
+This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
+This comparison will be limited to the rulebased and backtracking algorithms and the goal will be to see if there is a correlation between how hard the puzzles are. 
+Since only two algorithms will be used, the results will be somewhat uncertain but it will be a beginning in determining if certain puzzles are inherently difficult independent on which algorithms are used to solve it.
+
+\subsection{Generation and Parallelising}
+This is a more practical aspect of the comparison and no tests will be done. It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelisised. Generation of puzzles is obviously interesting because that is mainly what one want to do if constructing a puzzle collection. Parallelising is however not entirely obvious why it is of interest. Normal sudoku puzzles can be solved in a matter of milliseconds by the best sudoku solvers and one might therefore struggle to see the need for parallelising those solvers. And truly this topic is quite unrelevant for normal sudoku puzzles but the discussion that will be held about the algorithms is however still of practical interest since one might want to solve n by n puzzles which can get extremely difficult fast when n grows. Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion is also relevant in determining which type of algorithms might be useful in other areas. This last remark has already been studied, but not for sudoku solving algorithms and we therefore take the chance to start the discussion.
+
 \section{Benchmark puzzles}
+The test data consisted of multiple puzzles that was chosen beforehand.
+Since the set of test puzzles can affect the outcome of this study it is appropriate to motivate the choice of puzzles.
+As was discovered during the study the Boltzmann machine algorithm did not perform as well as the other algorithms and some modifications to which puzzles was used was therefore done.
+The backtracking and rulebased algorithms was however both tested on a set of 49151 17-clue puzzles. 
+Those was found on \cite{database} and is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
+The reason for chosing this specific database is because the generation of the puzzles does not involve a specific algorithm but is rather a collection of puzzles found by different puzzle generating algorithms.  
+The puzzles are therefore assumed to be represantative of all 17-clue puzzles. 
+This assumption is the main motivating factor for chosing this set of puzzles, but there is however also other factors that makes this set of puzzles suitable. 
+As recently discovered by Tugemann and Civario, no 16-clue puzzle exists which means that puzzles must contain 17 clues to have unique solutions. \cite{17clueProof}  
+As discussed under section 3.2.2 difficutly rating is poorly measured by the number of clues in a puzzle, but one can however see a correlation between the number of clues and the difficulty. \cite{difficulty}
+This means that the choosen set of 17-clue puzzles shall contain some of the hardest sudoku puzzles that exists.
+This is ofcourse a wanted feature since one then can see how the algorithms performs at puzzles of all difficulties.
+
 \section{Statistical analyses}
+Due to several reasons statistical analyses is required to make a rigouros statement about the results. 
+This is mainly due to two reason.
+Firstly the results contain a very large dataset and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
+Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test. As described in section 3.4.2 some of the statistical tests have been limited by computational constraints and a lower confidence level in combination with a more inprecise result have therefore been needed for those tests.
 \subsection{Statistical tests}
+This section explains which statistical tests and methods are used in the study.
+The first statistical method that is applied is to make sure that variance in processor performance does not affect the results considerable. 
+This is done by measuring a specific algorithms solving time for a specific puzzle multiple times. 
+The mean value of those times are then calculated and bootstraping are used to attain a 95\% confidence interval of 0.05 seconds. 
+The reason bootstraping is used is because it does not require the stochastic variable to be a certain distribution. 
+This is necessary since the distribution of the processor perfomance is unkown and also since the distribution might vary between different puzzles. 
+\newline
+The meanvalues are then saved as described in section 3.1.
+It is now that the real analyses of the algorithms begins. 
+Even if the representation of the results does not really classify as a statistical method it is appropriate to mention that the results are displayed as histograms which means that the data are sorted and devided into bars of equal width. 
+For this study this means each bar represents a fixed size solution time intervall. 
+The height of the bars are proportional to the frequency data points falls into that bar's time intervall.
+After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms. The usefullness of this somewhat unrigouros approach shall not negleted, but shall also use statistical methods to rigourosly prove some relations.
+\newline
+The first thing one think of looking for is probably how the different algorithms compare in solving ability. 
+This means that one want to find out if one algorithm is better than other algorithms. 
+Since the distribution again is unknown one has to rely on more general statistical tests. 
+One of those are wilcoxons sign test. n
+This makes use of the fact that the difference in solving times between two algorithms will have a mean value of 0 if there is no difference between the two algorithms. 
+The tests uses the binomial theorem to see if the sign of the difference is unevenly distributed.
+One can then determine if an algorithm performs better than an other algorithm with a certain confidence.
+Since the distribution of the solution times are unknown it is not possible for wilcoxons sign test to give any measurement of how much better an algorithm is than another algorithm.
+One might however make a histogram of the difference which leads us to the next aspect, namely difficulty rating and distribution. 
+Difficulty rating for each algorithm can easily be calculated by making histograms of the solution times for each algorithm. 
+One aim of this study have however been to determine if there is puzzles that are inherently difficult, that is regardless of solution method.
+To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rulebased algorithms and the result can therefore not speak for other solution methods.
+The method used is however  
+
+\newline
+
 \subsection{Computational constraints}
 
 
@@ -438,6 +504,9 @@ Royle G. Minimum Sudoku. [homepage on the Internet]. No date [cited 2012 Mar 13]
 \bibitem{boltzmann2}
 Ackley D, Hinton G. A Learning Algorithm for Boltzmann Machines. [homepage on the Internet]. 1985 [cited 2012 Mar 13]. Available from: The University of Western Australia, Web site: http://learning.cs.toronto.edu/~hinton/absps/cogscibm.pdf
 
+\bibitem{difficulty}
+%TODO Patrik: fix this reference
+%http://www.sudokuwiki.org/Weekly_Sudoku.asp
 \end{thebibliography}
 
 \appendix

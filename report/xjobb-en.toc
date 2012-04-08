@@ -17,20 +17,29 @@
 \contentsline {subsubsection}{Artificial neural network - theory}{9}
 \contentsline {subsection}{\numberline {2.2.4}Artificial neural network - implementation}{10}
 \contentsline {chapter}{\chapternumberline {3}Method}{13}
-\contentsline {section}{\numberline {3.1}Benchmark puzzles}{13}
-\contentsline {section}{\numberline {3.2}Comparison methods}{14}
+\contentsline {section}{\numberline {3.1}Test setup}{13}
+\contentsline {section}{\numberline {3.2}Comparison Methods}{13}
 \contentsline {subsection}{\numberline {3.2.1}Solving}{14}
-\contentsline {subsection}{\numberline {3.2.2}Generation}{14}
-\contentsline {subsection}{\numberline {3.2.3}Parallelising}{15}
-\contentsline {subsection}{\numberline {3.2.4}Difficulty rating}{15}
-\contentsline {section}{\numberline {3.3}Comparison}{15}
-\contentsline {subsection}{\numberline {3.3.1}Solving}{15}
-\contentsline {section}{\numberline {3.4}Generation}{15}
-\contentsline {section}{\numberline {3.5}Parallelising}{15}
-\contentsline {section}{\numberline {3.6}Difficulty ratings}{15}
-\contentsline {chapter}{\chapternumberline {4}Analysis}{17}
-\contentsline {chapter}{\chapternumberline {5}Conclusion}{19}
-\contentsline {chapter}{\chapternumberline {6}References}{21}
-\contentsline {chapter}{Bibliography}{23}
-\contentsline {chapter}{Appendices}{24}
-\contentsline {chapter}{\chapternumberline {A}RDF}{25}
+\contentsline {subsection}{\numberline {3.2.2}Difficulty rating}{14}
+\contentsline {subsection}{\numberline {3.2.3}Generation and Parallelising}{14}
+\contentsline {section}{\numberline {3.3}Benchmark puzzles}{14}
+\contentsline {section}{\numberline {3.4}Statistical analyses}{15}
+\contentsline {subsection}{\numberline {3.4.1}Statistical tests}{15}
+\contentsline {subsection}{\numberline {3.4.2}Computational constraints}{15}
+\contentsline {section}{\numberline {3.5}Benchmark puzzles}{15}
+\contentsline {section}{\numberline {3.6}Comparison methods}{16}
+\contentsline {subsection}{\numberline {3.6.1}Solving}{16}
+\contentsline {subsection}{\numberline {3.6.2}Generation}{16}
+\contentsline {subsection}{\numberline {3.6.3}Parallelising}{17}
+\contentsline {subsection}{\numberline {3.6.4}Difficulty rating}{17}
+\contentsline {section}{\numberline {3.7}Comparison}{17}
+\contentsline {subsection}{\numberline {3.7.1}Solving}{17}
+\contentsline {section}{\numberline {3.8}Generation}{17}
+\contentsline {section}{\numberline {3.9}Parallelising}{17}
+\contentsline {section}{\numberline {3.10}Difficulty ratings}{17}
+\contentsline {chapter}{\chapternumberline {4}Analysis}{19}
+\contentsline {chapter}{\chapternumberline {5}Conclusions}{21}
+\contentsline {chapter}{\chapternumberline {6}References}{23}
+\contentsline {chapter}{Bibliography}{25}
+\contentsline {chapter}{Appendices}{26}
+\contentsline {chapter}{\chapternumberline {A}RDF}{27}

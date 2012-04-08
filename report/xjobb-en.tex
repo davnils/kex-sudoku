@@ -5,10 +5,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[swedish,english]{babel}
 \usepackage{modifications}
-\title{A comparison of sudoku solving algorithms}
+\title{A study of sudoku solving algorithms}
 
-\subtitle{by ability in solving, generation and difficulty rating of sudoku puzzles.}
-\foreigntitle{En jämförelse av algoritmer för lösning av sudokupussel}
+\subtitle{}
+\foreigntitle{En studie om sudokulösningsalgorithmer}
 \author{Patrik Berggren \and David Nilsson}
 \date{April 2012}
 \blurb{Bachelor's Thesis at NADA\\Supervisor: Alexander Baltatzis\\Examiner: Mårten Björkman}
@@ -21,11 +21,15 @@
 \selectlanguage{english}
 \begin{abstract}
 This is a bachelor thesis that studies and compare four different sudoku
-solving algorithms. Those algorithms are rulebased, backtracking, neural network and 
-cultural genetic.  The comparison consisted of measuring the algorithms, including
+solving algorithms.
+Those algorithms are rulebased, backtracking, neural network and 
+cultural genetic.
+ The comparison consisted of measuring the algorithms, including
 variations of the algorithms, against a database of 49 151 different 17-clue sudoku
-puzzles. The algorithms use in generating as well as rating difficulty in sudoku
-puzzles was also compared. The results show that ...
+puzzles.
+The algorithms use in generating as well as rating difficulty in sudoku
+puzzles was also compared.
+The results show that ...
 \end{abstract}
 \clearpage
 \begin{foreignabstract}{swedish}
@@ -38,12 +42,14 @@ TODO:
 
 \chapter{Introduction}
 %TODO, pabergg
-Sudoku is a game that under recent years have gained popularity throughout the world. 
+Sudoku is a game that under recent years have gained popularity throughout the world.
+
 The game consists of a 9 by 9 grid which shall be filled in so that each 
 row, column and 3 by 3 square (also called a box) contains the digits 
 1 through 9 exactly ones. 
 Many newspaper today contain sudoku puzzles and there are also competitions devoted 
-to sudoku solving. It is therefore of interest to study how one can generate, 
+to sudoku solving.
+It is therefore of interest to study how one can generate, 
 solve and rate such puzzles by the help of computers.
 
 \section{Problem specification}
@@ -64,7 +70,8 @@ The ideas that will be studied are how well each algorithm performs on a given s
 The algorithms will be compared towards each other and hopefully it will be possible to make 
 conclusions about which kind of algorithm effectively solve which kind of puzzles. 
 Each sudoku solving algorithm can also be used for sudoku generation, which is another 
-aspect that will be studied and compared in this project. Furthermore some implementation 
+aspect that will be studied and compared in this project.
+Furthermore some implementation 
 issues regarding the algorithms will be discussed, 
 such as how well the algorithms are suited for parallelising the work. 
 The discussion will also touch on difficulty rating which is another aspect that often 
@@ -75,9 +82,14 @@ As this project is quite limited in time available and in expected scope,
 there are several limitations on what can and will be done. 
 These are the limitations of the project:
 \begin{itemize}
-    \item Limited number of algorithms: Since many of the algorithms are only available as psuedo-code and since we ourselves want to make sure that the algorithms we implement have a similar amount of optimization, we will implement the algorithms ourselves. This will however be time consuming and since each algorithm have multiple variations, the measurements will also be time consuming. The analysis would also be beyond this scope if to many algorithms were chosen.
-    \item Optimization: As mentioned above we will put some work into optimizing the different algorithms, but it will however be limited to which extent this can be done. This will affect the conclusion as some comparisons might have some uncertianty regarding the correctness of the results. The general idea is to put the same amount of work into every algorithm, while keeping the essential parts of the program in mind.
-    \item Special sudokus: There are several variations of sudoku including different sizes of the grid. This thesis will however be limited to the study of ordinary sudoku, which is 9 by 9 grids.
+    \item Limited number of algorithms: Since many of the algorithms are only available as psuedo-code and since we ourselves want to make sure that the algorithms we implement have a similar amount of optimization, we will implement the algorithms ourselves.
+This will however be time consuming and since each algorithm have multiple variations, the measurements will also be time consuming.
+The analysis would also be beyond this scope if to many algorithms were chosen.
+    \item Optimization: As mentioned above we will put some work into optimizing the different algorithms, but it will however be limited to which extent this can be done.
+This will affect the conclusion as some comparisons might have some uncertianty regarding the correctness of the results.
+The general idea is to put the same amount of work into every algorithm, while keeping the essential parts of the program in mind.
+    \item Special sudokus: There are several variations of sudoku including different sizes of the grid.
+This thesis will however be limited to the study of ordinary sudoku, which is 9 by 9 grids.
     \item The results of this thesis will be applicable to other areas apart from sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
 \end{itemize}
 
@@ -102,10 +114,15 @@ no known effective algorithm exists that solve them.
 For now we will however only conclude that there exists some similarities between 
 sudoku and some of those NP-complete problems, such as latin squares and graph colouring. 
 
-\section{Background}
-Ever since sudoku started to get popular in the 80s it have been studied from different perspectives by both computer scientists and mathematicans. Many of those results have some impact on this thesis since many different aspects are studied. Some results that are of value but of minor direct use is the proof for sudokus NP-completeness \cite{complexity} and the proof that the minimal number of clues in a puzzle is 17. \cite{17clueProof} Enumeration of sudoku solutions is also relevant to this thesis in order to give a clearer picture of how big the search space is for solutions. \cite{enumeration} 
 
-The most important sources are the ones that concern the algorithms. Primarly the chosen algorithms, but some other reports concerning other algorithms may also be of interest. Those directly related to the chosen algorithms are. \cite{techniques,boltzmann,stochastic,review} There are however as mentioned also some other articles that have helped in both chosing of the algorithms, but also by algorithmic ideas that can be used. Those articles and webpages are. \cite{discrepancySearch,culturalSwarms,culturalSwarms}
+\section{Background}
+Ever since sudoku started to get popular in the 80s it have been studied from different perspectives by both computer scientists and mathematicans.
+Many of those results have some impact on this thesis since many different aspects are studied. Some results that are of value but of minor direct use is the proof for sudokus NP-completeness \cite{complexity} and the proof that the minimal number of clues in a puzzle is 17.
+\cite{17clueProof} Enumeration of sudoku solutions is also relevant to this thesis in order to give a clearer picture of how big the search space is for solutions. \cite{enumeration} 
+
+The most important sources are the ones that concern the algorithms.
+Primarly the chosen algorithms, but some other reports concerning other algorithms may also be of interest. Those directly related to the chosen algorithms are. \cite{techniques,boltzmann,stochastic,review} There are however as mentioned also some other articles that have helped in both chosing of the algorithms, but also by algorithmic ideas that can be used.
+Those articles and webpages are. \cite{discrepancySearch,culturalSwarms,culturalSwarms}
 
 As mentioned in the problem specification this thesis will not only be concerned with solving sudoku puzzles but also generating them and \cite{generation} have been of great help by discussing this topic from different aspects which mainly includes how one shall generate puzzles using different sudoku solving algorithms in reverse.
 
@@ -115,42 +132,82 @@ One of the most important resources to this project is the puzzles used in the c
 %TODO, davnils
 
 \section{Chosen algorithms}
-There are as already mentioned in the introduction several algorithms for solving sudoku. It would be of interest to do a quantative study of those to definitely determine which ones that performs best. Due to limitations of this study and to make the study of the chosen algorithms more qualitativly, four algorithms have been chosen. The main selection criteria was that they offered a new approach in relation to the other algorithms. The algorithms that was chosen are the following:
+There are as already mentioned in the introduction several algorithms for solving sudoku.
+It would be of interest to do a quantative study of those to definitely determine which ones that performs best.
+Due to limitations of this study and to make the study of the chosen algorithms more qualitativly, four algorithms have been chosen.
+The main selection criteria was that they offered a new approach in relation to the other algorithms.
+The algorithms that was chosen are the following:
 \begin{itemize}
-    \item Backtracking: Backtracking is probably the most basic sudokusolving strategy for computer algorithms. It is a kind of a bruteforce method which tries different numbers and if it fails it backtracks and try a different number.
-    \item Ruledbased: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number). This method is very similar to how humans solve sudoku and the rules used is in fact derived from human solving methods.
+    \item Backtracking: Backtracking is probably the most basic sudokusolving strategy for computer algorithms.
+It is a kind of a bruteforce method which tries different numbers and if it fails it backtracks and try a different number.
+    \item Ruledbased: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
+This method is very similar to how humans solve sudoku and the rules used is in fact derived from human solving methods.
     \item Cultural genetic: 
-    \item Nueral Network: Modelling a sudoku by using a constraint solving artificial neural network. The most natural way of encoding constraints is with a reccurent stochastic boltzmann network. By overlaying the input grid over all neural network nodes and then simulating until it is stable, a valid solution can be found. This way of solving constraint problems can be seen as a natural way of encoding data and constraints. It is however difficult to reason about performance.
+    \item Nueral Network: Modelling a sudoku by using a constraint solving artificial neural network.
+The most natural way of encoding constraints is with a reccurent stochastic boltzmann network.
+By overlaying the input grid over all neural network nodes and then simulating until it is stable, a valid solution can be found.
+This way of solving constraint problems can be seen as a natural way of encoding data and constraints.
+It is however difficult to reason about performance.
 \end{itemize}
 
-As the reader probably notices, this algorithms are quite different from each other. Both in which ideas are used but also in which algorithm constructing methods. Our hopes for this project is therefore that we will be able to determine how those algorithms could be used in several situations for either generating or solving sudokus. The implementations of those algorithms will be discussed in more detail in section 3. 
+As the reader probably notices, this algorithms are quite different from each other.
+Both in which ideas are used but also in which algorithm constructing methods.
+Our hopes for this project is therefore that we will be able to determine how those algorithms could be used in several situations for either generating or solving sudokus.
+The implementations of those algorithms will be discussed in more detail in section 3. 
 
 \section{Implementation}
 
-In this section we will describe the methods in more detail and also explain which modifications that might be interesting to do to each algorithm. Parallelising the algorithms will also be discussed alldue the comparison of this will still be in section 4.
+In this section we will describe the methods in more detail and also explain which modifications that might be interesting to do to each algorithm.
+Parallelising the algorithms will also be discussed alldue the comparison of this will still be in section 4.
 
 \subsection{Backtracking}
 
-The backtracking algorithm for solving sudoku is a bruteforce method. One might view it as guessing which numbers goes where. When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else. This means that the backtracking algorithm does an extensive search to find a solution. The main drawback to this algorithm is that it is exponential in time complexity, but will on the other hand always find a solution sooner or later if one exists. This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution. As a result it could be used to generate valid sudoku puzzles (with unique solutions).
+The backtracking algorithm for solving sudoku is a bruteforce method.
+One might view it as guessing which numbers goes where.
+When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else.
+This means that the backtracking algorithm does an extensive search to find a solution.
+The main drawback to this algorithm is that it is exponential in time complexity, but will on the other hand always find a solution sooner or later if one exists.
+This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
+As a result it could be used to generate valid sudoku puzzles (with unique solutions).
 \newline
-Parallelising is something that could improve this algorithm considerable. The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.
+Parallelising is something that could improve this algorithm considerable.
+The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.
 \newline
-There are several interesting variations of this algorithm that might prove to vary in effiecency. The main variations regards in which order the squares are visited. One might for instance search the squares in random order or in some order that is defined by the structure of the sudoku. One might for instance first fill in all possible numbers in each empty square and then begin with the least number of candidates, or one might want to finish nearly completed rows, columns or boxes. One might also vary how the guesses are done. Some rules regarding how the guesses are done might lead to a higher probability to find a solution which in turn will make the whole algorithm faster as the solutions will be found earlier in the search.
+There are several interesting variations of this algorithm that might prove to vary in effiecency.
+The main variations regards in which order the squares are visited.
+One might for instance search the squares in random order or in some order that is defined by the structure of the sudoku.
+One might for instance first fill in all possible numbers in each empty square and then begin with the least number of candidates, or one might want to finish nearly completed rows, columns or boxes.
+One might also vary how the guesses are done.
+Some rules regarding how the guesses are done might lead to a higher probability to find a solution which in turn will make the whole algorithm faster as the solutions will be found earlier in the search.
 
 \subsection{Ruledbased}
-This algorithm relies on the logic rules that humans use to solve sudoku. Those rules works as proofs and either determines that a square must be a certain number or prooves that a certain square can not contain a certain number. The rules that are used are as follows:
+This algorithm relies on the logic rules that humans use to solve sudoku.
+Those rules works as proofs and either determines that a square must be a certain number or prooves that a certain square can not contain a certain number.
+The rules that are used are as follows:
 \begin{description}
     \item[Naked Single] 
     This means that a square only have one candidate number.
     \item[Hidden Single] 
     If a row, column or box contains only one square which can hold a specific number then that number must go into that square.
     \item[Naked pair] 
-    If a row, column or box contains two squares which each only have two specific candidates. If one such pair exists, then all occurences of these two candidates may be removed from all squares that share a row, column or box with both of the squares in the pair. This concept can also be extended to three or more squares.
+    If a row, column or box contains two squares which each only have two specific candidates.
+If one such pair exists, then all occurences of these two candidates may be removed from all squares that share a row, column or box with both of the squares in the pair.
+This concept can also be extended to three or more squares.
     \item[Hidden pair]
-    If a row, column or box contains only two squares which can hold two specific candidates, then those squares are a hidden pair. It is hidden because those squares might also include several other candidates. Since one already know which two numbers have to go into the two squares one might remove other candidates for those two squares. Those squares will now be a naked pair and one could therefore apply the rule for removal of further candidates. Similar to naked pairs this concept may also be extended to three or more squares.
+    If a row, column or box contains only two squares which can hold two specific candidates, then those squares are a hidden pair.
+It is hidden because those squares might also include several other candidates.
+Since one already know which two numbers have to go into the two squares one might remove other candidates for those two squares.
+Those squares will now be a naked pair and one could therefore apply the rule for removal of further candidates.
+Similar to naked pairs this concept may also be extended to three or more squares.
 
     \item[X-wing/swordfish/jellyfish/squirmbag]
-    These are all names of a more general rule that concerns a loop. Below is a example of a so called swordfish (figure 1 and 2). In figure 1 the squares which have the digit 4 as a candidate have been marked. The so called swordfish is shown in figure 2. The logical reasoning one might use with a swordfish is that since the configurations of the fours in the swordfish can only take two configurations and both of them will cover the same set of columns and rows. The other squares in those rows and columns with the digit 4 as a candidate may therefore remove 4 as a candidate. Swordfish is the special case of this concept where 3 rows and columns are involved in the loop, but the concept also applies to loops within 2 rows and columns (X-wing) and even loops with more than 3 rows and columns involved (jellyfish and squirmbag).
+    These are all names of a more general rule that concerns a loop.
+Below is a example of a so called swordfish (figure 1 and 2).
+In figure 1 the squares which have the digit 4 as a candidate have been marked.
+The so called swordfish is shown in figure 2.
+The logical reasoning one might use with a swordfish is that since the configurations of the fours in the swordfish can only take two configurations and both of them will cover the same set of columns and rows.
+The other squares in those rows and columns with the digit 4 as a candidate may therefore remove 4 as a candidate.
+Swordfish is the special case of this concept where 3 rows and columns are involved in the loop, but the concept also applies to loops within 2 rows and columns (X-wing) and even loops with more than 3 rows and columns involved (jellyfish and squirmbag).
 
 \includegraphics{images/swordfish1.png}
 \newline
@@ -158,13 +215,21 @@ This algorithm relies on the logic rules that humans use to solve sudoku. Those 
 
 \end{description}
 
-There are other rules that could be used but due to limitations these are the only implemented ones. There are several different aspects that are interesting to note about this algorithm. First of all the time complexity of the algorithm will be polynomial given that a solution can be found using these rules. This is a simple consequence of the fact that each rule only take polynomial time to check and there are only polynomial many squares to fill in. There are however no guarantee that a solution will be found and if no rule match it is impossible for the algorithm to continue. One way around this is to combine this algorithm with the backtracking algorithm. Other aspects that shall be studied are which rules shall be applied in which order and even if some rules are to time consuming to check compared to the extra puzzles that can be solved. The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
+There are other rules that could be used but due to limitations these are the only implemented ones.
+There are several different aspects that are interesting to note about this algorithm.
+First of all the time complexity of the algorithm will be polynomial given that a solution can be found using these rules.
+This is a simple consequence of the fact that each rule only take polynomial time to check and there are only polynomial many squares to fill in.
+There are however no guarantee that a solution will be found and if no rule match it is impossible for the algorithm to continue.
+One way around this is to combine this algorithm with the backtracking algorithm.
+Other aspects that shall be studied are which rules shall be applied in which order and even if some rules are to time consuming to check compared to the extra puzzles that can be solved.
+The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
 
 \subsection{Artificial neural network}
 In order to fully understand the artifical neural network approach of solving sudoku puzzles, it is necessary to have some basic theoretical background before introducting the implementation.
 
 \subsubsection{Artificial neural network - theory}
-The artificial neural network solver is based on reccurrent stochastic networks that encode all properties of sudoku. In the core there is a Boltzmann machine, which can be seen as a network of fully connected nodes, as pictured below.
+The artificial neural network solver is based on reccurrent stochastic networks that encode all properties of sudoku.
+In the core there is a Boltzmann machine, which can be seen as a network of fully connected nodes, as pictured below.
 
 \includegraphics{images/neural1.png}
 
@@ -231,15 +296,44 @@ Commonly the solution will appear in the end of the simulation when temperaure h
 
 \chapter{Method}
 %TODO, pabergg
-Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. Section 2.1 is devoted to explaining how and which algorithms was chosen and section 2.2 explains which puzzles are used as benchmarks and why. Section 2.3 explains how the comparison was carried out regarding the different aspects that was studied.
+Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
+Those sections will also describe in detail how the results was generated. 
+Section 2.1 is devoted to explaining the test setup which includes hardware specifications but also an overview picture of the setup. 
+Section 2.2 focuses on how and what aspects of the algorithms where analysed.
+Section 2.3 explains the process of choosing test data.
+The last subsection 2.4 gives an overview of the statistical analyses which was performed on the test data.
+This also includes what computational limitations was present and how this effect the results. 
+
+\section{Test setup}
+\section{Comparison Methods}
+\subsection{Solving}
+\subsection{Difficulty rating}
+\subsection{Parallelising}
+\section{Benchmark puzzles}
+\section{Statistical analyses}
+\subsection{Statistical tests}
+\subsection{Computational constraints}
 
 
 \section{Benchmark puzzles}
-This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. To measure this, puzzles are needed and consideration shall therefore be taken to choose those puzzles wisely. The puzzles that have been chosen to test the solving capabilities of the algorithms are a collection consisting of 49 151 puzzles which each have 17 clues (meaning 17 squares are filled in). \cite{database} Those have been collected by Gordon Royle from different sites as well as from his own database. The reason for choosing this collection is because it is believed not to be biased towards a specific solving idea. This is because it is a collection that comes from collecting as many of the 17-clue puzzles that have been found as possible rather than using a specific generation method. The collection also have other benefits. The puzzles are all qualitativly different as no pair of puzzles is within the same equivalence class. Equivalent puzzles are defined as puzzles that could be transformed into each other using some predefined operations that doesnt change the solution. One might for instance interchange the digits in a puzzle, but the solution would then be the transformed solution and no real change to the puzzle have therefore been done. Some other operations includes interchanging rows, columns and stacks (three boxes in a row,column). The downside of choosing this collection is that some algorithms may perform poorly because of the low nr of clues given and some analysis of this will therefore be carried out. This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle. The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
+This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. 
+To measure this, puzzles are needed and consideration shall therefore be taken to choose those puzzles wisely.
+The puzzles that have been chosen to test the solving capabilities of the algorithms are a collection consisting of 49 151 puzzles which each have 17 clues (meaning 17 squares are filled in). \cite{database} Those have been collected by Gordon Royle from different sites as well as from his own database.
+The reason for choosing this collection is because it is believed not to be biased towards a specific solving idea.
+This is because it is a collection that comes from collecting as many of the 17-clue puzzles that have been found as possible rather than using a specific generation method.
+The collection also have other benefits.
+The puzzles are all qualitativly different as no pair of puzzles is within the same equivalence class.
+Equivalent puzzles are defined as puzzles that could be transformed into each other using some predefined operations that doesnt change the solution.
+One might for instance interchange the digits in a puzzle, but the solution would then be the transformed solution and no real change to the puzzle have therefore been done.
+Some other operations includes interchanging rows, columns and stacks (three boxes in a row,column).
+The downside of choosing this collection is that some algorithms may perform poorly because of the low nr of clues given and some analysis of this will therefore be carried out.
+This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle.
+The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
 
 \section{Comparison methods}
 As already mentioned several comparisons and measurements will be carried out to 
-analyse different aspects of the algorithms. Those will include statistically tests 
+analyse different aspects of the algorithms.
+Those will include statistically tests 
 to for instance determine with what confidence one can say that one algorithm performs 
 better than another. 
 The following subsections will however explain more clearly what will be measured 
@@ -255,11 +349,20 @@ meanvalue as a approximation.
 To some extent the variations of the runningtimes will be reduced as the algorithms are tested against a large set of puzzles.  
 
 \subsection{Solving}
-The main interest of this thesis is the algorithms ability to solve sudokus and most focus will therefore also be on measuring their solving abilities. As already mentioned, there is a fixed collection of puzzles that shall be tested on each algorithm and also on each variation of the algorithms. The data needed for the analysis will consist of measuring the time it takes for each algorithm to solve each puzzle. This will result in quite a big data set and consideration must therefore be taken regarding what statisticall methods are used to analyse it. 
+The main interest of this thesis is the algorithms ability to solve sudokus and most focus will therefore also be on measuring their solving abilities.
+As already mentioned, there is a fixed collection of puzzles that shall be tested on each algorithm and also on each variation of the algorithms.
+The data needed for the analysis will consist of measuring the time it takes for each algorithm to solve each puzzle.
+This will result in quite a big data set and consideration must therefore be taken regarding what statisticall methods are used to analyse it. 
 \underline{(It is however at this point not decided which stasticall tests shall be performed so a discussion of that is yet to come).}
 
 \subsection{Generation}
-Sudoku solving algorithms may also be used to generate puzzles. One way this could be done in is by randomly placing numbers in squars and then using the solver to determine if there is a sudoku and if it is unique. Some solvers may however be better suited for this as some will for example not be vary suited for determining if a solution is unique. There are however also other methods for generating puzzles as explained in \cite{generation}. The algorithms will therefore be compared at theirs ability to generate puzzles in any way that the authors thinks suitable. The comparison will regard how correct the generated puzzles are (if there is always a unique solution) and also how fast the generation was done. As the data from the generation testing will be very similar to the data from the solving tests, the same statistical tests will be used.
+Sudoku solving algorithms may also be used to generate puzzles.
+One way this could be done in is by randomly placing numbers in squars and then using the solver to determine if there is a sudoku and if it is unique.
+Some solvers may however be better suited for this as some will for example not be vary suited for determining if a solution is unique.
+There are however also other methods for generating puzzles as explained in \cite{generation}.
+The algorithms will therefore be compared at theirs ability to generate puzzles in any way that the authors thinks suitable.
+The comparison will regard how correct the generated puzzles are (if there is always a unique solution) and also how fast the generation was done.
+As the data from the generation testing will be very similar to the data from the solving tests, the same statistical tests will be used.
 
 \subsection{Parallelising}
 
@@ -267,11 +370,18 @@ Sudoku solving algorithms may also be used to generate puzzles. One way this cou
 
 \section{Comparison}
 
-At this point, the conclusions that can be drawn are very limited. This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented. Some tests so far however show that the ruledbased solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules. Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most sudoku puzzles probably are easy. An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems. Backtracking algorithms with some variations have also been tested, but at a smaller scale. It seems so far that backtracking seems to be a less fit algorithm for solving 17-clue puzzles, but some optimization are yet to be done. 
+At this point, the conclusions that can be drawn are very limited.
+This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented.
+Some tests so far however show that the ruledbased solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules.
+Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most sudoku puzzles probably are easy.
+An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems.
+Backtracking algorithms with some variations have also been tested, but at a smaller scale.
+It seems so far that backtracking seems to be a less fit algorithm for solving 17-clue puzzles, but some optimization are yet to be done. 
 Those are the subsections expected to exist in the finished report.
 \subsection{Solving}
 
-This will probably be the most extensive subsection and it will probably be divided into smaller parts. It is however difficult to tell which those will be now since they greatly depend on what results we get.
+This will probably be the most extensive subsection and it will probably be divided into smaller parts.
+It is however difficult to tell which those will be now since they greatly depend on what results we get.
 \section{Generation}
 
 \section{Parallelising}

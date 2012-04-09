@@ -5,37 +5,39 @@
 \select@language {english}
 \contentsline {chapter}{\chapternumberline {1}Introduction}{1}
 \contentsline {section}{\numberline {1.1}Problem specification}{1}
-\contentsline {section}{\numberline {1.2}Scope}{2}
+\contentsline {section}{\numberline {1.2}Scope}{1}
 \contentsline {section}{\numberline {1.3}Purpose}{2}
-\contentsline {chapter}{\chapternumberline {2}Background}{5}
-\contentsline {section}{\numberline {2.1}Sudoku fundamentals}{5}
-\contentsline {section}{\numberline {2.2}Computational perspective}{5}
-\contentsline {section}{\numberline {2.3}Evaluated algorithms}{6}
-\contentsline {subsection}{\numberline {2.3.1}Backtrack}{7}
-\contentsline {subsection}{\numberline {2.3.2}Rule-based}{7}
-\contentsline {subsection}{\numberline {2.3.3}Boltzmann machine}{9}
-\contentsline {chapter}{\chapternumberline {3}Method}{13}
-\contentsline {section}{\numberline {3.1}Test setup}{13}
-\contentsline {section}{\numberline {3.2}Comparison Methods}{13}
-\contentsline {subsection}{\numberline {3.2.1}Solving}{14}
-\contentsline {subsection}{\numberline {3.2.2}Difficulty rating}{14}
-\contentsline {subsection}{\numberline {3.2.3}Generation and parallelization}{14}
-\contentsline {section}{\numberline {3.3}Benchmark puzzles}{14}
-\contentsline {section}{\numberline {3.4}Statistical analysis}{15}
-\contentsline {subsection}{\numberline {3.4.1}Statistical tests}{15}
-\contentsline {subsection}{\numberline {3.4.2}Computational constraints}{16}
-\contentsline {section}{\numberline {3.5}Benchmark puzzles}{16}
-\contentsline {section}{\numberline {3.6}Comparison methods}{17}
-\contentsline {subsection}{\numberline {3.6.1}Solving}{17}
-\contentsline {subsection}{\numberline {3.6.2}Generation}{17}
-\contentsline {subsection}{\numberline {3.6.3}Parallelising}{18}
-\contentsline {subsection}{\numberline {3.6.4}Difficulty rating}{18}
-\contentsline {section}{\numberline {3.7}Comparison}{18}
-\contentsline {subsection}{\numberline {3.7.1}Solving}{18}
-\contentsline {section}{\numberline {3.8}Generation}{18}
-\contentsline {section}{\numberline {3.9}Parallelising}{18}
-\contentsline {section}{\numberline {3.10}Difficulty ratings}{18}
+\contentsline {chapter}{\chapternumberline {2}Background}{3}
+\contentsline {section}{\numberline {2.1}Sudoku fundamentals}{3}
+\contentsline {section}{\numberline {2.2}Computational perspective}{3}
+\contentsline {section}{\numberline {2.3}Evaluated algorithms}{4}
+\contentsline {subsection}{\numberline {2.3.1}Backtrack}{5}
+\contentsline {subsection}{\numberline {2.3.2}Rule-based}{5}
+\contentsline {subsection}{\numberline {2.3.3}Boltzmann machine}{7}
+\contentsline {chapter}{\chapternumberline {3}Method}{11}
+\contentsline {section}{\numberline {3.1}Test setup}{11}
+\contentsline {section}{\numberline {3.2}Comparison Methods}{11}
+\contentsline {subsection}{\numberline {3.2.1}Solving}{12}
+\contentsline {subsection}{\numberline {3.2.2}Difficulty rating}{12}
+\contentsline {subsection}{\numberline {3.2.3}Generation and parallelization}{12}
+\contentsline {section}{\numberline {3.3}Benchmark puzzles}{12}
+\contentsline {section}{\numberline {3.4}Statistical analysis}{13}
+\contentsline {subsection}{\numberline {3.4.1}Statistical tests}{13}
+\contentsline {subsection}{\numberline {3.4.2}Computational constraints}{14}
+\contentsline {section}{\numberline {3.5}Benchmark puzzles}{14}
+\contentsline {section}{\numberline {3.6}Comparison methods}{15}
+\contentsline {subsection}{\numberline {3.6.1}Solving}{15}
+\contentsline {subsection}{\numberline {3.6.2}Generation}{16}
+\contentsline {subsection}{\numberline {3.6.3}Parallelising}{16}
+\contentsline {subsection}{\numberline {3.6.4}Difficulty rating}{16}
+\contentsline {section}{\numberline {3.7}Comparison}{16}
+\contentsline {subsection}{\numberline {3.7.1}Solving}{16}
+\contentsline {section}{\numberline {3.8}Generation}{17}
+\contentsline {section}{\numberline {3.9}Parallelising}{17}
+\contentsline {section}{\numberline {3.10}Difficulty ratings}{17}
 \contentsline {chapter}{\chapternumberline {4}Analysis}{19}
+\contentsline {section}{\numberline {4.1}Time distributions}{19}
+\contentsline {subsection}{\numberline {4.1.1}Rule-based solver}{19}
 \contentsline {chapter}{\chapternumberline {5}Conclusions}{21}
 \contentsline {chapter}{\chapternumberline {6}References}{23}
 \contentsline {chapter}{Bibliography}{25}

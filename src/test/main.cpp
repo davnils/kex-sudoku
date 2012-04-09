@@ -13,7 +13,7 @@
 int main(int argc, char ** argv)
 {
   std::string inPath = "../../analysis/rulebased/reference";
-  std::string outPath = "../../analysis/rulebasedd/out";
+  std::string outPath = "../../analysis/rulebased/out";
 
   if(argc == 2) {
     std::string suffix = argv[1];

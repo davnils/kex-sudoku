@@ -5,6 +5,10 @@
 \usepackage[utf8]{inputenc}
 \usepackage[swedish,english]{babel}
 \usepackage{modifications}
+\usepackage{graphicx}
+\usepackage{blindtext}
+\usepackage{tabularx}
+
 \title{A study of Sudoku solving algorithms}
 
 \subtitle{}
@@ -40,88 +44,46 @@ TODO:
 \chapter{Introduction}
 %TODO, pabergg
 Sudoku is a game that under recent years have gained popularity throughout the world.
-
-The game consists of a 9 by 9 grid which shall be filled in so that each 
-row, column and 3 by 3 square (also called a box) contains the digits 
-1 through 9 exactly ones. 
-Many newspaper today contain Sudoku puzzles and there are also competitions devoted 
-to Sudoku solving.
-It is therefore of interest to study how one can generate, 
-solve and rate such puzzles by the help of computers.
+Many newspaper today contain sudoku puzzles and there are also competitions devoted 
+to sudoku solving.
+It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computers algorithms.
 
 \section{Problem specification}
-To generate and solve sudokus one can choose from several different algorithms. 
-Some might be limited to only generation or only solving whilst other could be used for both. 
-The main goal of this project is to explore different aspects of Sudoku solving and generation.
-To be able to compare different ideas, several algorithms will be used in the comparison. 
-The project will not only try to identify which algorithm seems to fit best for 
-a specific aspect of Sudoku, but also conclude how each algorithm performs itself and why.
-\newline
-The algorithms that will be studied are backtrack solver, rule-based solver and
-Boltzmann machine solver. 
-Those will be discussed and explained in more detail in section 2.1 and 3. 
-Variations of those algorithms will also be studied so there will in effect 
-be data for 10 or more algorithms and variations of algorithms.
-\newline
-The ideas that will be studied are how well each algorithm performs on a given set of puzzle. 
-The algorithms will be compared towards each other and hopefully it will be possible to make 
-conclusions about which kind of algorithm effectively solve which kind of puzzles. 
-Each Sudoku solving algorithm can also be used for Sudoku generation, which is another 
-aspect that will be studied and compared in this project.
-Furthermore some implementation 
-issues regarding the algorithms will be discussed, 
-such as how well the algorithms are suited for parallelising the work. 
-The discussion will also touch on difficulty rating which is another aspect that often 
-gets attention in many studies regarding Sudoku.
+There are multiple algorithms that can solve sudoku puzzles.
+In this report we discuss three different algorithms and compare them in their abbilities.
+The primary focus is on solving ability, but some results regarding difficulty rating are also presented.
+The solving ability that is of primarly focus is the time distribution among the tested puzzles for each algorithm, but some discussion regarding other topics will also be done.
+Those other algorithms primarly include how well the algorithms are suited for parallelising and well the algorithms can be used in generating puzzles.
+The algorithms that will be studied are backtrack solver, rulebased solver and Boltzmann machines. 
+This algorithms and their implementations are explained in more detail in section 2. 
+>>>>>>> Some minor changes and some text added to analyses
 
 \section{Scope}
 As this project is quite limited in time available and in expected scope, 
 there are several limitations on what can and will be done. 
 These are the limitations of the project:
 \begin{itemize}
-    \item Limited number of algorithms: Since many of the algorithms are only available as psuedo-code and since we ourselves want to make sure that the algorithms we implement have a similar amount of optimization, we will implement the algorithms ourselves.
-This will however be time consuming and since each algorithm have multiple variations, the measurements will also be time consuming.
-The analysis would also be beyond this scope if to many algorithms were chosen.
-    \item Optimization: As mentioned above we will put some work into optimizing the different algorithms, but it will however be limited to which extent this can be done.
-This will affect the conclusion as some comparisons might have some uncertianty regarding the correctness of the results.
-The general idea is to put the same amount of work into every algorithm, while keeping the essential parts of the program in mind.
-    \item Special sudokus: There are several variations of Sudoku including different sizes of the grid.
-This thesis will however be limited to the study of ordinary Sudoku, which is 9 by 9 grids.
-    \item The results of this thesis will be applicable to other areas apart from Sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
+    \item Limited number of algorithms: 
+Because of the time available is limited we have choosen to limit the number of algorithms studied to three. 
+    \item Optimization: 
+All algorithms are implemented by ourselfes and optimization is therefore an issue. 
+We have therefore only aimed for exploring the underlying ideas of the algorithms and not the algorithms themselfes.
+There is however the possibility that some dramatic optimization could have been done that affect the result, and we have therefore been quite cautios about this particular issue. There is however still a lot of things that can be determined with certainty.
+
+    \item Special sudokus: There are several variations of sudoku including different sizes of the grid.
+This thesis will however be limited to the study of ordinary sudoku, which is 9 by 9 grids.
+    \item The results of this thesis will be applicable to other areas apart from sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
 \end{itemize}
 
 \section{Purpose}
-As already mentioned, Sudoku is today a popular game throughout the world and it appears 
-in multiple medias, including websites, newspapers and books. 
-As a result, the demand of effective Sudoku related algorithms are rising. 
-For most purposes there already exist satisfactory algorithms, but there are 
-still some value in studying Sudoku algorithms. 
-Sudoku could for instance be extended to a more generalized form with 
-a n by n grid and most regular Sudoku solving algorithms could be generalized 
-to solve those as well. 
-Another related reason for studying Sudoku solving algorithms is that there exists 
-several similar problems to Sudoku and an idea for Sudoku may be applicable for 
-those other related puzzles. 
-Latin squares are for instance a very similar puzzle that could directly benefit 
-from Sudoku solving algorithms. 
-There are however a broader class of problems that could benefit from these thesis 
-and those are the NP-complete problems. 
+As already mentioned, sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
+As a result, it is of interest to find effective sudoku solving and generating algorithms. 
+For most purposes there already exist satisfactory algorithms, and as a result one might struggle to see the use in studying sudoku solving algorithms. 
+There is however still some value in studying sudoku solving algorithms as it might reveal how one can deal with harder variations of sudoku, such as puzzles with a 16 by 16 grid. 
+Sudoku is also, as will be discussed in section 2, an NP-Complete problem which means that it is one of many computational difficult problems. 
+One hope of this study is to contribute to the discussion about how one can deal with such puzzles. 
+We will as mentioned in section 1.2 not discuss how our algorithms could be used in other areas, but seen as many NP-Complete problems can frequently be transformed into others it is still plausible that our result could be valueable. 
 Sudoku is one of those NP-complete problems \cite{complexity} which briefly speaking means that 
-no known effective algorithm exists that solve them. 
-For now we will however only conclude that there exists some similarities between 
-Sudoku and some of those NP-complete problems, such as latin squares and graph colouring. 
-
-
-\begin{comment}
-\section{Background}
-Ever since Sudoku started to get popular in the 80s it have been studied from different perspectives by both computer scientists and mathematicans.
-Many of those results have some impact on this thesis since many different aspects are studied. Some results that are of value but of minor direct use is the proof for Sudoku's NP-completeness \cite{complexity} and the proof that the minimal number of clues in a puzzle is 17.
-\cite{17clueProof} Enumeration of Sudoku solutions is also relevant to this thesis in order to give a clearer picture of how big the search space is for solutions. \cite{enumeration} 
-
-The most important sources are the ones that concern the algorithms.
-Primarly the chosen algorithms, but some other reports concerning other algorithms may also be of interest. Those directly related to the chosen algorithms are. \cite{techniques,boltzmann,stochastic,review} There are however as mentioned also some other articles that have helped in both chosing of the algorithms, but also by algorithmic ideas that can be used.
-Those articles and webpages are. \cite{discrepancySearch,culturalSwarms,culturalSwarms}
-\end{comment}
 
 \chapter{Background}
 The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers.
@@ -180,11 +142,9 @@ When a deadend is reached, the algorithm backtracks to a earlier guess and tries
 This means that the backtracking algorithm does an extensive search to find a solution.
 The main drawback to this algorithm is that it is exponential in time complexity, but will on the other hand always find a solution sooner or later if one exists.
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
-As a result it could be used to generate valid Sudoku puzzles (with unique solutions).
-\newline
+As a result it could be used to generate valid sudoku puzzles (with unique solutions).\\
 Parallelising is something that could improve this algorithm considerable.
-The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.
-\newline
+The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.\\
 There are several interesting variations of this algorithm that might prove to vary in effiecency.
 The main variations regards in which order the squares are visited.
 One might for instance search the squares in random order or in some order that is defined by the structure of the Sudoku.
@@ -221,8 +181,7 @@ The logical reasoning one might use with a swordfish is that since the configura
 The other squares in those rows and columns with the digit 4 as a candidate may therefore remove 4 as a candidate.
 Swordfish is the special case of this concept where 3 rows and columns are involved in the loop, but the concept also applies to loops within 2 rows and columns (X-wing) and even loops with more than 3 rows and columns involved (jellyfish and squirmbag).
 
-\includegraphics{images/swordfish1.png}
-\newline
+\includegraphics{images/swordfish1.png}\\
 \includegraphics{images/swordfish2.png}
 
 \end{description}
@@ -342,15 +301,13 @@ The first statistical method that is applied is to make sure that variance in pr
 This is done by measuring a specific algorithms solving time for a specific puzzle multiple times. 
 The mean value of those times are then calculated and bootstraping are used to attain a 95\% confidence interval of 0.05 seconds. 
 The reason bootstraping is used is because it does not require the stochastic variable to be a certain distribution. 
-This is necessary since the distribution of the processor perfomance is unkown and also since the distribution might vary between different puzzles. 
-\newline
+This is necessary since the distribution of the processor perfomance is unkown and also since the distribution might vary between different puzzles. \\
 The meanvalues are then saved as described in section 3.1.
 It is now that the real analyses of the algorithms begins. 
 Even if the representation of the results does not really classify as a statistical method it is appropriate to mention that the results are displayed as histograms which means that the data are sorted and devided into bars of equal width. 
 For this study this means each bar represents a fixed size solution time intervall. 
 The height of the bars are proportional to the frequency data points falls into that bar's time intervall.
-After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms. The usefullness of this somewhat unrigouros approach shall not negleted, but shall also use statistical methods to rigourosly prove some relations.
-\newline
+After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms. The usefullness of this somewhat unrigouros approach shall not negleted, but shall also use statistical methods to rigourosly prove some relations.\\
 The first thing one think of looking for is probably how the different algorithms compare in solving ability. 
 This means that one want to find out if one algorithm is better than other algorithms. 
 Since the distribution again is unknown one has to rely on more general statistical tests. 
@@ -360,11 +317,18 @@ The tests uses the binomial theorem to see if the sign of the difference is unev
 One can then determine if an algorithm performs better than an other algorithm with a certain confidence.
 Since the distribution of the solution times are unknown it is not possible for wilcoxons sign test to give any measurement of how much better an algorithm is than another algorithm.
 One might however make a histogram of the difference which leads us to the next aspect, namely difficulty rating and distribution. 
+%Another approach that are also performed are to test if the test data seems to follow a certain distribution. This is done with 
 Difficulty rating for each algorithm can easily be calculated by making histograms of the solution times for each algorithm. 
 One aim of this study have however been to determine if there is puzzles that are inherently difficult, that is regardless of solution method.
-To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rule-based algorithms and the result can therefore not speak for other solution methods.
-The method used is however  
-
+To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rulebased algorithms and the result can therefore not speak for other solution methods.
+The method used is however built on the fact that independent events, say A and B, must follow the following property:
+\[
+P(A \cap B) = P(A) P(B)
+\] 
+If A is chosen to be the event that a puzzle is within algorithms 1 worst 10\% puzzles.
+B is similiarly chosen to be the event that a puzzle is within the 10 \% worst puzzles for algorithm 2.
+Since $P(A \cap B)$ shall den be 1 \% a statistical test can be set up to determine if the 10 \% worst puzzles are independent of algorithm. This is done by measuring the probability that the measured results appear if the null hypothesis is ascertained. If the probability is very low one can determine that the worst puzzles are not independent on the algorithms to a certain confidence level.
+Similarly the easiest puzzles will be checked for independence.\\
 \subsection{Computational constraints}
 
 
@@ -443,6 +407,30 @@ It is however difficult to tell which those will be now since they greatly depen
 
 \chapter{Analysis}
 %TODO, davnils/pabergg
+In this section multiple results will be presented together with a discussion about how the results could be interpreted. 
+Section 4.1 is devoted to presenting how the different algorithms performed. 
+Section 4.2 explains how the different puzzles can be  
+
+\section{Time distributions}
+The time distributions of individual algorithms over the test set shows several things.
+One can see if there seem to be no particular difference between puzzles or if some puzzles seem to be more difficult for the algorithm to solve.
+
+\subsection{Rule-based solver}
+The rule-based solver was by far the fastest algorithm in the study and also had the lowest standard deviation. 
+The result was a mean value of 0.02 seconds and a standard deviation of 0.02 seconds as well. 
+The time distribution for the rule-based solver can be seen in 
+figure ~\ref{fig:rule-basedDistribution}. 
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/rulebaseddistribution.png}
+\end{tabularx}}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time.}
+\label{fig:rule-basedDistribution}
+\end{figure}
+
+The figure is a zommed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and all measurements was stable. The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds those have been removed from the figure.
+ 
 
 \chapter{Conclusions}
 %TODO, davnils
@@ -494,6 +482,7 @@ Ackley D, Hinton G. A Learning Algorithm for Boltzmann Machines. [homepage on th
 \bibitem{difficulty}
 %TODO Patrik: fix this reference
 %http://www.sudokuwiki.org/Weekly_Sudoku.asp
+blargh
 \end{thebibliography}
 
 \appendix

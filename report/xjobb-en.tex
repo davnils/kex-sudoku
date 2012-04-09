@@ -22,7 +22,7 @@
 \begin{abstract}
 This is a bachelor thesis that studies and compare four different sudoku
 solving algorithms.
-Those algorithms are rulebased, backtracking, neural network and 
+Those algorithms are rule-based, backtracking, neural network and 
 cultural genetic.
  The comparison consisted of measuring the algorithms, including
 variations of the algorithms, against a database of 49 151 different 17-clue sudoku
@@ -60,7 +60,7 @@ To be able to compare different ideas, several algorithms will be used in the co
 The project will not only try to identify which algorithm seems to fit best for 
 a specific aspect of sudoku, but also conclude how each algorithm performs itself and why.
 \newline
-The algorithms that will be studied are backtrack solver, ruledbased solver, 
+The algorithms that will be studied are backtrack solver, rule-based solver, 
 nueral network solver and cultural genetic solver. 
 Those will be discussed and explained in more detail in section 2.1 and 3. 
 Variations of those algorithms will also be studied so there will in effect 
@@ -140,10 +140,9 @@ The algorithms that was chosen are the following:
 \begin{itemize}
     \item Backtracking: Backtracking is probably the most basic sudokusolving strategy for computer algorithms.
 It is a kind of a bruteforce method which tries different numbers and if it fails it backtracks and try a different number.
-    \item Ruledbased: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
+    \item Rule-based: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
 This method is very similar to how humans solve sudoku and the rules used is in fact derived from human solving methods.
-    \item Cultural genetic: 
-    \item Nueral Network: Modelling a sudoku by using a constraint solving artificial neural network.
+    \item Boltzmann machine: Modeling a sudoku by using a constraint solving artificial neural network.
 The most natural way of encoding constraints is with a reccurent stochastic boltzmann network.
 By overlaying the input grid over all neural network nodes and then simulating until it is stable, a valid solution can be found.
 This way of solving constraint problems can be seen as a natural way of encoding data and constraints.
@@ -180,7 +179,7 @@ One might for instance first fill in all possible numbers in each empty square a
 One might also vary how the guesses are done.
 Some rules regarding how the guesses are done might lead to a higher probability to find a solution which in turn will make the whole algorithm faster as the solutions will be found earlier in the search.
 
-\subsection{Ruledbased}
+\subsection{Rule-based}
 This algorithm relies on the logic rules that humans use to solve sudoku.
 Those rules works as proofs and either determines that a square must be a certain number or prooves that a certain square can not contain a certain number.
 The rules that are used are as follows:
@@ -322,7 +321,7 @@ Multiple aspects of the results was considered when analysing and comparing the 
 \subsection{Difficulty rating}
 One can often find difficulty ratings associated to sudoku puzzles in puzzle books etc. Those are often based on the level of human solving techniques that are needed to solve the puzzle in question. \cite{difficulty} 
 This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
-This comparison will be limited to the rulebased and backtracking algorithms and the goal will be to see if there is a correlation between how hard the puzzles are. 
+This comparison will be limited to the rule-based and backtracking algorithms and the goal will be to see if there is a correlation between how hard the puzzles are. 
 Since only two algorithms will be used, the results will be somewhat uncertain but it will be a beginning in determining if certain puzzles are inherently difficult independent on which algorithms are used to solve it.
 
 \subsection{Generation and Parallelising}
@@ -332,7 +331,7 @@ This is a more practical aspect of the comparison and no tests will be done. It 
 The test data consisted of multiple puzzles that was chosen beforehand.
 Since the set of test puzzles can affect the outcome of this study it is appropriate to motivate the choice of puzzles.
 As was discovered during the study the Boltzmann machine algorithm did not perform as well as the other algorithms and some modifications to which puzzles was used was therefore done.
-The backtracking and rulebased algorithms was however both tested on a set of 49151 17-clue puzzles. 
+The backtracking and rule-based algorithms was however both tested on a set of 49151 17-clue puzzles. 
 Those was found on \cite{database} and is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
 The reason for chosing this specific database is because the generation of the puzzles does not involve a specific algorithm but is rather a collection of puzzles found by different puzzle generating algorithms.  
 The puzzles are therefore assumed to be represantative of all 17-clue puzzles. 
@@ -373,10 +372,8 @@ Since the distribution of the solution times are unknown it is not possible for 
 One might however make a histogram of the difference which leads us to the next aspect, namely difficulty rating and distribution. 
 Difficulty rating for each algorithm can easily be calculated by making histograms of the solution times for each algorithm. 
 One aim of this study have however been to determine if there is puzzles that are inherently difficult, that is regardless of solution method.
-To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rulebased algorithms and the result can therefore not speak for other solution methods.
+To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rule-based algorithms and the result can therefore not speak for other solution methods.
 The method used is however  
-
-\newline
 
 \subsection{Computational constraints}
 
@@ -438,7 +435,7 @@ As the data from the generation testing will be very similar to the data from th
 
 At this point, the conclusions that can be drawn are very limited.
 This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented.
-Some tests so far however show that the ruledbased solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules.
+Some tests so far however show that the rule-based solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules.
 Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most sudoku puzzles probably are easy.
 An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems.
 Backtracking algorithms with some variations have also been tested, but at a smaller scale.

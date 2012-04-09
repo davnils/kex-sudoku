@@ -87,15 +87,15 @@ The background gives an introduction to Sudoku solving and the various approache
 
 \section{Sudoku fundamentals}
 %list rules and puzzle difficulties, puzzle uniqeness
-A Sudoku game consists of a 9x9 grid of numbergs, each belonging to the range 1-9.
+A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
 Initially a subset of the grid is revealed and the goal is to fill the reamining grid with valid numbers.
 The grid is guarded by certain rules restricting which values that are valid insertions, with the initial subset always being valid.
-The three main rules are: row and columns can only contain all 1-9 digits exactly once, which also applies to each one of the nine 3x3 subgrids \cite{17clueProof}.
+The three main rules are: rows and columns can only contain all 1-9 digits exactly once, which also applies to each one of the nine 3x3 subgrids \cite{17clueProof}.
 In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by studying the size of the initial subset and solving for all possible solutions.
 
 The size of the given subset, typically referred to as the number of clues, determine the difficulty of finding all grid values and thereby solving the Sudoku.
 Commonly the number of clues are reduced for increased difficulty with difficulty levels such as "easy", "medium" and "hard" being common ratings in newpapers.
-Rating puzzles is however not just that simple but requires more extensive analysis, something which has been studied separately (http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.6263\&rep=rep1\&type=pdf\#page=91).
+Rating puzzles is however not just that simple but requires more extensive analysis, something which has been studied (http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.6263\&rep=rep1\&type=pdf\#page=91).
 
 There is however a lower limit on the number of clues given that results in a unique solution.
 This limit was proven to be 17 \cite{17clueProof}, limiting the interesting number of clues to the range of 17-80.
@@ -105,7 +105,7 @@ This limit was proven to be 17 \cite{17clueProof}, limiting the interesting numb
 Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic}(http://www.springerlink.com/index/L14T86X63XQ7402T.pdf, "Research on Construting of Sudoku Puzzles") \cite{generation}.
 
 The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete \cite{complexity}.
-While being theoretically interesting a an result it has also motivated research into heurstics, resulting in a wide range of available solving methods.
+While being theoretically interesting as an result it has also motivated research into heurstics, resulting in a wide range of available solving methods.
 Some of these algorithms include backtrack \cite{searchBased}, rule-based \cite{techniques}, cultural genetic with variations\cite{stochastic}, and Boltzmann machines \cite{boltzmann}.
 
 Given the large variety of solvers available it is interesting to group them together with similar features in mind and try to make generic statements about their performance and other aspects.
@@ -195,7 +195,15 @@ The variations of this algorithm therefore consists of different sets of rules (
 \subsection{Boltzmann machine}
 The concept of Boltzmann machines is gradually introduced by beginning with the neuron, network and finally concluding with a discussion on simulation techniques.\\
 
-The central part of an artificial neural network (ANN) is the neuron, as pictured in (TODO).
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=10cm]{images/neuron.png}
+\end{tabularx}}
+\caption{A single neuron with showing weighted inputs from other neurons, bias threshold, and activation function.}
+\label{fig:neural-Neuron}
+\end{figure}
+The central part of an artificial neural network (ANN) is the neuron, as pictured in \ref{fig:neural-Neuron}. .
 It decides if to fire an output signal by summing upp all inputs, tresholding the value and applying an activation function producing a binary output value.
 In the case of Boltzmann machines the activation function is stochastic and the probablility of a neuron being active is defined as follows:
 \[

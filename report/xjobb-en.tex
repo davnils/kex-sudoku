@@ -44,12 +44,12 @@ TODO:
 \chapter{Introduction}
 %TODO, pabergg
 Sudoku is a game that under recent years have gained popularity throughout the world.
-Many newspaper today contain sudoku puzzles and there are also competitions devoted 
-to sudoku solving.
+Many newspaper today contain Sudoku puzzles and there are also competitions devoted 
+to Sudoku solving.
 It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computers algorithms.
 
 \section{Problem specification}
-There are multiple algorithms that can solve sudoku puzzles.
+There are multiple algorithms that can solve Sudoku puzzles.
 In this report we discuss three different algorithms and compare them in their abbilities.
 The primary focus is on solving ability, but some results regarding difficulty rating are also presented.
 The solving ability that is of primarly focus is the time distribution among the tested puzzles for each algorithm, but some discussion regarding other topics will also be done.
@@ -70,16 +70,16 @@ All algorithms are implemented by ourselfes and optimization is therefore an iss
 We have therefore only aimed for exploring the underlying ideas of the algorithms and not the algorithms themselfes.
 There is however the possibility that some dramatic optimization could have been done that affect the result, and we have therefore been quite cautios about this particular issue. There is however still a lot of things that can be determined with certainty.
 
-    \item Special sudokus: There are several variations of sudoku including different sizes of the grid.
-This thesis will however be limited to the study of ordinary sudoku, which is 9 by 9 grids.
-    \item The results of this thesis will be applicable to other areas apart from sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
+    \item Special Sudokus: There are several variations of Sudoku including different sizes of the grid.
+This thesis will however be limited to the study of ordinary Sudoku, which is 9 by 9 grids.
+    \item The results of this thesis will be applicable to other areas apart from Sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
 \end{itemize}
 
 \section{Purpose}
-As already mentioned, sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
-As a result, it is of interest to find effective sudoku solving and generating algorithms. 
-For most purposes there already exist satisfactory algorithms, and as a result one might struggle to see the use in studying sudoku solving algorithms. 
-There is however still some value in studying sudoku solving algorithms as it might reveal how one can deal with harder variations of sudoku, such as puzzles with a 16 by 16 grid. 
+As already mentioned, Sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
+As a result, it is of interest to find effective Sudoku solving and generating algorithms. 
+For most purposes there already exist satisfactory algorithms, and as a result one might struggle to see the use in studying Sudoku solving algorithms. 
+There is however still some value in studying Sudoku solving algorithms as it might reveal how one can deal with harder variations of Sudoku, such as puzzles with a 16 by 16 grid. 
 Sudoku is also, as will be discussed in section 2, an NP-Complete problem which means that it is one of many computational difficult problems. 
 One hope of this study is to contribute to the discussion about how one can deal with such puzzles. 
 We will as mentioned in section 1.2 not discuss how our algorithms could be used in other areas, but seen as many NP-Complete problems can frequently be transformed into others it is still plausible that our result could be valueable. 
@@ -142,7 +142,7 @@ When a deadend is reached, the algorithm backtracks to a earlier guess and tries
 This means that the backtracking algorithm does an extensive search to find a solution.
 The main drawback to this algorithm is that it is exponential in time complexity, but will on the other hand always find a solution sooner or later if one exists.
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
-As a result it could be used to generate valid sudoku puzzles (with unique solutions).\\
+As a result it could be used to generate valid Sudoku puzzles (with unique solutions).\\
 Parallelising is something that could improve this algorithm considerable.
 The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.\\
 There are several interesting variations of this algorithm that might prove to vary in effiecency.
@@ -255,7 +255,7 @@ This also includes what computational limitations was present and how this effec
 \section{Test setup}
 %TODO HARDWARE SPECIFICATION
 The central part of the test setup was the test framework which timed and tested each algorithm on different puzzles. 
-This was done by implementing each algorithm as separate classes that all inherited from a superclass for all sudokusolvers.
+This was done by implementing each algorithm as separate classes that all inherited from a superclass for all Sudokusolvers.
 This made sure the implementations was consistent which made the test process easier.
 The last part of the setup consisted of the test puzzles which was tested on the algorithms.
 The test consisted of timing the algorithms on each puzzle. 
@@ -347,64 +347,6 @@ The downside of choosing this collection is that some algorithms may perform poo
 This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle.
 The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
 
-\section{Comparison methods}
-As already mentioned several comparisons and measurements will be carried out to 
-analyse different aspects of the algorithms.
-Those will include statistically tests 
-to for instance determine with what confidence one can say that one algorithm performs 
-better than another. 
-The following subsections will however explain more clearly what will be measured 
-regarding each aspect. 
-Two of the general problems one most confront when doing this kind of study is how one 
-shall make sure that the measured time for  running a algorithm is correct. 
-There might for instance be delays due to slow input and output and one must also account 
-to variations in runningtime. 
-The input/output delays can be avoided by communicating with the algorithm through a 
-direct interface. 
-Variations in runningtime is however difficult to predict, but one might however use a 
-meanvalue as a approximation. 
-To some extent the variations of the runningtimes will be reduced as the algorithms are tested against a large set of puzzles.  
-
-\subsection{Solving}
-The main interest of this thesis is the algorithms ability to solve sudokus and most focus will therefore also be on measuring their solving abilities.
-As already mentioned, there is a fixed collection of puzzles that shall be tested on each algorithm and also on each variation of the algorithms.
-The data needed for the analysis will consist of measuring the time it takes for each algorithm to solve each puzzle.
-This will result in quite a big data set and consideration must therefore be taken regarding what statisticall methods are used to analyse it. 
-\underline{(It is however at this point not decided which stasticall tests shall be performed so a discussion of that is yet to come).}
-
-\subsection{Generation}
-Sudoku solving algorithms may also be used to generate puzzles.
-One way this could be done in is by randomly placing numbers in squars and then using the solver to determine if there is a Sudoku and if it is unique.
-Some solvers may however be better suited for this as some will for example not be vary suited for determining if a solution is unique.
-There are however also other methods for generating puzzles as explained in \cite{generation}.
-The algorithms will therefore be compared at theirs ability to generate puzzles in any way that the authors thinks suitable.
-The comparison will regard how correct the generated puzzles are (if there is always a unique solution) and also how fast the generation was done.
-As the data from the generation testing will be very similar to the data from the solving tests, the same statistical tests will be used.
-
-\subsection{Parallelising}
-
-\subsection{Difficulty rating}
-
-\section{Comparison}
-
-At this point, the conclusions that can be drawn are very limited.
-This is largerly due to the fact that the test system have not yet been implemented even thought the first draft of the algorithms have been implemented.
-Some tests so far however show that the rule-based solver seems to be able to solve roughly 50\% of the puzzles with only hidden and naked single rules.
-Since puzzles that only requires these rules are generally regarded as very easy puzzles, one can conclude that most Sudoku puzzles probably are easy.
-An hypothesis that is related to that but not yet tested is that it will probably be difficult to generate difficult problems.
-Backtracking algorithms with some variations have also been tested, but at a smaller scale.
-It seems so far that backtracking seems to be a less fit algorithm for solving 17-clue puzzles, but some optimization are yet to be done. 
-Those are the subsections expected to exist in the finished report.
-\subsection{Solving}
-
-This will probably be the most extensive subsection and it will probably be divided into smaller parts.
-It is however difficult to tell which those will be now since they greatly depend on what results we get.
-\section{Generation}
-
-\section{Parallelising}
-
-\section{Difficulty ratings}
-
 \chapter{Analysis}
 %TODO, davnils/pabergg
 In this section multiple results will be presented together with a discussion about how the results could be interpreted. 
@@ -429,7 +371,17 @@ figure ~\ref{fig:rule-basedDistribution}.
 \label{fig:rule-basedDistribution}
 \end{figure}
 
-The figure is a zommed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and all measurements was stable. The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds those have been removed from the figure.
+The figure is a zommed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. 
+All puzzles was solved and all measurements was stable. 
+The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds those have been removed from the figure to make it clearer.
+As the figure displays, the solution times go up to a peak at about 0.17 seconds.
+The solution times then drops at an approximately exponential rate.
+This is believed to due to the use of backtracking.
+The reason why backtracking is thought to result in this behaviour is because all searchtrees is believed to be equally probable and one can therefore expect to find the solution at any leaf in the searchtree.
+This in turn leads to the classical property of memorylessness in the exponential distribution since you can not know if
+
+
+
  
 
 \chapter{Conclusions}

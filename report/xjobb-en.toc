@@ -25,21 +25,11 @@
 \contentsline {subsection}{\numberline {3.4.1}Statistical tests}{13}
 \contentsline {subsection}{\numberline {3.4.2}Computational constraints}{14}
 \contentsline {section}{\numberline {3.5}Benchmark puzzles}{14}
-\contentsline {section}{\numberline {3.6}Comparison methods}{15}
-\contentsline {subsection}{\numberline {3.6.1}Solving}{15}
-\contentsline {subsection}{\numberline {3.6.2}Generation}{16}
-\contentsline {subsection}{\numberline {3.6.3}Parallelising}{16}
-\contentsline {subsection}{\numberline {3.6.4}Difficulty rating}{16}
-\contentsline {section}{\numberline {3.7}Comparison}{16}
-\contentsline {subsection}{\numberline {3.7.1}Solving}{16}
-\contentsline {section}{\numberline {3.8}Generation}{17}
-\contentsline {section}{\numberline {3.9}Parallelising}{17}
-\contentsline {section}{\numberline {3.10}Difficulty ratings}{17}
-\contentsline {chapter}{\chapternumberline {4}Analysis}{19}
-\contentsline {section}{\numberline {4.1}Time distributions}{19}
-\contentsline {subsection}{\numberline {4.1.1}Rule-based solver}{19}
-\contentsline {chapter}{\chapternumberline {5}Conclusions}{21}
-\contentsline {chapter}{\chapternumberline {6}References}{23}
-\contentsline {chapter}{Bibliography}{25}
-\contentsline {chapter}{Appendices}{26}
-\contentsline {chapter}{\chapternumberline {A}RDF}{27}
+\contentsline {chapter}{\chapternumberline {4}Analysis}{17}
+\contentsline {section}{\numberline {4.1}Time distributions}{17}
+\contentsline {subsection}{\numberline {4.1.1}Rule-based solver}{17}
+\contentsline {chapter}{\chapternumberline {5}Conclusions}{19}
+\contentsline {chapter}{\chapternumberline {6}References}{21}
+\contentsline {chapter}{Bibliography}{23}
+\contentsline {chapter}{Appendices}{24}
+\contentsline {chapter}{\chapternumberline {A}RDF}{25}

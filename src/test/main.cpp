@@ -3,7 +3,7 @@
 #include <vector>
 
 //#include "../cultural/Cultural.h"
-//#include "../neural/Boltzmann.h"
+#include "../neural/Boltzmann.h"
 #include "TestFramework.h"
 #include "../rulebased/rulebased2/Rulebased.h"
 
@@ -12,8 +12,8 @@
  */
 int main(int argc, char ** argv)
 {
-  std::string inPath = "../../analysis/backtrack/newreference0";
-  std::string outPath = "../../analysis/backtrack/newout";
+  std::string inPath = "../../analysis/boltzmann_exp/reference";
+  std::string outPath = "../../analysis/boltzmann_exp/out";
 
   if(argc == 2) {
     std::string suffix = argv[1];
@@ -25,8 +25,8 @@ int main(int argc, char ** argv)
   TestFramework framework(inPath, outPath);//../../testdata/minlex");
   
   //framework.addSolver(new Cultural);
-  //framework.addSolver(new Boltzmann);
-  framework.addSolver(new Rulebased);
+  framework.addSolver(new Boltzmann);
+  //framework.addSolver(new Rulebased);
   //...
 
   std::vector<result_t> res = framework.runTests();

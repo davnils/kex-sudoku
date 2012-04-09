@@ -14,7 +14,7 @@ const clock_t MAX_EXECUTION_TIME = 20;
 const float UNSTABLE_MEASUREMENT = -1;
 const float NO_SOLUTION_FOUND = -2;
 const float CONFIDENCE = 0.95;
-const float BOOTSTRAP_INTERVAL = 0.05f;
+const float BOOTSTRAP_INTERVAL = 1.0f;
 
 /**
  * 

@@ -9,10 +9,10 @@
 
 const uint8_t NOT_ASSIGNED = 0;
 const int MAX_TEMPERATURE = 100;
-const float dTEMPERATURE = 0.0004; //0.0004
-const float MIN_TEMPERATURE = 0.01;
-const int REDUCED_PUZZLE_RATE = 30;
-const int REDUCED_PUZZLE_FACTOR = 10;
+const float dTEMPERATURE = -0.000035; //0.0004
+const float MIN_TEMPERATURE = 0.001;
+const int REDUCED_PUZZLE_RATE = 35;
+const int REDUCED_PUZZLE_FACTOR = 4;
 
 typedef std::vector<Square> group_t;
 typedef std::vector<group_t> internal_grid_t;

@@ -1,4 +1,5 @@
 #include "Boltzmann.h"
+#include <cmath>
 #include <cstdlib>
 #include <iostream>
 
@@ -71,8 +72,9 @@ void Boltzmann::printGrid(grid_t g)
  */
 bool Boltzmann::runStep(clock_t endTime)
 {
+  unsigned long iteration = 0;
   do {
-    //if(rand() % 1000 < 10) std::cout << "temperature: " << temperature << std::endl;
+    //if(rand() % 10000 < 10) std::cout << "temperature: " << temperature << ", iteration: " << iteration << std::endl;
     internal_grid_t::iterator rowIt;
     for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
       group_t::iterator squareIt;
@@ -87,7 +89,8 @@ bool Boltzmann::runStep(clock_t endTime)
       return(true);
     }
 
-    temperature = std::max(temperature - dTEMPERATURE, MIN_TEMPERATURE);
+    iteration++;
+    temperature = std::max((float)(MAX_TEMPERATURE*exp(dTEMPERATURE*iteration)), MIN_TEMPERATURE);
   } while(clock() < endTime);
 
   return(false);

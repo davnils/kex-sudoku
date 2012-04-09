@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.5)  9 APR 2012 14:07
+This is pdfTeX, Version 3.1415926-1.40.10 (TeX Live 2009/Debian) (format=pdflatex 2011.4.5)  9 APR 2012 15:52
 entering extended mode
  %&-line parsing enabled.
 **xjobb-en.tex
@@ -822,33 +822,28 @@ File: images/swordfish2.png Graphic file (type png)
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [8 <./images/swordfish1.png (PNG copy)>]
-<images/neural1.png, id=64, 259.97125pt x 249.93375pt>
-File: images/neural1.png Graphic file (type png)
+Underfull \hbox (badness 10000) in paragraph at lines 240--241
 
-<use images/neural1.png> [9 <./images/swordfish2.png (PNG copy)>] [10 <./images
-/neural1.png (PNG copy)>]
-Underfull \hbox (badness 10000) in paragraph at lines 286--288
+ []
+
+[9 <./images/swordfish2.png (PNG copy)>]
+Underfull \hbox (badness 10000) in paragraph at lines 256--264
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 291--295
+Underfull \hbox (badness 10000) in paragraph at lines 269--274
 
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 296--300
-
- []
-
-[11] [12
+[10] [11] [12
 
 ]
 Underfull \vbox (badness 1845) has occurred while \output is active []
 
  [13]
 [14] [15] [16]
-Overfull \hbox (375.50911pt too wide) in paragraph at lines 429--434
+Overfull \hbox (375.50911pt too wide) in paragraph at lines 405--410
 \T1/lmr/m/n/10.95 sta-tis-ti-call meth-ods are used to anal-yse it. $[]$ 
  []
 
@@ -863,126 +858,126 @@ Overfull \hbox (375.50911pt too wide) in paragraph at lines 429--434
 ]
 bibitemlist
 
-Underfull \hbox (badness 7888) in paragraph at lines 489--490
+Underfull \hbox (badness 7888) in paragraph at lines 465--466
 []\T1/lmr/m/n/10.95 Astraware Lim-ited. Tech-niques For Solv-ing Su-doku. [home
 -page on
  []
 
 
-Underfull \hbox (badness 3942) in paragraph at lines 489--490
+Underfull \hbox (badness 3942) in paragraph at lines 465--466
 \T1/lmr/m/n/10.95 the In-ter-net]. 2008 [cited 2012 Mar 8]. Avail-able from:, W
 eb site:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 492--493
+Underfull \hbox (badness 10000) in paragraph at lines 468--469
 []\T1/lmr/m/n/10.95 Ekeberg. Boltz-mann Ma-chines. [home-page on the In-ter-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 492--493
+Underfull \hbox (badness 10000) in paragraph at lines 468--469
 \T1/lmr/m/n/10.95 net]. 2012 [cited 2012 Mar 8]. Avail-able from:, Web site:
  []
 
 
-Overfull \hbox (65.23807pt too wide) in paragraph at lines 492--493
+Overfull \hbox (65.23807pt too wide) in paragraph at lines 468--469
 \T1/lmr/m/n/10.95 http://www.csc.kth.se/utbildning/kth/kurser/DD2432/ann12/fore
 lasningsanteckningar/07-
  []
 
 
-Underfull \hbox (badness 4291) in paragraph at lines 498--499
+Underfull \hbox (badness 4291) in paragraph at lines 474--475
 []\T1/lmr/m/n/10.95 . An In-com-plete Re-view of Su-doku Solver Im-ple-men-ta-t
 ions. [home-
  []
 
 
-Underfull \hbox (badness 5893) in paragraph at lines 498--499
+Underfull \hbox (badness 5893) in paragraph at lines 474--475
 \T1/lmr/m/n/10.95 page on the In-ter-net]. 2011 [cited 2012 Mar 8]. Avail-able 
 from:,
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 501--502
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
 []\T1/lmr/m/n/10.95 Harvey W, Gins-berg M. Lim-ited dis-crep-ancy search.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 501--502
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
 \T1/lmr/m/n/10.95 [home-page on the In-ter-net]. No date [cited 2012 Mar
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 501--502
+Underfull \hbox (badness 10000) in paragraph at lines 477--478
 \T1/lmr/m/n/10.95 13]. Avail-able from: Uni-ver-sity of Ore-gon, Web site:
  []
 
 
-Overfull \hbox (52.92001pt too wide) in paragraph at lines 501--502
+Overfull \hbox (52.92001pt too wide) in paragraph at lines 477--478
 \T1/lmr/m/n/10.95 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.2
 426&rep=rep1&type=pdf 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
 []\T1/lmr/m/n/10.95 Cazenave Cazenave T. A search based Su-doku solver. [home-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
 \T1/lmr/m/n/10.95 page on the In-ter-net]. No date [cited 2012 Mar 13]. Avail-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 504--505
+Underfull \hbox (badness 10000) in paragraph at lines 480--481
 \T1/lmr/m/n/10.95 able from: Uni-ver-sité Paris, Dept. In-for-ma-tique Web site
 :
  []
 
 
-Overfull \hbox (47.44502pt too wide) in paragraph at lines 504--505
+Overfull \hbox (47.44502pt too wide) in paragraph at lines 480--481
 \T1/lmr/m/n/10.95 http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.64.4
 59&rep=rep1&type=pdf 
  []
 
 [25]
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 483--484
 []\T1/lmr/m/n/10.95 Mantere T, Koljo-nen J. Su-doku Solv-ing with Cul-tural Swa
 rms.
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 483--484
 \T1/lmr/m/n/10.95 AI and Ma-chine Con-scious-ness [home-page on the In-ter-net]
 . 2008
  []
 
 
-Underfull \hbox (badness 7869) in paragraph at lines 507--508
+Underfull \hbox (badness 7869) in paragraph at lines 483--484
 \T1/lmr/m/n/10.95 [cited 2012 Mar 13]. Avail-able from: Uni-ver-sity of Vaasa, 
 De-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 507--508
+Underfull \hbox (badness 10000) in paragraph at lines 483--484
 \T1/lmr/m/n/10.95 part-ment of Elec-tri-cal En-gi-neer-ing and Au-toma-tion Web
  site:
  []
 
 
-Underfull \hbox (badness 1460) in paragraph at lines 510--511
+Underfull \hbox (badness 1460) in paragraph at lines 486--487
 []\T1/lmr/m/n/10.95 Morrow J. Gen-er-at-ing Su-doku Puz-zles as an In-verse Pro
 b-lem. [home-
  []
 
 
-Underfull \hbox (badness 5302) in paragraph at lines 510--511
+Underfull \hbox (badness 5302) in paragraph at lines 486--487
 \T1/lmr/m/n/10.95 page on the In-ter-net]. 2008 [cited 2012 Mar 13]. Avail-able
  from:
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 510--511
+Underfull \hbox (badness 10000) in paragraph at lines 486--487
 \T1/lmr/m/n/10.95 Uni-ver-sity of Wash-ing-ton, De-part-ment of Math-e-mat-ics 
 Web site:
  []
@@ -995,17 +990,17 @@ Web site:
 
  (./xjobb-en.aux) ) 
 Here is how much of TeX's memory you used:
- 4406 strings out of 493848
- 56153 string characters out of 1152824
+ 4401 strings out of 493848
+ 56051 string characters out of 1152824
  134242 words of memory out of 3000000
- 7632 multiletter control sequences out of 15000+50000
+ 7628 multiletter control sequences out of 15000+50000
  75543 words of font info for 54 fonts, out of 3000000 for 9000
  714 hyphenation exceptions out of 8191
  30i,11n,24p,1190b,346s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf/fonts/enc/dvips/lm/lm-ec.enc}{/usr/share/t
-exmf/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-r
-m.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/font
-s/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</
+exmf/fonts/enc/dvips/lm/lm-mathex.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-m
+athit.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf/font
+s/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf/fonts/enc/dvips/lm/lm-ts1.enc}</
 usr/share/texmf/fonts/type1/public/lm/lmbx10.pfb></usr/share/texmf/fonts/type1/
 public/lm/lmbx9.pfb></usr/share/texmf/fonts/type1/public/lm/lmex10.pfb></usr/sh
 are/texmf/fonts/type1/public/lm/lmmi10.pfb></usr/share/texmf/fonts/type1/public
@@ -1016,9 +1011,9 @@ ype1/public/lm/lmss10.pfb></usr/share/texmf/fonts/type1/public/lm/lmss12.pfb></
 usr/share/texmf/fonts/type1/public/lm/lmssbx10.pfb></usr/share/texmf/fonts/type
 1/public/lm/lmssdc10.pfb></usr/share/texmf/fonts/type1/public/lm/lmsy10.pfb></u
 sr/share/texmf/fonts/type1/public/lm/lmsy8.pfb>
-Output written on xjobb-en.pdf (33 pages, 350501 bytes).
+Output written on xjobb-en.pdf (33 pages, 320834 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
+ 187 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
- 21 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 16 words of extra memory for PDF output out of 10000 (max. 10000000)
 

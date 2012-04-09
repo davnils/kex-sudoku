@@ -14,8 +14,6 @@
 \contentsline {subsection}{\numberline {2.3.1}Backtrack}{7}
 \contentsline {subsection}{\numberline {2.3.2}Rule-based}{7}
 \contentsline {subsection}{\numberline {2.3.3}Boltzmann machine}{9}
-\contentsline {subsubsection}{Theory}{9}
-\contentsline {subsubsection}{Implementation}{11}
 \contentsline {chapter}{\chapternumberline {3}Method}{13}
 \contentsline {section}{\numberline {3.1}Test setup}{13}
 \contentsline {section}{\numberline {3.2}Comparison Methods}{13}

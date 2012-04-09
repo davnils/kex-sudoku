@@ -124,7 +124,7 @@ Those articles and webpages are. \cite{discrepancySearch,culturalSwarms,cultural
 \end{comment}
 
 \chapter{Background}
-The background gives a introduction of Sudoku solving and the various approaches to creating efficient solvers.
+The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers.
 
 \section{Sudoku fundamentals}
 %list rules and puzzle difficulties, puzzle uniqeness
@@ -155,7 +155,7 @@ Deterministic solvers include backtrack and rule-based.
 The typical layout of these is a predetermined selection of rules and a deterministic way of traversing all possible solutions.
 They can be seen as performing discrete steps and at every moment some transformation is applied in a deterministic way.
 Stochastic solvers include genetic algorithms and Boltzmann machines.
-They are typically based different stochastic selection criteria that decides how candidate solutions are constructed and how the general search path is built up.
+They are typically based on a different stochastic selection criteria that decides how candidate solutions are constructed and how the general search path is built up.
 While providing more flexibility and more a more generic approach to Sudoku solving there are weaker guarantees surrounding execution time until completion, since a solution can become apparent at any moment, but also take longer time \cite{stochastic}.
 
 \section{Evaluated algorithms}
@@ -169,10 +169,8 @@ It is a kind of a bruteforce method which tries different numbers and if it fail
     \item Rule-based: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
 This method is very similar to how humans solve Sudoku and the rules used is in fact derived from human solving methods.
     \item Boltzmann machine: Modeling a Sudoku by using a constraint solving artificial neural network.
-The most natural way of encoding constraints is with a recurrent stochastic boltzmann network.
-By overlaying the input grid over all neural network nodes and then simulating until it is stable, a valid solution can be found.
-This way of solving constraint problems can be seen as a natural way of encoding data and constraints.
-It is however difficult to reason about performance.
+Puzzles are seen as constraints describing which nodes that can not be connected to each other.
+These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits.
 \end{itemize}
 
 \subsection{Backtrack}
@@ -239,74 +237,51 @@ Other aspects that shall be studied are which rules shall be applied in which or
 The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
 
 \subsection{Boltzmann machine}
-In order to fully understand the artifical neural network approach of solving Sudoku puzzles, it is necessary to have some basic theoretical background before introducting the implementation.
+The concept of Boltzmann machines is gradually introduced by beginning with the neuron, network and finally concluding with a discussion on simulation techniques.\\
 
-\subsubsection{Theory}
-The artificial neural network solver is based on reccurrent stochastic networks that encode all properties of Sudoku.
-In the core there is a Boltzmann machine, which can be seen as a network of fully connected nodes, as pictured below.
-
-\includegraphics{images/neural1.png}
-
-The recurrent property implies that output connections are fed back into to neurons, or in this case, all nodes are fully connected.
-This definition often implies a hopfield network which is a somewhat limited version of the Boltzmann machine.
-What differentiates them and makes the latter more powerfull is the stochatic property, meaning state transitions of individual nodes are stochastic.
-
-In the case of Sudoku there are a total of 81*9 nodes; for every number being placed on the grid, there is nine possible assignments.
-When a solution is present in the network there will only be one node active in every group and the solution can be extracted by simply assigning the node index within the group as the resulting grid number.
-
-Given that a network of nodes has been defined it is also required to encode constraints.
-This is done by introducing weights on all edges in the fully connected network.
-All weights are stored in a weight matrix that satisfies the following conditions:
-
-\[
-w_{ii} = 0 \quad \forall i
-\]
-\[
-w_{ij} = w_{ji} \quad \forall i,j
-\]
-
-At any moment in the simulation there is a state present in the network, which is coded separately.
-Each node has a binary state s\_i of either on or off.
-This also translates to solutions, where only one of every nine neurons in groups will be in the state on.
-With weights and the state associated with every node of the network it is also useful to define an energy measure which is used to determine if the state of single neuron should be flipped.
-The difference in enery activation for a single node flipping state is given by the following equation, where theta is a offset used as an adjustable performance parameter \cite{boltzmann2}:
-\[
-\Delta E_{i} = \sum_{j} w_{ij} s_{j} - \theta
-\]
-
-Due to stochastic nature of boltzmann machines there is a separate probability function used to determine if a single neuron should flip its state during a discrete time step. \cite{boltzmann2}
-Here another adjustable performance parameter is introduced, T.
-In order to have convergence in the network towards a valid Sudoku solution it is necessary to control the probablity of state flipping as the simulation goes on.
-This is done by utilising simulated annealing which controls the temperature T over time.
-By lowering the value in a controlled fashion it is possible to maximize the probability of a final correct solution.
-
+The central part of an artificial neural network (ANN) is the neuron, as pictured in (TODO).
+It decides if to fire an output signal by summing upp all inputs, tresholding the value and applying an activation function producing a binary output value.
+In the case of Boltzmann machines the activation function is stochastic and the probablility of a neuron being active is defined as follows:
 \[
 p_{i=on} = \frac{1}{1+e^{-\frac{\Delta E_{i}}{T}}}
 \]
+$E_i$ is the summed up energy of the whole network into neuron $i$, which is a fully connected to all other neurons.
+T is a temperature constant controlling the rate of change during several evaluations with the probability $p_{i=on}$ during simulation.
+$E_i$ is defined as follows \cite{boltzmann2}:
+\[
+\Delta E_{i} = \sum_{j} w_{ij} s_{j} - \theta
+\]
+where $s_j$ is a binary value set if neuron $j$ is in a active state, which occurs with probability $p_{i=on}$, and $w_{ij}$ are weights between the current node and node $j$. $\theta$ is a constant offset used to control the overall activation.
 
-Using the previously introduced expressions it is now possible to describe the actual implementation and the steps necessary to solve Sudoku puzzles.
-\newline
+The state of every node and the associated weights describes the entire network and encondes the problem to be solved.
+In the case of Sudoku there is a need to represent all 81 grid values, each having 9 possible values.
+The resulting $81*9=729$ nodes are fully connected and have a binary state which is updated at every discrete timestep.
+Some of these nodes will have predetermined outputs since the initial puzzle will fix certain grid values and simplify the problem.
+In order to produce valid solutions it is necessary to insert weights describing known relations.
+This is done by inserting negative weights, making the interconnected nodes less likely to fire at the same time, resulting in reduced probability of conflicts.
+Negative weights are placed in rows, columns, 9x9 subgrids, and between nodes in the same square, since a single square should only contain a single active digit.\\
+%Eventually an image here
 
-\subsubsection{Implementation}
+In order to produce a solution the network is simulated in discrete timesteps.
+For every step, all probabilites are evaluated and states are assigned active with the given probability.
+Finally the grid is checked for conflicts and no conflicts implies a valid solution, which is gathered by inspecting which nodes are in a active state.
 
-The first step is to take initialize a random weight matrix and random states for all 81*9 nodes in the neural network.
-Then all given grid values are inserted as activiations of states in the associated groups of neurons, with all others being set to the off state.
-This ensures that only the given activations are active.
-\newline
+Even though the procedure detailed above eventually will find a solution, there are enhanced techniques used in order to converge faster to a valid solution.
+The temperature, $T$, can be controlled over time and is used to adjust the rate of change in the network while still allowing larger mutations to occur.
+A typical scheme being used is simulated annealing (TODO: ref).
+By starting off with a high temperature (typically $T = 100$) and gradually decreasing the value as time progresses, it is possible to guarantee convergence if the time steps are small enough (TODO: ref).
+Due to practical constraints it is not possible to guarantee a solution but simulated annealing provides a good foundation which was used.\\
 
-The second step is to encode Sudoku restrictions into the weight matrix.
-Negative connections are introduced between different digits on within the same group, in other words only one digit should be active on every place in the grid at the same time.
-The other properties of unique rows, unique columns and unique subsquares are encoded in the same way but processed with the whole weight matrix.
-\newline
+There are some implications of using a simple linear descent, beginning at a high temperature.
+Typically solutions are much less likely to appear in a Boltzmann machine before the temperature has been lowered enough to a critical level.
+This is due to the scaling of probabilites in the activation function (TODO: ref to figur).
+With a big temperature all probabilites are more or less equal, even though the energy is vastly different.
+With a low temperature the exponential function will produce a wider range of values, resuling in increasing probability of ending up with less conflicts.
 
-With all configuration done it is then time to launch the simulation, which is run in discrete time steps.
-At every time step the energy function is evaluated at all nodes.
-The energies are then processed which renders the probablities of nodes flipping state, which is then performed to varying degrees.
-Since simulated annealing is used with a lowered temperature T there also small adjustments at certain intervals.
-This is done in a timely manner which allows all puzzles to be solved but still doesn't waste any time for uneccessary computation.
-\newline
-A valid solution can be found by simple looking at all states and insepecting the requirements of Sudoku.
-Commonly the solution will appear in the end of the simulation when temperaure has been lowered to its minimum.
+This will affect the study since the linear temperature decrement was chosen to produce a final value at the end of the simulation.
+With increased probability of solutions appearing in the final part of the simulation, this leads to skew towards the end of the spectrum.
+Possible workarounds for problems like this are non-linear temperature descents, restarting temperature descent and multiple descents with increasing temperature difference.
+
 
 \chapter{Method}
 %TODO, pabergg

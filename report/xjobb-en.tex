@@ -255,26 +255,42 @@ This also includes what computational limitations was present and how this effec
 \section{Test setup}
 %TODO HARDWARE SPECIFICATION
 The central part of the test setup was the test framework which timed and tested each algorithm on different puzzles. 
-This was done by implementing each algorithm as separate classes that all inherited from a superclass for all Sudokusolvers.
-This made sure the implementations was consistent which made the test process easier.
-The last part of the setup consisted of the test puzzles which was tested on the algorithms.
-The test consisted of timing the algorithms on each puzzle. 
-Since there might be variations in processor performance multiple tests where performed with each puzzle. 
+The test framework was implemented as a separate part which made it possible to guarantee correct timing and also solving correctness of the algorithms.
+The algorithms was then called from the test work for each puzzle that was to be solved and the algorithm then returned when it finished.
+The test framework measured the solving time and recorded it. 
+Since there might be variations in processor performance multiple tests where performed on each puzzle. 
 The mean value was then saved for each puzzle and algorithm.
-As the variance in processor performance might vary depending on the puzzle tested a confidence intervall for the mean value was calculated for the mean value using bootstraping. 
-This will be described in more detail in section 3.4.
 
 \section{Comparison Methods}
 Multiple aspects of the results was considered when analysing and comparing the algorithms. The following three subsections describes those aspects in more detail. 
+
 \subsection{Solving}
-\subsection{Difficulty rating}
-One can often find difficulty ratings associated to Sudoku puzzles in puzzle books etc. Those are often based on the level of human solving techniques that are needed to solve the puzzle in question. \cite{difficulty} 
+The solving ability of an algorithm is ofcourse the most interesting aspect.
+By measuring the time it takes for a sudoku to solve different puzzles one
+can determine which algorithms are more effective.
+Solving ability is often given in the form of a mean value, but since puzzles vary greatly in difficulty this misses the bigger picture.
+An algorithm might for instance be equally good at all puzzles and one algorithm might be really good for one special kind of puzzles while performing poorly at others.
+They can still have the same mean value which illustrates why that is not a good enough representation of the algorithms effectiveness.
+We will therefore present histograms that shows the frequency at which it solves puzzles at a certain time intervall.
+This does not only depict a more interesting view of the sudoku solvers performance, but also shows possible underlying features such as if the sudoku solver solves the puzzle with an already known distribution.
+Those topics are mostly studied for each algorithm, but will also to some extent be compared between the algorithms.
+
+\subsection{Puzzle difficulty}
+One can often find difficulty ratings associated to Sudoku puzzles in puzzle books etc. 
+Those are often based on the level of human solving techniques that are needed to solve the puzzle in question. \cite{difficulty} 
 This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
-This comparison will be limited to the rule-based and backtracking algorithms and the goal will be to see if there is a correlation between how hard the puzzles are. 
-Since only two algorithms will be used, the results will be somewhat uncertain but it will be a beginning in determining if certain puzzles are inherently difficult independent on which algorithms are used to solve it.
+The test will primarly consist of determining if certain puzzles are inherently difficult, meaning that all algorithms rate them as hard.
+During the implementation process it was discovered that the Boltzmann machine performed much worse than the other algorithms and could therefore not be tested on the same set of puzzles.
+The comparison are therefore focused on the rule-based and backtracking algorithms.
 
 \subsection{Generation and parallelization}
-This is a more practical aspect of the comparison and no tests will be done. It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelisised. Generation of puzzles is obviously interesting because that is mainly what one want to do if constructing a puzzle collection. Parallelising is however not entirely obvious why it is of interest. Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelising those solvers. And truly this topic is quite unrelevant for normal Sudoku puzzles but the discussion that will be held about the algorithms is however still of practical interest since one might want to solve n by n puzzles which can get extremely difficult fast when n grows. Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion is also relevant in determining which type of algorithms might be useful in other areas. This last remark has already been studied, but not for Sudoku solving algorithms and we therefore take the chance to start the discussion.
+This is a more theoretical aspect of the comparison and no tests will be done.
+It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelisised. 
+Generation of puzzles is obviously interesting because that is mainly what one want to do if constructing a puzzle collection. 
+Parallelising is however not entirely obvious why it is of interest. 
+Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelising those solvers. 
+And truly this topic is quite unrelevant for normal Sudoku puzzles but the discussion that will be held about the algorithms is however still of practical interest since one might want to solve n by n puzzles which can get extremely difficult fast when n grows. 
+Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion is also relevant in determining which type of algorithms might be useful in other areas. 
 
 \section{Benchmark puzzles}
 The test data consisted of multiple puzzles that was chosen beforehand.
@@ -317,7 +333,7 @@ The tests uses the binomial theorem to see if the sign of the difference is unev
 One can then determine if an algorithm performs better than an other algorithm with a certain confidence.
 Since the distribution of the solution times are unknown it is not possible for wilcoxons sign test to give any measurement of how much better an algorithm is than another algorithm.
 One might however make a histogram of the difference which leads us to the next aspect, namely difficulty rating and distribution. 
-%Another approach that are also performed are to test if the test data seems to follow a certain distribution. This is done with 
+%Another approach that are also performed are to test if the test data seems to follow a certain distribution. This can be done by multiple tests.  
 Difficulty rating for each algorithm can easily be calculated by making histograms of the solution times for each algorithm. 
 One aim of this study have however been to determine if there is puzzles that are inherently difficult, that is regardless of solution method.
 To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rulebased algorithms and the result can therefore not speak for other solution methods.
@@ -329,8 +345,13 @@ If A is chosen to be the event that a puzzle is within algorithms 1 worst 10\% p
 B is similiarly chosen to be the event that a puzzle is within the 10 \% worst puzzles for algorithm 2.
 Since $P(A \cap B)$ shall den be 1 \% a statistical test can be set up to determine if the 10 \% worst puzzles are independent of algorithm. This is done by measuring the probability that the measured results appear if the null hypothesis is ascertained. If the probability is very low one can determine that the worst puzzles are not independent on the algorithms to a certain confidence level.
 Similarly the easiest puzzles will be checked for independence.\\
-\subsection{Computational constraints}
 
+\subsection{Computational constraints}
+There is some computational constraints in the testing which have forced us to use a lower confidence level than wanted.
+The problem origins from the variance in processor performance.
+This was solved as discussed above by applying bootstraping to attain a approximately confidence level for the mean value to be within a certain interval.
+Bootstraping is however somewhat lacking in its ability to ascertain high confidence levels for small samples compared to other methods due to the fact that it does not ascertain any special distribution.
+As a result the confidence level and the allowed intervall was fitted to allow for a reasonable number of puzzles to pass with high enough confidence in a reasonable time frame.
 
 \section{Benchmark puzzles}
 This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. 
@@ -367,12 +388,12 @@ figure ~\ref{fig:rule-basedDistribution}.
 \begin{tabularx}{1.5\textwidth}{XX}
   \includegraphics[width=20cm]{images/rulebaseddistribution.png}
 \end{tabularx}}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time.}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
 
 The figure is a zommed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. 
-All puzzles was solved and all measurements was stable. 
+All puzzles was solved and all measurements was stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
 The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds those have been removed from the figure to make it clearer.
 As the figure displays, the solution times go up to a peak at about 0.17 seconds.
 The solution times then drops at an approximately exponential rate.
@@ -382,6 +403,15 @@ This in turn leads to the classical property of memorylessness in the exponentia
 
 \chapter{Conclusions}
 %TODO, davnils
+%Ideer
+% Furthur ideas eller något sånt
+%   Man skulle kunna prata om vad vi inte gjort som man kan göra
+%   fast vet inte riktigt om det passar in i conclusion
+%
+% Vi kanske borde ha ett annat namn än conclusion så kan vi
+% inkludera både slutsatser och sammanfattning och möjligen
+% det jag skrev ovan också (furthur ideas) eller liknande.
+%
 
 \chapter{References}
 

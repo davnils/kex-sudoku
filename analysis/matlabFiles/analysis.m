@@ -19,8 +19,8 @@ for i = 1:length(backtracktimes)
     end
 end
 
-fprintf('Unsolved %d\nUnstable %d\nSolved %d\nTotal %d\n',unsolved,unstable,length(bt),length(backtracktimes));
         
+fprintf('Unsolved %d\nUnstable %d\nSolved %d\nTotal %d\n',unsolved,unstable,length(bt),length(backtracktimes));
     
 
 hist(bt,50);

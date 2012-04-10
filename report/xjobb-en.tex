@@ -40,7 +40,6 @@ TODO:
 \pagestyle{newchap}
 
 \chapter{Introduction}
-%TODO, pabergg
 Sudoku is a game that under recent years have gained popularity throughout the world.
 Many newspaper today contain Sudoku puzzles and there are also competitions devoted 
 to Sudoku solving.
@@ -86,7 +85,6 @@ Sudoku is one of those NP-complete problems \cite{complexity} which briefly spea
 The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers.
 
 \section{Sudoku fundamentals}
-%list rules and puzzle difficulties, puzzle uniqeness
 A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
 Initially a subset of the grid is revealed and the goal is to fill the reamining grid with valid numbers.
 The grid is guarded by certain rules restricting which values that are valid insertions, with the initial subset always being valid.
@@ -101,7 +99,6 @@ There is however a lower limit on the number of clues given that results in a un
 This limit was proven to be 17 \cite{17clueProof}, limiting the interesting number of clues to the range of 17-80.
 
 \section{Computational perspective}
-%list computational analysis and complexity, also different solving methods
 Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic}(http://www.springerlink.com/index/L14T86X63XQ7402T.pdf, "Research on Construting of Sudoku Puzzles") \cite{generation}.
 
 The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete \cite{complexity}.
@@ -254,6 +251,8 @@ This also includes what computational limitations was present and how this effec
 
 \section{Test setup}
 %TODO HARDWARE SPECIFICATION
+%Hardware: x64 x.x GHz, x GB RAM, Ubuntu x.x
+%TODO: Specify compilations flag and used optimizations
 The central part of the test setup was the test framework which timed and tested each algorithm on different puzzles. 
 The test framework was implemented as a separate part which made it possible to guarantee correct timing and also solving correctness of the algorithms.
 The algorithms was then called from the test work for each puzzle that was to be solved and the algorithm then returned when it finished.
@@ -370,19 +369,20 @@ The reason for this approach is ones again that one does not want to rely too mu
 
 \chapter{Analysis}
 %TODO, davnils/pabergg
-In this section multiple results will be presented together with a discussion about how the results could be interpreted. 
-Section 4.1 is devoted to presenting how the different algorithms performed. 
-Section 4.2 explains how the different puzzles can be  
+In this section multiple results are presented together with a discussion about how the results could be interpreted. 
+Section 4.1 is devoted to presenting how different algorithms perform. 
+Section 4.2 explains how different puzzles can be can be correlated in terms of difficulty of solving.
+%TODO: Verify the sentence above, filled in by davnils.
 
 \section{Time distributions}
 The time distributions of individual algorithms over the test set shows several things.
-One can see if there seem to be no particular difference between puzzles or if some puzzles seem to be more difficult for the algorithm to solve.
+It is possible to observe if there is no particular difference between puzzles or if some puzzles seem to be more difficult for the algorithm to solve.
 
 \subsection{Rule-based solver}
 The rule-based solver was by far the fastest algorithm in the study and also had the lowest standard deviation. 
 The result was a mean value of 0.02 seconds and a standard deviation of 0.02 seconds as well. 
 The time distribution for the rule-based solver can be seen in 
-figure ~\ref{fig:rule-basedDistribution}. 
+figure ~\ref{fig:rule-basedDistribution}.
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.5\textwidth}{XX}
@@ -392,26 +392,39 @@ figure ~\ref{fig:rule-basedDistribution}.
 \label{fig:rule-basedDistribution}
 \end{figure}
 
-The figure is a zommed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. 
-All puzzles was solved and all measurements was stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
-The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds those have been removed from the figure to make it clearer.
-As the figure displays, the solution times go up to a peak at about 0.17 seconds.
+The figure is a closed in view of the histogram showing the rule-based solvers time distribution with all 49151 puzzles. 
+All puzzles were solved and all measurements were stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
+The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds, those have been removed from the figure to make it clearer.
+As the figure displays, the solution times increase up to a peak at about 0.17 seconds.
 The solution times then drops at an approximately exponential rate.
 This is believed to due to the use of backtracking.
-The reason why backtracking is thought to result in this behaviour is because all searchtrees is believed to be equally probable and one can therefore expect to find the solution at any leaf in the searchtree.
+The reason why backtracking is thought to result in this behaviour is because all search trees are believed to be equally probable and one can therefore expect to find the solution at any leaf in the search tree.
 This in turn leads to the classical property of memorylessness in the exponential distribution since you can not know if
+%TODO: Finish the damn sentence! /grumpy davnils
+
+
+\subsection{Boltzmann machine solver}
+
+\ref{fig:boltzmannDistribution}.
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/boltzmanndistribution.png}
+\end{tabularx}}
+\caption{TODO: caption}
+\label{fig:boltzmannDistribution}
+\end{figure}
 
 \chapter{Conclusions}
 %TODO, davnils
 %Ideer
-% Furthur ideas eller något sånt
-%   Man skulle kunna prata om vad vi inte gjort som man kan göra
-%   fast vet inte riktigt om det passar in i conclusion
 %
 % Vi kanske borde ha ett annat namn än conclusion så kan vi
 % inkludera både slutsatser och sammanfattning och möjligen
 % det jag skrev ovan också (furthur ideas) eller liknande.
 %
+
+%General structure: (1) Results (2) Conclusion (3) Future work
 
 \chapter{References}
 

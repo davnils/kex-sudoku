@@ -31,16 +31,20 @@ bt = [];
 rb = [];
 
 for i = 1:length(backtracktimes)
-    if(backtracktimes(i)<0)
+    if(backtracktimes(i)==-2)
         bt(i)=100;%Ansätt högt värde.
+    elseif(backtracktimes(i)==-1)
+        bt(i) = median(backtracktimes); % Ansätt värde som inte kommer räknas
     else
         bt(i)=backtracktimes(i);
     end
 end
 
 for i = 1:length(rulebasedtimes)
-    if(rulebasedtimes(i)<0)
+    if(rulebasedtimes(i)==-2)
         rb(i)=100;%Ansätt högt värde.
+    elseif(rulebasedtimes(i)==-1)
+        rb(i)=median(rulebasedtimes(i)); % Ansätt värde som inte räknas
     else
         rb(i)=rulebasedtimes(i);
     end
@@ -101,5 +105,13 @@ samehigh/length(highbtindexes)
 disp('samehigh/10 % of rb')
 samehigh/length(highrbindexes)
 
+
+disp('Felmarginaler')
+disp('low')
+binopdf(samelow,length(lowbtindexes),1/10)
+binopdf(samelow,length(lowrbindexes),1/10)
+disp('high')
+binopdf(samehigh,length(highbtindexes),1/10)
+binopdf(samehigh,length(highrbindexes),1/10)
 
 

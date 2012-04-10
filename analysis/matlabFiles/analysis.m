@@ -23,8 +23,8 @@ fprintf('Unsolved %d\nUnstable %d\nSolved %d\nTotal %d\n',unsolved,unstable,leng
         
     
 
-hist(bt,500);
-axis([0 2 -Inf Inf]); 
+hist(bt,50);
+axis([15 20 0 300]); 
 %pause;
 %hold on;
 %hist(rulebasedtimes,500);

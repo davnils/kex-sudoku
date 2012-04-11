@@ -417,15 +417,16 @@ To get an idea of how each algorithm performs one can plot the solving times in 
 The rule-based solver was by far the fastest algorithm in the study and also had the lowest standard deviation. 
 The result was a mean value of 0.02 seconds and a standard deviation of 0.02 seconds as well. 
 The time distribution for the rule-based solver can be seen in 
-figure ~\ref{fig:rule-basedDistribution}.
+figure ~\ref{fig:rulebasedHistogram}, ~\ref{fig:rulebasedHistogram2} and ~\ref{fig:rulebasedIndices}.
 
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.5\textwidth}{XX}
   \includegraphics[width=20cm]{images/rulebased_histogram.png}
 \end{tabularx}}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
-\label{fig:rule-basedDistribution}
+\caption{A histogram displaying the solving times for the rule-based solver. The x-axis showing solving time have a logaritmic scale to clearify the result. The reader shall note that this makes the bars in the histograms' widths different, but they still represent the same time interval.
+A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rulebasedHistogram}
 \end{figure}
 
 The figure is a closed in view of the histogram showing the rule-based solvers time distribution with all 49151 puzzles. 
@@ -436,20 +437,22 @@ All puzzles were solved and all measurements were stable. The solving times was 
 \begin{tabularx}{1.5\textwidth}{XX}
   \includegraphics[width=20cm]{images/rulebased_histogram2.png}
 \end{tabularx}}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
-\label{fig:rule-basedDistribution}
+\caption{A zoomed in view of the histogram in figure ~\ref{fig:rulebasedHistogram} showing the rule-based solvers time distribution among all 49151 puzzles. The bars represent half the time intervall compared to figure ~\ref{fig:rulebasedHistogram}. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rulebasedHistogram2}
 \end{figure}
 
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/rulebased_sortedindices.png}
+\end{tabularx}}
+\caption{The x-axis is the indices of the puzzles when sorted according to the solving time for the rule-based solver. The y-axis shows a logaritmic scale of the solving time for each puzzle. All 49151 puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rulebasedIndices}
+\end{figure}
 
 The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds, those have been removed from the figure to make it clearer.
 As the figure displays, the solution times increase up to a peak at about 0.17 seconds.
 The solution times then drops at an approximately exponential rate.
-This is believed to due to the use of backtracking.
-The reason why backtracking is thought to result in this behaviour is because all search trees are believed to be equally probable and one can therefore expect to find the solution at any leaf in the search tree.
-This in turn leads to the classical property of memorylessness in the exponential distribution since you can not know if
-
-%TODO: Finish the damn sentence! /grumpy davnils
-%TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAh
 
 \FloatBarrier
 \subsection{Backtrack solver}
@@ -459,8 +462,8 @@ This in turn leads to the classical property of memorylessness in the exponentia
 \begin{tabularx}{1.5\textwidth}{XX}
   \includegraphics[width=20cm]{images/backtrack_distribution.png}
 \end{tabularx}}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
-\label{fig:rule-basedDistribution}
+\caption{A plot similar to a histogram showing the results of the backtrack solver for all solved puzzles (47859 solved, 1150 unsolved and 142 with unstable measured running time out of all 49151 puzzles). Note that the y-axis is a logaritmic scale of the solving times. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:backtrackDistribution}
 \end{figure}
 
 \begin{figure}[here] 

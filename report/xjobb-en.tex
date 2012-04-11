@@ -153,7 +153,7 @@ The backtracking algorithm for solving Sudoku is a bruteforce method.
 One might view it as guessing which numbers goes where.
 When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else.
 This means that the backtracking algorithm does an extensive search to find a solution, which means that a solution is guaranteed to be found if enough time is provided.
-Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as sudoku. 
+Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as Sudoku. 
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
 As a result it could be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.\\
 There are several interesting variations of this algorithm that might prove to be more or less effiecent.
@@ -169,10 +169,10 @@ That is because very easy puzzles always have one square with only one candidate
 
 \FloatBarrier
 \subsection{Rule-based}
-This algorithm builts on a heuristik for solving sudokus.
+This algorithm builts on a heuristik for solving Sudoku puzzles.
 The algorithm consists of testing a puzzle for certain rules that fills in squares or eleminates candidates.
-Those rules are very similar to the ones human uses when solving sudoku.
-The rules humans uses when solving sudoku vary slightly and there are also different levels of those rules that are normally classified as beginner, intermediate and advanced rules.
+Those rules are very similar to the ones human uses when solving Sudoku puzzles.
+The rules humans uses when solving Sudoku vary slightly and there are also different levels of those rules that are normally classified as beginner, intermediate and advanced rules.
 The algorithm that is used in this thesis is one that implements three of those rules.
 
 \begin{description}
@@ -217,11 +217,9 @@ Given however that one is presented with an easy enough puzzle where no more rul
 The concept of Boltzmann machines is gradually introduced by beginning with the neuron, network and finally concluding with a discussion on simulation techniques.\\
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=10cm]{images/neuron.png}
-\end{tabularx}}
-\caption{A single neuron with showing weighted inputs from other neurons, bias threshold, and activation function.}
+\centering
+\includegraphics[width=10cm]{images/neuron.png}
+\caption{A single neuron with showing weighted inputs from other neurons on the left, a bias threshold $\theta$, and activation function \emph{s}.}
 \label{fig:neural-Neuron}
 \end{figure}
 The central part of an artificial neural network (ANN) is the neuron, as pictured in \ref{fig:neural-Neuron}.
@@ -292,13 +290,13 @@ Multiple aspects of the results was considered when analysing and comparing the 
 \FloatBarrier
 \subsection{Solving}
 The solving ability of an algorithm is ofcourse the most interesting aspect.
-By measuring the time it takes for a sudoku to solve different puzzles one
+By measuring the time it takes for a Sudoku to solve different puzzles one
 can determine which algorithms are more effective.
 Solving ability is often given in the form of a mean value, but since puzzles vary greatly in difficulty this misses the bigger picture.
 An algorithm might for instance be equally good at all puzzles and one algorithm might be really good for one special kind of puzzles while performing poorly at others.
 They can still have the same mean value which illustrates why that is not a good enough representation of the algorithms effectiveness.
 We will therefore present histograms that shows the frequency at which it solves puzzles at a certain time intervall.
-This does not only depict a more interesting view of the sudoku solvers performance, but also shows possible underlying features such as if the sudoku solver solves the puzzle with an already known distribution.
+This does not only depict a more interesting view of the Sudoku solvers performance, but also shows possible underlying features such as if the Sudoku solver solves the puzzle with an already known distribution.
 Those topics are mostly studied for each algorithm, but will also to some extent be compared between the algorithms.
 
 \FloatBarrier
@@ -427,10 +425,8 @@ The time distribution for the rule-based solver can be seen in
 figure ~\ref{fig:rule-basedDistribution}.
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/rulebased_histogram.png}
-\end{tabularx}}
+\centering
+  \includegraphics[width=15cm]{images/rulebased_histogram.png}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
@@ -439,10 +435,8 @@ The figure is a closed in view of the histogram showing the rule-based solvers t
 All puzzles were solved and all measurements were stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/rulebased_histogram2.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=16cm]{images/rulebased_histogram2.png}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
@@ -459,29 +453,23 @@ This in turn leads to the classical property of memorylessness in the exponentia
 \subsection{Backtrack solver}
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/backtrack_distribution.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=16cm]{images/backtrack_distribution.png}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/backtrack_sortedindices.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=16cm]{images/backtrack_sortedindices.png}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
 
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/backtrack_exponential.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=16cm]{images/backtrack_exponential.png}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
 \end{figure}
@@ -501,10 +489,8 @@ The value of TODO-TODO seconds is equivalent to a temperature of about 1\%, lead
 After this temperature interval there were no puzzles being solved within the limit of 20 seconds.
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=15cm]{images/boltzmanndistribution.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=12cm]{images/boltzmanndistribution.png}
 \caption{Histogram showing distribution of boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
 \label{fig:boltzmannDistribution}
 \end{figure}
@@ -514,10 +500,8 @@ After this temperature interval there were no puzzles being solved within the li
 \label{sec:comparisonAnalysis}
 
 \begin{figure}[here] 
-\noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=15cm]{images/comparison.png}
-\end{tabularx}}
+\centering
+\includegraphics[width=15cm]{images/comparison.png}
 \caption{Histogram showing distribution of boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
 \label{fig:boltzmannDistribution}
 \end{figure}
@@ -543,10 +527,10 @@ The statistical test also confirms this with a very high confidence level (great
 As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallellised.
 Those are however qualities that can be discussed purely theoretically.
 To start of with generation one has to make sure that the generated puzzle is valid and has a unique solution.
-Puzzles with multiple solutions are often disregarded as sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle.
+Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle.
 \\
-The generation process can be implemented multiple ways, but since this thesis is about sudoku solving algorithms only this viewpoint is presented.
-The way one generates a puzzle is by randomly inserting numbers into an empty sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
+The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
+The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
 Both the rule-based solver and the backtracking solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
 The rule-based solver does this much faster since it can apply logical rules to roll out some part of the search three.
 Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and is therefore not as suitable for generation.
@@ -586,8 +570,6 @@ Boltzmann machines were found to be relatively complex and requires implementati
 Future work includes studying the behaviour of Boltzmann machines in relation to the final distribution of execution times.
 The large variance and stochastic behaviour most likely demands a study with access to large amounts of computational power.
 It is also interesting to study the influence of different temperature descents used in Boltzmann machines, with restarting being a suitable alternative to endlessly decreasing temperatures.
-
-\chapter{References}
 
 \begin{thebibliography}{99}
 

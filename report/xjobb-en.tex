@@ -8,6 +8,9 @@
 \usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{tabularx}
+% No images or other floats can pass through \FloatBarrier and
+% section is redefined to include a floatbarrier.
+\usepackage[section]{placeins}
 \title{A study of Sudoku solving algorithms}
 \subtitle{}
 \foreigntitle{En studie om Sudokulösningsalgorithmer}

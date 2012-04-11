@@ -62,56 +62,56 @@ rb10 = trb(floor(length(rb)/10))
 bt90 = tbt(floor(length(bt)*9/10))
 rb90 = trb(floor(length(rb)*9/10))
 
-lowbtindexes = [];
+lowbtindices = [];
 for i = 1:length(bt)
     if(bt(i)<=bt10)
-        lowbtindexes(length(lowbtindexes)+1)=i;
+        lowbtindices(length(lowbtindices)+1)=i;
     end
 end
-lowrbindexes = [];
+lowrbindices = [];
 for i = 1:length(rb)
     if(rb(i)<=rb10)
-        lowrbindexes(length(lowrbindexes)+1)=i;
+        lowrbindices(length(lowrbindices)+1)=i;
     end
 end
-highbtindexes = [];
+highbtindices = [];
 for i = 1:length(bt)
     if(bt(i)>=bt90)
-        highbtindexes(length(highbtindexes)+1)=i;
+        highbtindices(length(highbtindices)+1)=i;
     end
 end
-highrbindexes = [];
+highrbindices = [];
 for i = 1:length(rb)
     if(rb(i)>=rb90)
-        highrbindexes(length(highrbindexes)+1)=i;
+        highrbindices(length(highrbindices)+1)=i;
     end
 end
-disp('lengths')
-length(lowbtindexes)
-length(highbtindexes)
-length(lowrbindexes)
-length(highrbindexes)
+disp('lengths lowbt, highbt, lowrb, highrb')
+length(lowbtindices)
+length(highbtindices)
+length(lowrbindices)
+length(highrbindices)
 
 disp('same low and high')
-samelow = length(intersect(lowbtindexes,lowrbindexes))
-samehigh = length(intersect(highbtindexes,highrbindexes))
+samelow = length(intersect(lowbtindices,lowrbindices))
+samehigh = length(intersect(highbtindices,highrbindices))
 
 disp('samelow/10 % of bt')
-samelow/length(lowbtindexes)
+samelow/length(lowbtindices)
 disp('samelow/10 % of rb')
-samelow/length(lowrbindexes)
+samelow/length(lowrbindices)
 disp('samehigh/10 % of bt')
-samehigh/length(highbtindexes)
+samehigh/length(highbtindices)
 disp('samehigh/10 % of rb')
-samehigh/length(highrbindexes)
+samehigh/length(highrbindices)
 
 
 disp('Felmarginaler')
 disp('low')
-binopdf(samelow,length(lowbtindexes),1/10)
-binopdf(samelow,length(lowrbindexes),1/10)
+1-binocdf(samelow,length(lowbtindices),length(lowrbindices)/length(rulebasedtimes))
+1-binocdf(samelow,length(lowrbindices),length(lowbtindices)/length(backtracktimes))
 disp('high')
-binopdf(samehigh,length(highbtindexes),1/10)
-binopdf(samehigh,length(highrbindexes),1/10)
+1-binocdf(samehigh-1,length(highbtindices),length(highrbindices)/length(rulebasedtimes))
+1-binocdf(samehigh-1,length(highrbindices),length(highbtindices)/length(backtracktimes))
 
 

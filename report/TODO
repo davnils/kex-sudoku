@@ -1,20 +1,18 @@
-VAD BEHÖVER GÖRAS!!!!!!
+todo
 
 Fixa framsida
 Skriv abstrakt på båda språk
 Skriv statement of collaboration
 Skriv definitions vid behov
-Fixa referenser. Mitt i text och i referenslistan. Ta bort oanvända referenser.
+Fixa referenser, bara en på slutet. Ta bort oanvända referenser. <- Patrik
 Fixa listan med regler i rule-based
-Konsekvent hänvisning till "backtrack", "rule-based", "Boltzmann machine". Inte solver-suffix.
 Positionering och storlek av bilder. Även positioner relativt text.
-RuleBased i analysis ej klar
+Rule-based i analysis ej klar
 Backtrack ej klar
-Boltzmann ej klar. Lägg in nya diagram.
+Boltzmann ej klar. Lägg in nya diagram. <- David
 Comparison ej klar
 Generation och parallellizing. Parallellizing ej klar
-Fixa stavning parallellizing.
+Fixa stavning.
 Utvidga conclusion med future för backtrack och rule-based. Nya resultat för boltzmann. Slutsatser kring generering/parallellisering/hklöfg/timedistributions
-Ta bort kap 6 references
-Fixa in kod i appendix. Dokumentera kod.
+Fixa in kod i appendix. Dokumentera kod. <- David
 Figurlista

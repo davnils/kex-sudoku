@@ -12,7 +12,6 @@
 % No images or other floats can pass through \FloatBarrier 
 \usepackage{placeins}
 
-
 \title{A study of Sudoku solving algorithms}
 \subtitle{}
 \foreigntitle{En studie om Sudokulösningsalgorithmer}
@@ -149,10 +148,10 @@ These constraints are encoded into weights of an artificial neural network and t
 
 \FloatBarrier
 \subsection{Backtrack}
-The backtracking algorithm for solving Sudoku is a bruteforce method.
+The backtrack algorithm for solving Sudoku puzzles is a bruteforce method.
 One might view it as guessing which numbers goes where.
 When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else.
-This means that the backtracking algorithm does an extensive search to find a solution, which means that a solution is guaranteed to be found if enough time is provided.
+This means that the backtrack algorithm does an extensive search to find a solution, which means that a solution is guaranteed to be found if enough time is provided.
 Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as Sudoku. 
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
 As a result it could be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.\\
@@ -164,7 +163,7 @@ Another approach would be to take a random square and this would avoid the above
 There is however a better approach.
 When dealing with search trees one greatly benefit from having as few branches at the rot of the search tree.
 To achieve this one shall therefore choose the square with least candidates.
-Note that this approach solves very easy puzzles without backtracking.
+Note that this approach solves very easy puzzles without backtrack search.
 That is because very easy puzzles always have one square with only one candidate (Naked single).
 
 \FloatBarrier
@@ -195,7 +194,7 @@ Similar to naked pairs this concept may also be extended to three or more square
     The solver finds an empty square and fills in one of the candidates for that square.
     It then continues from there and sees if the guess leads to a solution or an invalid puzzle.
     If an invalid puzzle comes up the solver return to the point where it made its guess and makes another guess.
-    The reader might recognize this approach from the backtracking algorithm and it is indeed the same method.
+    The reader might recognize this approach from the backtrack algorithm and it is indeed the same method.
     The same method for choosing which square to begin with is also used.
     \end{description}
 
@@ -204,7 +203,7 @@ Consider for instance a row with five empty squares.
 If three of those form a naked triple the other two must form a hidden pair.
 The implemented rules therefore are naked single, naked tuples and guessing.
 Note that naked single and naked tuples are different as the naked single rule fills in numbers in squares whilst the naked tuple rule only deals with candidates for squares.
-The reason for choosing this rules is because none of them needs to search more than one region at once which could otherwise make the search space very big. It would however be of interest to study which rules is most effiecent, but as this thesis is not primarly about the rulebased algorithm only those rules are considered.
+The reason for choosing this rules is because none of them needs to search more than one region at once which could otherwise make the search space very big. It would however be of interest to study which rules is most effiecent, but as this thesis is not primarly about the rule-based algorithm only those rules are considered.
 \\
 At the beginning of this section it was stated that this algorithm was built on a heuristik which is true.
 It is however a combination between a bruteforce method and a heuristik.
@@ -306,7 +305,7 @@ Those are often based on the level of human solving techniques that are needed t
 This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
 The test will primarly consist of determining if certain puzzles are inherently difficult, meaning that all algorithms rate them as hard.
 During the implementation process it was discovered that the Boltzmann machine performed much worse than the other algorithms and could therefore not be tested on the same set of puzzles.
-The comparison are therefore focused on the rule-based and backtracking algorithms.
+The comparison are therefore focused on the rule-based and backtrack algorithms.
 
 \FloatBarrier
 \subsection{Generation and parallelization}
@@ -323,7 +322,7 @@ Since the algorithms to some extent also can be applied to other NP-complete pro
 The test data consisted of multiple puzzles that was chosen beforehand.
 Since the set of test puzzles can affect the outcome of this study it is appropriate to motivate the choice of puzzles.
 As was discovered during the study the Boltzmann machine algorithm did not perform as well as the other algorithms and some modifications to which puzzles was used was therefore done.
-The backtracking and rule-based algorithms was however both tested on a set of 49151 17-clue puzzles. 
+The backtrack and rule-based algorithms was however both tested on a set of 49151 17-clue puzzles. 
 Those was found on \cite{database} and is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
 The reason for chosing this specific database is because the generation of the puzzles does not involve a specific algorithm but is rather a collection of puzzles found by different puzzle generating algorithms.  
 The puzzles are therefore assumed to be represantative of all 17-clue puzzles. 
@@ -385,9 +384,9 @@ At the same time the puzzle set was very big which required a compromiss which l
 The puzzles that could not pass the requirements for the confidence interval was marked as unstable measurment.
 \\
 Another problematic aspect concerning computational constraints is the running time for each algorithm.
-During the projekt it was discovered that backtracking was slow for some puzzle with 17 clues and the Boltzmann machine was discovered to be much to slow for all 17 clue puzzle.
-The way this was handled was by setting a runningtime limit of 20 seconds for each test run for the backtracking solver.
-The boltzmann machine required a more dramatic solution and the test puzzles was exchanged with ones with 51 clues instead of 17. 
+During the projekt it was discovered that backtrack was slow for some puzzle with 17 clues and the Boltzmann machine was discovered to be much to slow for all 17 clue puzzle.
+The way this was handled was by setting a runningtime limit of 20 seconds for each test run for the backtrack solver.
+The Boltzmann machine required a more dramatic solution and the test puzzles was exchanged with ones with 51 clues instead of 17. 
 This was quite unfortunate as this leaves some of the comparison aspects with only two algorithms.
 
 \FloatBarrier
@@ -496,7 +495,7 @@ After this temperature interval there were no puzzles being solved within the li
 \begin{figure}[here] 
 \centering
 \includegraphics[width=12cm]{images/boltzmanndistribution.png}
-\caption{Histogram showing distribution of boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
+\caption{Histogram showing distribution of Boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
 \label{fig:boltzmannDistribution}
 \end{figure}
 
@@ -507,7 +506,7 @@ After this temperature interval there were no puzzles being solved within the li
 \begin{figure}[here] 
 \centering
 \includegraphics[width=15cm]{images/comparison.png}
-\caption{Histogram showing distribution of boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
+\caption{Histogram showing distribution of Boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
 \label{fig:boltzmannDistribution}
 \end{figure}
 
@@ -515,8 +514,8 @@ After this temperature interval there were no puzzles being solved within the li
 \section{Puzzle difficulty}
 \label{sec:difficultyAnalysis}
 Both the backtrack solver and the rule-based solver was runned on the same set of puzzles. One interesting aspect to study is to see if some of those puzzles is difficult for both algorithms or if the algorithms are independent when it comes to which puzzles they perform good/bad at.
-Even if the rule-based solver uses backtracking as a last resort it is not clear whetever the most difficult puzzles correlates between the two algorithms.
-The reason for this is because a puzzle can be very hard for the backtracking algorithm, but still trivial for the rule-based solver. 
+Even if the rule-based solver uses backtrack search as a last resort it is not clear whetever the most difficult puzzles correlates between the two algorithms.
+The reason for this is because a puzzle can be very hard for the backtrack algorithm, but still trivial for the rule-based solver. 
 This has to do with the naked tuple rule in the rule-based solver that quickly can reduce the number of candidates in each square.
 \\
 To test for independence the statistical method described in section~\ref{sec:statisticalTests} is used.
@@ -536,7 +535,7 @@ Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are 
 \\
 The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
 The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
-Both the rule-based solver and the backtracking solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
+Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
 The rule-based solver does this much faster since it can apply logical rules to roll out some part of the search three.
 Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and is therefore not as suitable for generation.
 If one attempted to use the Boltzmann machine for checking validity and backtracking for checking uniqueness, the result would be that the backtracking would have to exhaust all possible solutions anyway and no improvement would have been made.
@@ -555,11 +554,11 @@ Parallellising of algorithms is interesting mainly because one might want to use
 %TODO: Verify all content after new data
 %General structure: (1) Results (2) Conclusion (3) Future work
 
-Three different Sudoku solvers have been studied; backtrack search, rulebased solver and Boltzmann machines.
+Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.
 All solvers were tested using a test framework with statistically significant results being produced.
 They have shown to be dissimilar to each other in terms of performance and general behaviour.
 
-Backtrack search and rulebased solvers are deterministic and form execution time distributions that conform to standard distributions, namely TODO and TODO.
+Backtrack search and rule-based solvers are deterministic and form execution time distributions that conform to standard distributions, namely TODO and TODO.
 Their excecution time was shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deteministic behaviour.
 
 The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable timeframe.

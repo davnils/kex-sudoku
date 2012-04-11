@@ -3,7 +3,9 @@
 #include "SudokuSolver.h"
 
 /**
- *
+ * Counts the number of row and columns conflicts.
+ * @param grid Grid to be used.
+ * @return Number of conflicts.
  */
 unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
 {
@@ -38,7 +40,9 @@ unsigned int SudokuSolver::countRowColumnConflicts(const grid_t & grid)
 }
 
 /**
- *
+ * Counts the number of sub-square conflicts.
+ * @param grid Grid to be used.
+ * @return Number of conflicts.
  */
 unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
 {
@@ -66,14 +70,12 @@ unsigned int SudokuSolver::countSubSquareConflicts(const grid_t & grid)
 }
 
 /**
- *
+ * Checks if grid is a valid solution.
+ * @param grid Grid to be used.
+ * @return True if a valid Sudoku.
  */
 bool SudokuSolver::isValidSolution(const grid_t & grid)
 {
   int a, b;
-  /*a = countRowColumnConflicts(grid);
-  b = countSubSquareConflicts(grid);
-  std::cout << "rowcolumns: " << a << std::endl;
-  std::cout << "squares: " << b << std::endl;*/
   return(!countRowColumnConflicts(grid) && !countSubSquareConflicts(grid));
 }

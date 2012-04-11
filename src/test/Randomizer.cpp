@@ -1,7 +1,9 @@
 #include "Randomizer.h"
 
 /**
- *
+ * Sets the reference puzzle solution and a reduced puzzle.
+ * @param solved Solution to puzzle.
+ * @param reduced Actual puzzle.
  */
 void Randomizer::reference(std::string solved, std::string reduced)
 {
@@ -10,7 +12,8 @@ void Randomizer::reference(std::string solved, std::string reduced)
 }
 
 /**
- *
+ * Sets the number of clues to be withdrawn from the complete solution.
+ * @param rate Number of clues, inverted.
  */
 void Randomizer::setMutationRate(int rate)
 {
@@ -18,7 +21,8 @@ void Randomizer::setMutationRate(int rate)
 }
 
 /**
- *
+ * Generates a single puzzle.
+ * @return New puzzle.
  */
 std::string Randomizer::generateCandidate()
 {

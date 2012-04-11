@@ -7,18 +7,17 @@
 #include "Square.h"
 #include "../test/SudokuSolver.h"
 
-const uint8_t NOT_ASSIGNED = 0;
-const int MAX_TEMPERATURE = 100;
-const float dTEMPERATURE = -0.000035; //0.0004
-const float MIN_TEMPERATURE = 0.001;
-const int REDUCED_PUZZLE_RATE = 35;
-const int REDUCED_PUZZLE_FACTOR = 4;
+const int MAX_TEMPERATURE = 100; /* Maximum temperature */
+const float dTEMPERATURE = -0.000035; /* Simulated annealing constant */
+const float MIN_TEMPERATURE = 0.001; /* Minimum temperature ever reached */
+const int REDUCED_PUZZLE_RATE = 35; /* Number of clues to draw from a completely solved puzzle */
+const int REDUCED_PUZZLE_FACTOR = 4; /* Number of puzzles to generate from every input puzzle pair */
 
 typedef std::vector<Square> group_t;
 typedef std::vector<group_t> internal_grid_t;
 
 /*
- *
+ * Boltzmann implements the main structure of a Boltzmann machine.
  */
 class Boltzmann : public SudokuSolver
 {

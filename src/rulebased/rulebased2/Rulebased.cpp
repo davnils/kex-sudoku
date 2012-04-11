@@ -155,16 +155,6 @@ int Rulebased::guess(){
         Board tmp;
         tmp.operator=(board);
         vector<int> * tmpvector = &tmp.board[min[1]][min[2]];
-        /*
-        cout<<"board"<<&board<<endl;
-        cout<<"tmp"<<&tmp<<endl;
-        cout<<"board.board: "<<&board.board[min[1]][min[2]]<<endl;
-        cout<<"board.regions: "<<board.regions[min[1]][min[2]]<<endl;
-        cout<<"&tmp.board: "<<&tmp.board[min[1]][min[2]]<<endl;
-        cout<<"tmp.region: "<<tmp.regions[min[1]][min[2]]<<endl;
-        cout<<"tmpvector: "<<tmpvector<<endl;
-        */
-        //cout<<"guessändringscheck";
         //tmp.printPossibilities();
         (*tmpvector)[0] = g;
         //tmp.printPossibilities();
@@ -186,14 +176,6 @@ int Rulebased::guess(){
         return 0;
     }else{
         board.operator=(correctGuesses[0]);
-        /*
-        board.board[min[1]][min[2]].clear();
-        board.board[min[1]][min[2]].push_back(correctGuesses[0]);
-        board.remove(min[1],min[2]);
-        */
-        //cout<<"Returning"<<endl;
-        //board.printPossibilities();
-        //cout<<"returning:"<<endl;
         return correctGuesses.size();
     }
         
@@ -355,23 +337,3 @@ vector< vector<int> > Rulebased::findCombinations(
     }
     return combinations;
 }
-
-/*
-int main(){
-    //cout<<"START:"<<endl;
-    int grid[9][9];
-    for(int i=0;i<9;i++){
-        for(int j=0;j<9;j++){
-            char x;
-            cin >> x;
-            if(x=='\n'){
-                j--;
-            }
-            grid[i][j] = (int) (x-'0');
-        }
-    }
-    Rulebased solver(grid);
-    solver.runStep(clock()+CLOCKS_PER_SEC*20);
-    solver.printBoard();
-}
-*/

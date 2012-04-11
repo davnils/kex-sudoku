@@ -4,13 +4,16 @@
 #include <iostream>
 
 /**
- *
+ * Resets the current state.
  */
 Boltzmann::Boltzmann()
 {
   reset();
 }
 
+/**
+ * Randomizes the RNG and performs a reset.
+ */
 void Boltzmann::reset()
 {
   srand(time(0));
@@ -19,7 +22,8 @@ void Boltzmann::reset()
 }
 
 /**
- *
+ * Adds a puzzle to be solved.
+ * @puzzle Puzzle to be solved.
  */
 void Boltzmann::addPuzzle(grid_t puzzle)
 {
@@ -39,7 +43,8 @@ void Boltzmann::addPuzzle(grid_t puzzle)
 }
 
 /**
- *
+ * Returns the current grid.
+ * @return Current grid.
  */
 grid_t Boltzmann::getGrid()
 {
@@ -68,13 +73,14 @@ void Boltzmann::printGrid(grid_t g)
 }
 
 /**
- *
+ * Runs until a given deadline.
+ * @param endTime clock() deadline.
+ * @return True on solving success.
  */
 bool Boltzmann::runStep(clock_t endTime)
 {
   unsigned long iteration = 0;
   do {
-    //if(rand() % 10000 < 10) std::cout << "temperature: " << temperature << ", iteration: " << iteration << std::endl;
     internal_grid_t::iterator rowIt;
     for(rowIt = grid.begin(); rowIt != grid.end(); rowIt++) {
       group_t::iterator squareIt;
@@ -96,16 +102,11 @@ bool Boltzmann::runStep(clock_t endTime)
   return(false);
 }
 
-void Boltzmann::printDigits(std::vector<int> digits)
-{
-  for(int i = 0; i < 9; i++) {
-    std::cout << digits[i] << " ";
-  }
-  std::cout << std::endl;
-}
-
 /**
- *
+ * Updates a single grid node.
+ * @param row Current row.
+ * @param square Current grid node.
+ * @return True on success.
  */
 bool Boltzmann::updateNode(internal_grid_t::iterator row,
   group_t::iterator square)
@@ -137,7 +138,11 @@ bool Boltzmann::updateNode(internal_grid_t::iterator row,
 }
 
 /**
- *
+ * Checks a single quadrant for conflicts.
+ * @param digits Current accumulator of digits offsets.
+ * @param row Current row.
+ * @param square Current grid node.
+ * @return Updated accumulator with added offsets.
  */
 std::vector<int> Boltzmann::checkQuadrant(std::vector<int> digits,
   internal_grid_t::iterator row, group_t::iterator square)

@@ -17,7 +17,7 @@ const float CONFIDENCE = 0.95;
 const float BOOTSTRAP_INTERVAL = 1.0f;
 
 /**
- * 
+ * Structure describing results for a single solver.
  */
 typedef struct
 {
@@ -28,7 +28,7 @@ typedef struct
 } result_t;
 
 /**
- * 
+ * Test framework with functionality for measuring Sudoku solving performance.
  */
 class TestFramework
 {

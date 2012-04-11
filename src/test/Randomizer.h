@@ -4,7 +4,7 @@
 #include <string>
 
 /**
- *
+ * Randomizer provides functionality for randomly generating Sudokus.
  */
 class Randomizer
 {

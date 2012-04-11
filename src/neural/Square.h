@@ -4,16 +4,25 @@
 #include <cstdint>
 #include <vector>
 
+/* Offset added to colliding nodes */
 const int COLLISION_OFFSET = -2;
+/* Offset added to colliding nodes if already resolved */
 const int COLLISION_GIVEN_OFFSET = -20;
+/* Bias value used in offset calculation */
 const float BIAS = 3.0f;
 
+/**
+ * Node describes a possible candidate for the current grid position.
+ */
 struct Node
 {
   bool used;
   int offset;
 };
 
+/**
+ * Square class describes a single Sudoku grid value.
+ */
 class Square
 {
   public:

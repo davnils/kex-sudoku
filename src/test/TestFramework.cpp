@@ -8,20 +8,26 @@
 #include "Randomizer.h"
 
 /**
- * 
+ * Setups a test framework with file paths.
+ * @param puzzlePath Path to puzzles.
+ * @param matlabPath Path for matlab output.
  */
 TestFramework::TestFramework(std::string puzzlePath, std::string matlabPath) : of(matlabPath)
 {
   this->puzzlePath = puzzlePath;
 }
 
+/**
+ * Destructor that closes the associated output file.
+ */
 TestFramework::~TestFramework()
 {
     of.close();
 }
 
 /**
- * 
+ * Reads all puzzles associated with a given solver.
+ * @param solver Solver to be used.
  */
 void TestFramework::readPuzzles(SudokuSolver * solver)
 {
@@ -59,7 +65,8 @@ void TestFramework::readPuzzles(SudokuSolver * solver)
 }
 
 /**
- * 
+ * Adds a solver for future testing.
+ * @param solver Solver to be added.
  */
 void TestFramework::addSolver(SudokuSolver * solver)
 {
@@ -67,7 +74,8 @@ void TestFramework::addSolver(SudokuSolver * solver)
 }
 
 /**
- * 
+ * Runs all tests.
+ * @return All time measurements.
  */
 std::vector<result_t> TestFramework::runTests()
 {
@@ -113,7 +121,10 @@ std::vector<result_t> TestFramework::runTests()
 }
 
 /**
- * 
+ * Solves a given puzzle repeatedly and returns an average.
+ * @param solver Solver to be used.
+ * @param puzzle Puzzle to be solved.
+ * @return Average running time.
  */
 float TestFramework::runSampledSolver(SudokuSolver * solver, grid_t puzzle)
 {
@@ -151,7 +162,10 @@ bool compareFloat(const float a, const float b)
 
 /**
  * Percentile bootstrap implementation.
- * www.public.iastate.edu/~vardeman/stat511/BootstrapPercentile.pdf
+ * See: www.public.iastate.edu/~vardeman/stat511/BootstrapPercentile.pdf
+ * @param data Values to be used in calculation.
+ * @param confidence Confidence level used in estimation.
+ * @return Boolean indicating boostrap success.
  */
 bool TestFramework::bootstrap(std::vector<float> data, float confidence)
 {
@@ -174,7 +188,10 @@ bool TestFramework::bootstrap(std::vector<float> data, float confidence)
 }
 
 /**
- * 
+ * Calculates sampled standard deviation.
+ * @param data Samples to be used.
+ * @param avg Average value of samples.
+ * @return standard deviation.
  */
 float TestFramework::sampledStdDeviation(const std::vector<float> & data, float avg)
 {
@@ -195,7 +212,9 @@ float TestFramework::sampledStdDeviation(const std::vector<float> & data, float 
 }
 
 /**
- * 
+ * Calculates average of all positive items.
+ * @param data Samples to be used in calculation.
+ * @return Average of samples.
  */
 float TestFramework::sampledAverage(const std::vector<float> & data)
 {

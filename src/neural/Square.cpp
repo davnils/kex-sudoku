@@ -5,7 +5,7 @@
 #include "Square.h"
 
 /**
- *
+ * Assigns all nodes to not be used.
  */
 Square::Square()
 {
@@ -18,7 +18,8 @@ Square::Square()
 }
 
 /**
- *
+ * Assigns the current node be clamped at a given value.
+ * @param digit Value to be used.
  */
 Square::Square(int digit)
 {
@@ -34,7 +35,10 @@ Square::Square(int digit)
 }
 
 /**
- *
+ * Updates the current node with the given failure offsets.
+ * @param values Current digit values for this collection of candidates.
+ * @param temperature Current temperature.
+ * @return Returns true on success.
  */
 bool Square::update(std::vector<int> values, float temperature)
 {
@@ -52,7 +56,8 @@ bool Square::update(std::vector<int> values, float temperature)
 }
 
 /**
- *
+ * Adds an offset for every collision with the current node.
+ * @param values Accumulator used for failure offsets.
  */
 void Square::sum(std::vector<int> & values)
 {
@@ -71,7 +76,8 @@ void Square::sum(std::vector<int> & values)
 }
 
 /**
- *
+ * Checks if this square is resolved to a single digit.
+ * @return True if clamped to a single value.
  */
 bool Square::isResolved()
 {
@@ -79,7 +85,8 @@ bool Square::isResolved()
 }
 
 /**
- *
+ * Returns the best matching digit for the current square.
+ * @return Best matching digit.
  */
 uint8_t Square::bestMatch()
 {

@@ -143,11 +143,14 @@ With these requirements in mind, three different algorithms were chosen: backtra
 These represent different groups of solvers and were all possible to implement within a reasonable timeframe.
 A short description is given below with further in depth studies in the following subsections.
 \begin{itemize}
-    \item Backtrack: Backtrack is probably the most basic Sudoku solving strategy for computer algorithms.
+    \item Backtrack:
+    Backtrack is probably the most basic Sudoku solving strategy for computer algorithms.
 It is a kind of a bruteforce method which tries different numbers and if it fails it backtracks and try a different number.
-    \item Rule-based: This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
+    \item Rule-based:
+    This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
 This method is very similar to how humans solve Sudoku and the rules used is in fact derived from human solving methods.
-    \item Boltzmann machine: Modeling a Sudoku by using a constraint solving artificial neural network.
+    \item Boltzmann machine:
+    Modeling a Sudoku by using a constraint solving artificial neural network.
 Puzzles are seen as constraints describing which nodes that can not be connected to each other.
 These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits.
 \end{itemize}
@@ -180,29 +183,29 @@ Those rules are very similar to the ones human uses when solving Sudoku puzzles.
 The rules humans uses when solving Sudoku vary slightly and there are also different levels of those rules that are normally classified as beginner, intermediate and advanced rules.
 The algorithm that is used in this thesis is one that implements three of those rules.
 
-\begin{description}
-    \item[Naked Single] 
+\begin{itemize}
+    \item Naked Single: 
     This means that a square only have one candidate number.
-    \item[Hidden Single] 
+    \item Hidden Single: 
     If a row, column or box contains only one square which can hold a specific number then that number must go into that square.
-    \item[Naked pair] 
+    \item Naked pair:
     If a row, column or box contains two squares which each only have two specific candidates.
 If one such pair exists, then all occurences of these two candidates may be removed from all squares that share a row, column or box with both of the squares in the pair.
 This concept can also be extended to three or more squares.
-    \item[Hidden pair]
+    \item Hidden pair:
     If a row, column or box contains only two squares which can hold two specific candidates, then those squares are a hidden pair.
 It is hidden because those squares might also include several other candidates.
 Since one already know which two numbers have to go into the two squares one might remove other candidates for those two squares.
 Those squares will now be a naked pair and one could therefore apply the rule for removal of further candidates.
 Similar to naked pairs this concept may also be extended to three or more squares.
 
-    \item[Guessing or Nishio]
+    \item Guessing (Nishio):
     The solver finds an empty square and fills in one of the candidates for that square.
     It then continues from there and sees if the guess leads to a solution or an invalid puzzle.
     If an invalid puzzle comes up the solver return to the point where it made its guess and makes another guess.
     The reader might recognize this approach from the backtrack algorithm and it is indeed the same method.
     The same method for choosing which square to begin with is also used.
-    \end{description}
+\end{itemize}
 
 Before continueing the reader shall note that naked tuples and hidden tuples actually are the same rules but inversed.
 Consider for instance a row with five empty squares.

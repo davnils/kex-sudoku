@@ -8,9 +8,11 @@
 \usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{tabularx}
-% No images or other floats can pass through \FloatBarrier and
-% section is redefined to include a floatbarrier.
-\usepackage[section]{placeins}
+
+% No images or other floats can pass through \FloatBarrier 
+\usepackage{placeins}
+
+
 \title{A study of Sudoku solving algorithms}
 \subtitle{}
 \foreigntitle{En studie om Sudokulösningsalgorithmer}
@@ -38,6 +40,9 @@ The results show that ...
 TODO: 
 \end{foreignabstract}
 \clearpage
+\section{Statement of collaboration}
+% TODO
+\clearpage
 \tableofcontents*
 \mainmatter
 \pagestyle{newchap}
@@ -48,6 +53,7 @@ Many newspaper today contain Sudoku puzzles and there are also competitions devo
 to Sudoku solving.
 It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computers algorithms.
 
+\FloatBarrier
 \section{Problem specification}
 There are multiple algorithms that can solve Sudoku puzzles.
 In this report we discuss three different algorithms and compare them in their abbilities.
@@ -57,6 +63,7 @@ Those other algorithms primarly include how well the algorithms are suited for p
 The algorithms that will be studied are backtrack solver, rulebased solver and Boltzmann machines. 
 This algorithms and their implementations are explained in more detail in section 2. 
 
+\FloatBarrier
 \section{Scope}
 As this project is quite limited in time available and in expected scope, 
 there are several limitations on what can and will be done. 
@@ -74,6 +81,7 @@ This thesis will however be limited to the study of ordinary Sudoku, which is 9 
     \item The results of this thesis will be applicable to other areas apart from Sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
 \end{itemize}
 
+\FloatBarrier
 \section{Purpose}
 As already mentioned, Sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
 As a result, it is of interest to find effective Sudoku solving and generating algorithms. 
@@ -84,9 +92,13 @@ One hope of this study is to contribute to the discussion about how one can deal
 We will as mentioned in section 1.2 not discuss how our algorithms could be used in other areas, but seen as many NP-Complete problems can frequently be transformed into others it is still plausible that our result could be valueable. 
 Sudoku is one of those NP-complete problems \cite{complexity} which briefly speaking means that 
 
+\subsection{Definitions}
+%Tänkte att vi kan lägga svåra ord här typ
+
 \chapter{Background}
 The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers.
 
+\FloatBarrier
 \section{Sudoku fundamentals}
 A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
 Initially a subset of the grid is revealed and the goal is to fill the reamining grid with valid numbers.
@@ -101,6 +113,7 @@ Rating puzzles is however not just that simple but requires more extensive analy
 There is however a lower limit on the number of clues given that results in a unique solution.
 This limit was proven to be 17 \cite{17clueProof}, limiting the interesting number of clues to the range of 17-80.
 
+\FloatBarrier
 \section{Computational perspective}
 Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic}(http://www.springerlink.com/index/L14T86X63XQ7402T.pdf, "Research on Construting of Sudoku Puzzles") \cite{generation}.
 
@@ -117,6 +130,7 @@ Stochastic solvers include genetic algorithms and Boltzmann machines.
 They are typically based on a different stochastic selection criteria that decides how candidate solutions are constructed and how the general search path is built up.
 While providing more flexibility and more a more generic approach to Sudoku solving there are weaker guarantees surrounding execution time until completion, since a solution can become apparent at any moment, but also take longer time \cite{stochastic}.
 
+\FloatBarrier
 \section{Evaluated algorithms}
 Given the large amount of different algorithms available it is necessary to reduce the candidates, while still providing a quantitative study with broad results.
 With these requirements in mind, three different algorithms were chosen: backtrack, rule-based and Boltzmann machine.
@@ -132,27 +146,34 @@ Puzzles are seen as constraints describing which nodes that can not be connected
 These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits.
 \end{itemize}
 
+\FloatBarrier
 \subsection{Backtrack}
 The backtracking algorithm for solving Sudoku is a bruteforce method.
 One might view it as guessing which numbers goes where.
 When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else.
-This means that the backtracking algorithm does an extensive search to find a solution.
-The main drawback to this algorithm is that it is exponential in time complexity, but will on the other hand always find a solution sooner or later if one exists.
+This means that the backtracking algorithm does an extensive search to find a solution, which means that a solution is guaranteed to be found if enough time is provided.
+Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as sudoku. 
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
-As a result it could be used to generate valid Sudoku puzzles (with unique solutions).\\
-Parallelising is something that could improve this algorithm considerable.
-The way this could be done is by searching different searchpaths in parallel. This is possible as the search three is fixed and only determined by the puzzle.\\
-There are several interesting variations of this algorithm that might prove to vary in effiecency.
-The main variations regards in which order the squares are visited.
-One might for instance search the squares in random order or in some order that is defined by the structure of the Sudoku.
-One might for instance first fill in all possible numbers in each empty square and then begin with the least number of candidates, or one might want to finish nearly completed rows, columns or boxes.
-One might also vary how the guesses are done.
-Some rules regarding how the guesses are done might lead to a higher probability to find a solution which in turn will make the whole algorithm faster as the solutions will be found earlier in the search.
+As a result it could be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.\\
+There are several interesting variations of this algorithm that might prove to be more or less effiecent.
+One must at each guess decide which square to use for the guess.
+The most trivial method would be to take the first empty square.
+This might however be very ineffiecent since there are worst case scenarios where the first squares have very many candidates.
+Another approach would be to take a random square and this would avoid the above mentioned problem with worst case scenarios.
+There is however a better approach.
+When dealing with search trees one greatly benefit from having as few branches at the rot of the search tree.
+To achieve this one shall therefore choose the square with least candidates.
+Note that this approach solves very easy puzzles without backtracking.
+That is because very easy puzzles always have one square with only one candidate (Naked single).
 
+\FloatBarrier
 \subsection{Rule-based}
-This algorithm relies on the logic rules that humans use to solve Sudoku.
-Those rules works as proofs and either determines that a square must be a certain number or prooves that a certain square can not contain a certain number.
-The rules that are used are as follows:
+This algorithm builts on a heuristik for solving sudokus.
+The algorithm consists of testing a puzzle for certain rules that fills in squares or eleminates candidates.
+Those rules are very similar to the ones human uses when solving sudoku.
+The rules humans uses when solving sudoku vary slightly and there are also different levels of those rules that are normally classified as beginner, intermediate and advanced rules.
+The algorithm that is used in this thesis is one that implements three of those rules.
+
 \begin{description}
     \item[Naked Single] 
     This means that a square only have one candidate number.
@@ -169,29 +190,28 @@ Since one already know which two numbers have to go into the two squares one mig
 Those squares will now be a naked pair and one could therefore apply the rule for removal of further candidates.
 Similar to naked pairs this concept may also be extended to three or more squares.
 
-    \item[X-wing/swordfish/jellyfish/squirmbag]
-    These are all names of a more general rule that concerns a loop.
-Below is a example of a so called swordfish (figure 1 and 2).
-In figure 1 the squares which have the digit 4 as a candidate have been marked.
-The so called swordfish is shown in figure 2.
-The logical reasoning one might use with a swordfish is that since the configurations of the fours in the swordfish can only take two configurations and both of them will cover the same set of columns and rows.
-The other squares in those rows and columns with the digit 4 as a candidate may therefore remove 4 as a candidate.
-Swordfish is the special case of this concept where 3 rows and columns are involved in the loop, but the concept also applies to loops within 2 rows and columns (X-wing) and even loops with more than 3 rows and columns involved (jellyfish and squirmbag).
+    \item[Guessing or Nishio]
+    The solver finds an empty square and fills in one of the candidates for that square.
+    It then continues from there and sees if the guess leads to a solution or an invalid puzzle.
+    If an invalid puzzle comes up the solver return to the point where it made its guess and makes another guess.
+    The reader might recognize this approach from the backtracking algorithm and it is indeed the same method.
+    The same method for choosing which square to begin with is also used.
+    \end{description}
 
-\includegraphics{images/swordfish1.png}\\
-\includegraphics{images/swordfish2.png}
+Before continueing the reader shall note that naked tuples and hidden tuples actually are the same rules but inversed.
+Consider for instance a row with five empty squares.
+If three of those form a naked triple the other two must form a hidden pair.
+The implemented rules therefore are naked single, naked tuples and guessing.
+Note that naked single and naked tuples are different as the naked single rule fills in numbers in squares whilst the naked tuple rule only deals with candidates for squares.
+The reason for choosing this rules is because none of them needs to search more than one region at once which could otherwise make the search space very big. It would however be of interest to study which rules is most effiecent, but as this thesis is not primarly about the rulebased algorithm only those rules are considered.
+\\
+At the beginning of this section it was stated that this algorithm was built on a heuristik which is true.
+It is however a combination between a bruteforce method and a heuristik.
+This is because of the guess rule which is necessary to guarantee that the algorithm will find a solution.
+Without the guess rule one might end up with an unsolved puzzle where none of the other two rules are applicable.
+Given however that one is presented with an easy enough puzzle where no more rule than naked single and naked tuple are needed the algorithm will produce a solution in polynomial time.
 
-\end{description}
-
-There are other rules that could be used but due to limitations these are the only implemented ones.
-There are several different aspects that are interesting to note about this algorithm.
-First of all the time complexity of the algorithm will be polynomial given that a solution can be found using these rules.
-This is a simple consequence of the fact that each rule only take polynomial time to check and there are only polynomial many squares to fill in.
-There are however no guarantee that a solution will be found and if no rule match it is impossible for the algorithm to continue.
-One way around this is to combine this algorithm with the backtracking algorithm.
-Other aspects that shall be studied are which rules shall be applied in which order and even if some rules are to time consuming to check compared to the extra puzzles that can be solved.
-The variations of this algorithm therefore consists of different sets of rules (including guessing rules for backtracking) that are applied in different orders. 
-
+\FloatBarrier
 \subsection{Boltzmann machine}
 The concept of Boltzmann machines is gradually introduced by beginning with the neuron, network and finally concluding with a discussion on simulation techniques.\\
 
@@ -252,6 +272,7 @@ Section 3.3 explains the process of choosing test data.
 The last subsection 3.4 gives an overview of the statistical analyses which was performed on the test data.
 This also includes what computational limitations was present and how this effect the results. 
 
+\FloatBarrier
 \section{Test setup}
 %TODO HARDWARE SPECIFICATION
 %Hardware: x64 x.x GHz, x GB RAM, Ubuntu x.x
@@ -263,9 +284,11 @@ The test framework measured the solving time and recorded it.
 Since there might be variations in processor performance multiple tests where performed on each puzzle. 
 The mean value was then saved for each puzzle and algorithm.
 
+\FloatBarrier
 \section{Comparison Methods}
 Multiple aspects of the results was considered when analysing and comparing the algorithms. The following three subsections describes those aspects in more detail. 
 
+\FloatBarrier
 \subsection{Solving}
 The solving ability of an algorithm is ofcourse the most interesting aspect.
 By measuring the time it takes for a sudoku to solve different puzzles one
@@ -277,6 +300,7 @@ We will therefore present histograms that shows the frequency at which it solves
 This does not only depict a more interesting view of the sudoku solvers performance, but also shows possible underlying features such as if the sudoku solver solves the puzzle with an already known distribution.
 Those topics are mostly studied for each algorithm, but will also to some extent be compared between the algorithms.
 
+\FloatBarrier
 \subsection{Puzzle difficulty}
 One can often find difficulty ratings associated to Sudoku puzzles in puzzle books etc. 
 Those are often based on the level of human solving techniques that are needed to solve the puzzle in question. \cite{difficulty} 
@@ -285,6 +309,7 @@ The test will primarly consist of determining if certain puzzles are inherently 
 During the implementation process it was discovered that the Boltzmann machine performed much worse than the other algorithms and could therefore not be tested on the same set of puzzles.
 The comparison are therefore focused on the rule-based and backtracking algorithms.
 
+\FloatBarrier
 \subsection{Generation and parallelization}
 This is a more theoretical aspect of the comparison and no tests will be done.
 It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelisised. 
@@ -294,6 +319,7 @@ Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudo
 And truly this topic is quite unrelevant for normal Sudoku puzzles but the discussion that will be held about the algorithms is however still of practical interest since one might want to solve n by n puzzles which can get extremely difficult fast when n grows. 
 Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion is also relevant in determining which type of algorithms might be useful in other areas. 
 
+\FloatBarrier
 \section{Benchmark puzzles}
 The test data consisted of multiple puzzles that was chosen beforehand.
 Since the set of test puzzles can affect the outcome of this study it is appropriate to motivate the choice of puzzles.
@@ -308,11 +334,13 @@ As discussed under section 3.2.2 difficutly rating is poorly measured by the num
 This means that the choosen set of 17-clue puzzles shall contain some of the hardest Sudoku puzzles that exists.
 This is ofcourse a wanted feature since one then can see how the algorithms performs at puzzles of all difficulties.
 
+\FloatBarrier
 \section{Statistical analysis}
 Due to several reasons statistical analyses is required to make a rigouros statement about the results. 
 This is mainly due to two reason.
 Firstly the results contain a very large dataset and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
 Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test. As described in section 3.4.2 some of the statistical tests have been limited by computational constraints and a lower confidence level in combination with a more inprecise result have therefore been needed for those tests.
+\FloatBarrier
 \subsection{Statistical tests}
 This section explains which statistical tests and methods are used in the study.
 The first statistical method that is applied is to make sure that variance in processor performance does not affect the results considerable. 
@@ -325,50 +353,53 @@ It is now that the real analyses of the algorithms begins.
 Even if the representation of the results does not really classify as a statistical method it is appropriate to mention that the results are displayed as histograms which means that the data are sorted and devided into bars of equal width. 
 For this study this means each bar represents a fixed size solution time intervall. 
 The height of the bars are proportional to the frequency data points falls into that bar's time intervall.
-After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms. The usefullness of this somewhat unrigouros approach shall not negleted, but shall also use statistical methods to rigourosly prove some relations.\\
-The first thing one think of looking for is probably how the different algorithms compare in solving ability. 
+After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms.\\
+The first thing one might think of looking for is how the different algorithms compare in solving ability. 
 This means that one want to find out if one algorithm is better than other algorithms. 
-Since the distribution again is unknown one has to rely on more general statistical tests. 
-One of those are wilcoxons sign test. n
+Since the distribution is unknown one has to rely on more general statistical tests. 
+One of those are wilcoxons sign test. 
 This makes use of the fact that the difference in solving times between two algorithms will have a mean value of 0 if there is no difference between the two algorithms. 
-The tests uses the binomial theorem to see if the sign of the difference is unevenly distributed.
-One can then determine if an algorithm performs better than an other algorithm with a certain confidence.
-Since the distribution of the solution times are unknown it is not possible for wilcoxons sign test to give any measurement of how much better an algorithm is than another algorithm.
-One might however make a histogram of the difference which leads us to the next aspect, namely difficulty rating and distribution. 
-%Another approach that are also performed are to test if the test data seems to follow a certain distribution. This can be done by multiple tests.  
-Difficulty rating for each algorithm can easily be calculated by making histograms of the solution times for each algorithm. 
-One aim of this study have however been to determine if there is puzzles that are inherently difficult, that is regardless of solution method.
-To determine if that is the case some statistical methods are required. The reader shall note that this test is only conducted on the backtracking and rulebased algorithms and the result can therefore not speak for other solution methods.
-The method used is however built on the fact that independent events, say A and B, must follow the following property:
+The tests uses the binomial distribution to see if the sign of the difference is unevenly distributed.
+The null hypothesis is that the two algorithms perform equally and to attain a confidence for the result one compute the probability that one falsely rejects the null hypothesis given the test results.
+\\
+Difficulty distribution among the puzzles can be seen by looking at the histograms for each algorithm.
+One aspect that is of interest is however if some of the puzzles are inherently difficult/easy independent on which algorithm is used for solving it.
+The method used for determining this is built on the fact that independent events, say A and B, must follow the following property:
 \[
 P(A \cap B) = P(A) P(B)
 \] 
-If A is chosen to be the event that a puzzle is within algorithms 1 worst 10\% puzzles.
+To illustrate what this means for this thesis lets consider the following scenario.
+A is chosen to be the event that a puzzle is within algorithm one's worst 10\% puzzles.
 B is similiarly chosen to be the event that a puzzle is within the 10 \% worst puzzles for algorithm 2.
-Since $P(A \cap B)$ shall den be 1 \% a statistical test can be set up to determine if the 10 \% worst puzzles are independent of algorithm. This is done by measuring the probability that the measured results appear if the null hypothesis is ascertained. If the probability is very low one can determine that the worst puzzles are not independent on the algorithms to a certain confidence level.
-Similarly the easiest puzzles will be checked for independence.\\
+The event $A \cap B$ shall if the algorithms are independent then have a probability of 1\%.
+To test if this is the case one again uses the binomial distribution with the null hypothesis that the two algorithms are independent.
+This hypothesis is then tested in the same way as the above described method (wilcoxons sign test).
 
+\FloatBarrier
 \subsection{Computational constraints}
-There is some computational constraints in the testing which have forced us to use a lower confidence level than wanted.
-The problem origins from the variance in processor performance.
-This was solved as discussed above by applying bootstraping to attain a approximately confidence level for the mean value to be within a certain interval.
-Bootstraping is however somewhat lacking in its ability to ascertain high confidence levels for small samples compared to other methods due to the fact that it does not ascertain any special distribution.
-As a result the confidence level and the allowed intervall was fitted to allow for a reasonable number of puzzles to pass with high enough confidence in a reasonable time frame.
+The computational constraints of the computations done in relation to this thesis mainly originates from processor performance.
+This was as aboved described handled by running multiple tests on the same algorithm with each puzzle.
+The problem is that bootstraping which was used to determine confidence levels of the measured mean value, requires a large data set to attain a high confidence level. 
+At the same time the puzzle set was very big which required a compromiss which lead to a confidence interval of 0.05 seconds to a confidence level of 95\%. The number of tests that was allowed for each puzzle was also limited to 100 tries.
+The puzzles that could not pass the requirements for the confidence interval was marked as unstable measurment.
+\\
+Another problematic aspect concerning computational constraints is the running time for each algorithm.
+During the projekt it was discovered that backtracking was slow for some puzzle with 17 clues and the Boltzmann machine was discovered to be much to slow for all 17 clue puzzle.
+The way this was handled was by setting a runningtime limit of 20 seconds for each test run for the backtracking solver.
+The boltzmann machine required a more dramatic solution and the test puzzles was exchanged with ones with 51 clues instead of 17. 
+This was quite unfortunate as this leaves some of the comparison aspects with only two algorithms.
 
+\FloatBarrier
 \section{Benchmark puzzles}
 This thesis relies highly on measuring how long it takes different algorithms to solve puzzles. 
 To measure this, puzzles are needed and consideration shall therefore be taken to choose those puzzles wisely.
 The puzzles that have been chosen to test the solving capabilities of the algorithms are a collection consisting of 49 151 puzzles which each have 17 clues (meaning 17 squares are filled in). \cite{database} Those have been collected by Gordon Royle from different sites as well as from his own database.
 The reason for choosing this collection is because it is believed not to be biased towards a specific solving idea.
 This is because it is a collection that comes from collecting as many of the 17-clue puzzles that have been found as possible rather than using a specific generation method.
-The collection also have other benefits.
-The puzzles are all qualitativly different as no pair of puzzles is within the same equivalence class.
-Equivalent puzzles are defined as puzzles that could be transformed into each other using some predefined operations that doesnt change the solution.
-One might for instance interchange the digits in a puzzle, but the solution would then be the transformed solution and no real change to the puzzle have therefore been done.
-Some other operations includes interchanging rows, columns and stacks (three boxes in a row,column).
-The downside of choosing this collection is that some algorithms may perform poorly because of the low nr of clues given and some analysis of this will therefore be carried out.
-This will be done by solving the given puzzles and adding some of the numbers in the solution to the puzzle.
-The reason for this approach is ones again that one does not want to rely too much on a specific generation method.
+Another benefit of those puzzles are that all are qualitativly different, meaning no pair of puzzles is within the same equivalence class.
+This means that a puzzle can not be transformed into another puzzle using a certain set of transformations.
+The allowed tranformations are those that preserve the solution. Relabelling the numbers is for instance an allowed transformation since the solution is preserved (the numbers in the solution are also relabelled).
+Exchanging two boxes is however not allowed since this will change the solution or even make the puzzle invalid.
 
 \chapter{Analysis}
 %TODO, davnils/pabergg
@@ -377,19 +408,21 @@ Section 4.1 is devoted to presenting how different algorithms perform.
 Section 4.2 explains how different puzzles can be can be correlated in terms of difficulty of solving.
 %TODO: Verify the sentence above, filled in by davnils.
 
+\FloatBarrier
 \section{Time distributions}
-The time distributions of individual algorithms over the test set shows several things.
-It is possible to observe if there is no particular difference between puzzles or if some puzzles seem to be more difficult for the algorithm to solve.
+To get an idea of how each algorithm performs one can plot the solving times in a histogram. Another way of displaying the performance is to sort the solving times and plot puzzle index versus solving time. Both of those are of interest however since they can reveal different things about the algorithms performance. 
 
+\FloatBarrier
 \subsection{Rule-based solver}
 The rule-based solver was by far the fastest algorithm in the study and also had the lowest standard deviation. 
 The result was a mean value of 0.02 seconds and a standard deviation of 0.02 seconds as well. 
 The time distribution for the rule-based solver can be seen in 
 figure ~\ref{fig:rule-basedDistribution}.
+
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/rulebaseddistribution.png}
+  \includegraphics[width=20cm]{images/rulebased_histogram.png}
 \end{tabularx}}
 \caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rule-basedDistribution}
@@ -397,6 +430,17 @@ figure ~\ref{fig:rule-basedDistribution}.
 
 The figure is a closed in view of the histogram showing the rule-based solvers time distribution with all 49151 puzzles. 
 All puzzles were solved and all measurements were stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
+
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/rulebased_histogram2.png}
+\end{tabularx}}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rule-basedDistribution}
+\end{figure}
+
+
 The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds, those have been removed from the figure to make it clearer.
 As the figure displays, the solution times increase up to a peak at about 0.17 seconds.
 The solution times then drops at an approximately exponential rate.
@@ -405,10 +449,40 @@ The reason why backtracking is thought to result in this behaviour is because al
 This in turn leads to the classical property of memorylessness in the exponential distribution since you can not know if
 
 %TODO: Finish the damn sentence! /grumpy davnils
+%TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAh
 
+\FloatBarrier
 \subsection{Backtrack solver}
 
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/backtrack_distribution.png}
+\end{tabularx}}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rule-basedDistribution}
+\end{figure}
 
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/backtrack_sortedindices.png}
+\end{tabularx}}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rule-basedDistribution}
+\end{figure}
+
+
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=20cm]{images/backtrack_exponential.png}
+\end{tabularx}}
+\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:rule-basedDistribution}
+\end{figure}
+
+\FloatBarrier
 \subsection{Boltzmann machine solver}
 %TODO: Update values and replace image with more significant results
 The Boltzmann machine solver did not perform as well as others and required to be run on puzzles of difficulty 46, in order to have reasonable execution times.
@@ -431,7 +505,23 @@ After this temperature interval there were no puzzles being solved within the li
 \label{fig:boltzmannDistribution}
 \end{figure}
 
+\FloatBarrier
+\section{Comparison}
+
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.5\textwidth}{XX}
+  \includegraphics[width=15cm]{images/comparison.png}
+\end{tabularx}}
+\caption{Histogram showing distribution of boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
+\label{fig:boltzmannDistribution}
+\end{figure}
+
+\FloatBarrier
 \section{Puzzle difficulty}
+
+\section{Generation and parallellising}
+\label{sec:generation}
 
 \chapter{Conclusion}
 %TODO: Verify all content after new data

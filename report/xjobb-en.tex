@@ -340,8 +340,10 @@ Due to several reasons statistical analyses is required to make a rigouros state
 This is mainly due to two reason.
 Firstly the results contain a very large dataset and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
 Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test. As described in section 3.4.2 some of the statistical tests have been limited by computational constraints and a lower confidence level in combination with a more inprecise result have therefore been needed for those tests.
+
 \FloatBarrier
 \subsection{Statistical tests}
+\label{sec:statisticalTests}
 This section explains which statistical tests and methods are used in the study.
 The first statistical method that is applied is to make sure that variance in processor performance does not affect the results considerable. 
 This is done by measuring a specific algorithms solving time for a specific puzzle multiple times. 
@@ -404,13 +406,17 @@ Exchanging two boxes is however not allowed since this will change the solution 
 \chapter{Analysis}
 %TODO, davnils/pabergg
 In this section multiple results are presented together with a discussion about how the results could be interpreted. 
-Section 4.1 is devoted to presenting how different algorithms perform. 
-Section 4.2 explains how different puzzles can be can be correlated in terms of difficulty of solving.
-%TODO: Verify the sentence above, filled in by davnils.
+Section~\ref{sec:timeDistributions} is devoted to presenting how different algorithms perform. 
+Section~\ref{sec:comparisonAnalysis} show how the algorithms performs relative to the others and discusses different aspect of comparison.
+Section~\ref{sec:difficultyAnalysis} explains how different puzzles can be can be correlated in terms of difficulty of solving.
+Section~\ref{sec:generation} compares the algorithms in there ability to generate puzzles and how well they are suited for parallellising.
 
 \FloatBarrier
 \section{Time distributions}
-To get an idea of how each algorithm performs one can plot the solving times in a histogram. Another way of displaying the performance is to sort the solving times and plot puzzle index versus solving time. Both of those are of interest however since they can reveal different things about the algorithms performance. 
+\label{sec:timeDistributions}
+To get an idea of how each algorithm performs one can plot the solving times in a histogram. 
+Another way of displaying the performance is to sort the solving times and plot puzzle index versus solving time. 
+Both of those are of interest however since they can reveal different things about the algorithms performance. 
 
 \FloatBarrier
 \subsection{Rule-based solver}
@@ -507,6 +513,7 @@ After this temperature interval there were no puzzles being solved within the li
 
 \FloatBarrier
 \section{Comparison}
+\label{sec:comparisonAnalysis}
 
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
@@ -519,9 +526,31 @@ After this temperature interval there were no puzzles being solved within the li
 
 \FloatBarrier
 \section{Puzzle difficulty}
+\label{sec:difficultyAnalysis}
+Both the backtrack solver and the rule-based solver was runned on the same set of puzzles. One interesting aspect to study is to see if some of those puzzles is difficult for both algorithms or if the algorithms are independent when it comes to which puzzles they perform good/bad at.
+Even if the rule-based solver uses backtracking as a last resort it is not clear whetever the most difficult puzzles correlates between the two algorithms.
+The reason for this is because a puzzle can be very hard for the backtracking algorithm, but still trivial for the rule-based solver. 
+This has to do with the naked tuple rule in the rule-based solver that quickly can reduce the number of candidates in each square.
+\\
+To test for independence the statistical method described in section~\ref{sec:statisticalTests} is used.
+The measurements shows that about 20\% of the worst 10\% puzzles is common for the two algorithms. 
+This hints that some puzzles indeed are inherently difficult regardless of which of the two algorithms are used.
+If that would not have been the case only 10\% of the worst puzzles for one algorithm shall have been among the 10\% worst puzzles.
+The statistical test also confirms this with a very high confidence level (greater than 99.9\%).
+%TODO some comment about Boltzmann machine
+
 
 \section{Generation and parallellising}
 \label{sec:generation}
+As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallellised.
+Those are however qualities that can be discussed purely theoretically.
+To start of with generation one has to make sure that the generated puzzle is valid and has a unique solution.
+Puzzles with multiple solutions are often disregarded as sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle.
+\\
+The generation process can be implemented multiple ways, but since this thesis is about sudoku solving algorithms only this viewpoint is presented.
+The way one generates a puzzle is by randomly inserting numbers into an empty sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
+Both the rule-based solver and the backtracking solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee
+
 
 \chapter{Conclusion}
 %TODO: Verify all content after new data

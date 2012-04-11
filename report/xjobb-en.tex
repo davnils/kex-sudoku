@@ -109,14 +109,14 @@ In order to be regarded as a proper Sudoku puzzle it is also required that a uni
 
 The size of the given subset, typically referred to as the number of clues, determine the difficulty of finding all grid values and thereby solving the Sudoku.
 Commonly the number of clues are reduced for increased difficulty with difficulty levels such as "easy", "medium" and "hard" being common ratings in newpapers.
-Rating puzzles is however not just that simple but requires more extensive analysis, something which has been studied (http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.6263\&rep=rep1\&type=pdf\#page=91).
+Rating puzzles is however not just that simple but requires more extensive analysis, something which has been studied \cite{sudokuDifficulty}.
 
 There is however a lower limit on the number of clues given that results in a unique solution.
 This limit was proven to be 17 \cite{17clueProof}, limiting the interesting number of clues to the range of 17-80.
 
 \FloatBarrier
 \section{Computational perspective}
-Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic}(http://www.springerlink.com/index/L14T86X63XQ7402T.pdf, "Research on Construting of Sudoku Puzzles") \cite{generation}.
+Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic, sudokuConstruct, generation}.% \cite{sudokuConstruct} \cite{generation}.
 
 The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete \cite{complexity}.
 While being theoretically interesting as an result it has also motivated research into heurstics, resulting in a wide range of available solving methods.
@@ -616,6 +616,12 @@ Royle G. Minimum Sudoku. [homepage on the Internet]. No date [cited 2012 Mar 13]
 
 \bibitem{boltzmann2}
 Ackley D, Hinton G. A Learning Algorithm for Boltzmann Machines. [homepage on the Internet]. 1985 [cited 2012 Mar 13]. Available from: The University of Western Australia, Web site: http://learning.cs.toronto.edu/~hinton/absps/cogscibm.pdf
+
+\bibitem{sudokuConstruct}
+Wang HW, Zhai YZ, Yan SY. Research on Construting of Sudoku Puzzles. Advances in Electronic Engineering, Communication and Management [serial on the Internet]. 2012 [cited 2012 Apr 11].;1 Available from: http://www.springerlink.com/index/L14T86X63XQ7402T.pdf
+
+\bibitem{sudokuDifficulty}
+Mantere TM, Koljonen JK. Solving and Rating Sudoku Puzzles with Genetic Algorithms. Publications of the Finnish Artificial Intelligence Society [serial on the Internet]. 2006 [cited 2012 Apr 11].(23) Available from: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.6263\&rep=rep1\&type=pdf\#page=91
 
 \bibitem{difficulty}
 %TODO Patrik: fix this reference

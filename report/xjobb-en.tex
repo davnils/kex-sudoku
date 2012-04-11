@@ -547,7 +547,19 @@ Puzzles with multiple solutions are often disregarded as sudoku puzzles and are 
 \\
 The generation process can be implemented multiple ways, but since this thesis is about sudoku solving algorithms only this viewpoint is presented.
 The way one generates a puzzle is by randomly inserting numbers into an empty sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
-Both the rule-based solver and the backtracking solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee
+Both the rule-based solver and the backtracking solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
+The rule-based solver does this much faster since it can apply logical rules to roll out some part of the search three.
+Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and is therefore not as suitable for generation.
+If one attempted to use the Boltzmann machine for checking validity and backtracking for checking uniqueness, the result would be that the backtracking would have to exhaust all possible solutions anyway and no improvement would have been made.
+Another problem with generation with the Boltzmann machine solver is that it can not know if it is ever going to find a solution.
+The solver might therefore end up in a situation where it can not proceed, but where a solution for the puzzle still exists.
+If the solver was allowed to continue it will eventually find the solution, but as the solver will have to have a limit to function practically it is not suitable for generation.
+As described the Boltzmann machine uses puzzles generated from already existing puzzles.
+Empty squares in a valid puzzle is filled in by the correct numbers by looking at the solution of the puzzle that have been obtained previously with any algorithm.
+This is a kind of generation even if it is not generally considered as generation.
+It is however applicable for generating easier puzzles from a difficult puzzle.
+\\
+Parallellising of algorithms is interesting mainly because one might want to use similar algorithms in other problems. 
 
 
 \chapter{Conclusion}

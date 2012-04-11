@@ -55,13 +55,14 @@ It is therefore of interest to study how one can solve, generate and rate such p
 
 \FloatBarrier
 \section{Problem specification}
-There are multiple algorithms that can solve Sudoku puzzles.
-In this report we discuss three different algorithms and compare them in their abbilities.
-The primary focus is on solving ability, but some results regarding difficulty rating are also presented.
-The solving ability that is of primarly focus is the time distribution among the tested puzzles for each algorithm, but some discussion regarding other topics will also be done.
-Those other algorithms primarly include how well the algorithms are suited for parallelising and well the algorithms can be used in generating puzzles.
-The algorithms that will be studied are backtrack solver, rulebased solver and Boltzmann machines. 
-This algorithms and their implementations are explained in more detail in section 2. 
+There are multiple algorithms available for solving Sudoku puzzles.
+This report is limited to the study of three different algorithms, each demonstrating different properties and results.
+Primarly the focus is on solving ability, but some results regarding difficulty rating are also presented.
+Solving ability is studied by measuring solving times on a wide range of puzzles in order to determine the general behaviour.
+All results are presented with time distributions indicating more properties than only average solving time.
+There is also a discussion on parallelization abilities and an overlook on the area of puzzle generation.
+The chosen algorithms for evaulation are a backtrack, rule-based and Boltzmann machines.
+All algorithms with their respective implementations are further discussed in the background section.
 
 \FloatBarrier
 \section{Scope}
@@ -223,7 +224,7 @@ The concept of Boltzmann machines is gradually introduced by beginning with the 
 \caption{A single neuron with showing weighted inputs from other neurons, bias threshold, and activation function.}
 \label{fig:neural-Neuron}
 \end{figure}
-The central part of an artificial neural network (ANN) is the neuron, as pictured in \ref{fig:neural-Neuron}. .
+The central part of an artificial neural network (ANN) is the neuron, as pictured in \ref{fig:neural-Neuron}.
 It decides if to fire an output signal by summing upp all inputs, tresholding the value and applying an activation function producing a binary output value.
 In the case of Boltzmann machines the activation function is stochastic and the probablility of a neuron being active is defined as follows:
 \[
@@ -274,15 +275,15 @@ This also includes what computational limitations was present and how this effec
 
 \FloatBarrier
 \section{Test setup}
-%TODO HARDWARE SPECIFICATION
-%Hardware: x64 x.x GHz, x GB RAM, Ubuntu x.x
-%TODO: Specify compilations flag and used optimizations
-The central part of the test setup was the test framework which timed and tested each algorithm on different puzzles. 
-The test framework was implemented as a separate part which made it possible to guarantee correct timing and also solving correctness of the algorithms.
-The algorithms was then called from the test work for each puzzle that was to be solved and the algorithm then returned when it finished.
-The test framework measured the solving time and recorded it. 
-Since there might be variations in processor performance multiple tests where performed on each puzzle. 
-The mean value was then saved for each puzzle and algorithm.
+The central part of the test setup is the framework which extracts timing and test every algorithm on different puzzles. 
+In order to provide flexibility, the test framework was implemented as a separate part, which made it possible to guarantee correct timing and also solving correctness of the algorithms.
+Every algorithm was called from the test framework for each puzzle in the set to be solved.
+All execution times were measured and logged for further analysis.
+Since there might be variations in processor performance and an element of randomness in stochastic algorithms, multiple tests were performed on each puzzle. 
+Lastly when all values satisfied the given confidence intervals a single value was recorded, gradually building up the solving time distribution.
+
+All tests were run on a system using a Intel Q9550 quad core processor @ 2.83 GHz, 4 GB of RAM running on Ubuntu 10.04 x64.
+Both the test framework and all solvers were compiled using GNU GCC with optimizations enabled on the \emph{-O2} level.
 
 \FloatBarrier
 \section{Comparison Methods}
@@ -312,10 +313,10 @@ The comparison are therefore focused on the rule-based and backtracking algorith
 \FloatBarrier
 \subsection{Generation and parallelization}
 This is a more theoretical aspect of the comparison and no tests will be done.
-It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelisised. 
+It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelized. 
 Generation of puzzles is obviously interesting because that is mainly what one want to do if constructing a puzzle collection. 
-Parallelising is however not entirely obvious why it is of interest. 
-Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelising those solvers. 
+Parallelization is however not entirely obvious why it is of interest. 
+Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelization those solvers. 
 And truly this topic is quite unrelevant for normal Sudoku puzzles but the discussion that will be held about the algorithms is however still of practical interest since one might want to solve n by n puzzles which can get extremely difficult fast when n grows. 
 Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion is also relevant in determining which type of algorithms might be useful in other areas. 
 
@@ -454,9 +455,6 @@ This is believed to due to the use of backtracking.
 The reason why backtracking is thought to result in this behaviour is because all search trees are believed to be equally probable and one can therefore expect to find the solution at any leaf in the search tree.
 This in turn leads to the classical property of memorylessness in the exponential distribution since you can not know if
 
-%TODO: Finish the damn sentence! /grumpy davnils
-%TODO: AAAAAAAAAAAAAAAAAAAAAAAAAAh
-
 \FloatBarrier
 \subsection{Backtrack solver}
 
@@ -540,7 +538,7 @@ The statistical test also confirms this with a very high confidence level (great
 %TODO some comment about Boltzmann machine
 
 
-\section{Generation and parallellising}
+\section{Generation and parallelization}
 \label{sec:generation}
 As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallellised.
 Those are however qualities that can be discussed purely theoretically.

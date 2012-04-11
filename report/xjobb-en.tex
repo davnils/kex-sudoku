@@ -262,7 +262,7 @@ Finally the grid is checked for conflicts and no conflicts implies a valid solut
 
 Even though the procedure detailed above eventually will find a solution, there are enhanced techniques used in order to converge faster to a valid solution.
 The temperature, $T$, can be controlled over time and is used to adjust the rate of change in the network while still allowing larger mutations to occur.
-A typical scheme being used is simulated annealing (ref: http://www.sciencemag.org/content/220/4598/671.short).
+A typical scheme being used is simulated annealing \cite{simulatedAnnealing}.
 By starting off with a high temperature (typically $T = 100$) and gradually decreasing the value as time progresses, it is possible to reach a global minima.
 Due to practical constraints it is not possible to guarantee a solution but simulated annealing provides a good foundation which was used.\\
 
@@ -634,6 +634,9 @@ Wang HW, Zhai YZ, Yan SY. Research on Construting of Sudoku Puzzles. Advances in
 
 \bibitem{sudokuDifficulty}
 Mantere TM, Koljonen JK. Solving and Rating Sudoku Puzzles with Genetic Algorithms. Publications of the Finnish Artificial Intelligence Society [serial on the Internet]. 2006 [cited 2012 Apr 11].(23) Available from: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.100.6263\&rep=rep1\&type=pdf\#page=91
+
+\bibitem{simulatedAnnealing}
+Kirkpatrick SK, Gelatt CD, Vecchi MP. Optimization by Simulated Annealing. Science 1983; (13):671-680.
 
 \bibitem{difficulty}
 %TODO Patrik: fix this reference

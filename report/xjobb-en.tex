@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{blindtext}
 \usepackage{tabularx}
+\usepackage{listings}
 
 % No images or other floats can pass through \FloatBarrier 
 \usepackage{placeins}
@@ -649,4 +650,36 @@ And here is a figure
 \end{figure}
 
 that we refer to here: \ref{RDF_4}
+
+\chapter{Source code}
+\lstset{language=C++}
+\section{TestFramework.cpp}
+\lstinputlisting{../src/test/TestFramework.cpp}
+\section{TestFramework.h}
+\lstinputlisting{../src/test/TestFramework.h}
+
+\section{SodukuSolver.cpp}
+\lstinputlisting{../src/test/SudokuSolver.cpp}
+\section{SodukuSolver.h}
+\lstinputlisting{../src/test/SudokuSolver.h}
+
+\section{Randomizer.cpp}
+\lstinputlisting{../src/test/Randomizer.cpp}
+\section{Randomizer.h}
+\lstinputlisting{../src/test/Randomizer.h}
+
+\section{Boltzmann.cpp}
+\lstinputlisting{../src/neural/Boltzmann.cpp}
+\section{Boltzmann.h}
+\lstinputlisting{../src/neural/Boltzmann.h}
+
+\section{Square.cpp}
+\lstinputlisting{../src/neural/Square.cpp}
+\section{Square.h}
+\lstinputlisting{../src/neural/Square.h}
+
+\section{Rulebased.cpp / Backtrack}
+\lstinputlisting{../src/rulebased/rulebased2/Rulebased.cpp}
+\section{Rulebased.h / Backtrack}
+\lstinputlisting{../src/rulebased/rulebased2/Rulebased.h}
 \end{document}

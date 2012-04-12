@@ -471,7 +471,7 @@ It solved all 49151 17-clue puzzles that was in the puzzle database used for tes
 %The time distribution for the rule-based solver can be seen in 
 %figure ~\ref{fig:rulebasedHistogram}, ~\ref{fig:rulebasedHistogram2} and ~\ref{fig:rulebasedIndices}.
 Figure~\ref{fig:rulebasedHistogram} is a histogram on a logaritmic scale that shows how the rule-based solver performed over all test puzzles.
-As one can see there is a quite samll time intervall at which most puzzles are solved.
+As one can see there is a quite small time intervall at which most puzzles are solved.
 This is probably due to the use of logic rules with a polynomial time complexity.
 When the solver instead starts to use guessing the time complexity is changed to exponential time and it is therefore reasonable to believe that the solving time will then increase substantially.
 As will be seen in section~\ref{sec:backtrack} the backtrack algorithm have a similar behaviour which is also taken as a reason to believe that the rule-based solver starts to use guessing after the peak.
@@ -727,10 +727,12 @@ All the algorithms can furthermore be parallelized without adding any considerab
 \chapter{Conclusion}
 Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.
 All solvers were tested using a test framework with statistically significant results being produced.
-They have shown to be dissimilar to each other in terms of performance and general behaviour.
+They have shown to be dissimilar to each other in terms of performance and general behaviour.\\
 
 Backtrack search and rule-based solvers are deterministic and form execution time distributions that are precise with relatively low variance.
 Their excecution time was also shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deteministic behaviour.
+Comparing the two algorithms leads to the conclusion that rule-based performs better overall.
+There were some exceptions at certain puzzles, but overall solution times were significantly lower.\\
 
 The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable timeframe.
 A suitable number of clues was found to be 46 with a 20 second execution time limit, resulting in vastly worse general capabilites than the other solvers.
@@ -739,25 +741,25 @@ Another important aspect of the Boltzmann is the method of temperature descent, 
 This affected the resulting distribution times in a way that makes the probability of puzzles being solved under a certain critical temperature limit high.
 The critical temperature was found to be about 0.5\% of the starting temperature, with no puzzles being solved after this interval.
 
-Additionaly two different methods of temperature descent were studied.
-The results demonstrates that a slower descent solves more puzzles, even though the execution times are clustered closer to the 20 second execution limit.
+Additionally two different methods of temperature descent were studied.
+The results demonstrates that a slower descent solves more puzzles, even though the execution times are clustered closer to the 20 second execution limit.\\
 
 All results indicate that deterministic solvers based on a set of rules perform well and are capable of solving Sudokus with a low amount of clues.
-Boltzmann machines were found to be relatively complex and requires implementation of temperature descent and adjustment of parameters.
+Boltzmann machines were found to be relatively complex and requires implementation of temperature descent and adjustment of parameters.\\
 
 With regards to parallelization it is possible to implement to a varying extent in all algorithms.
 The most obvious way of solving several different puzzles in parallel has been used in the test framework.
-Parallel solving of individual puzzles require extensive analysis of individual algorithms, but both backtrack and rule-based have shown to inhibit parallelizable properties.
-Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates.
+Parallel solving of individual puzzles requires extensive analysis of individual algorithms, but both backtrack and rule-based have shown to inhibit parallelizable properties.
+Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates of node states.\\
 
 Deterministic algorithms such as backtrack and rule-based have been discussed in the context of puzzle generation, and are considered to perform well.
-This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behaviour of Boltzmann machines, that only gives very weak guarantees.
+This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behaviour of Boltzmann machines, that only gives very weak guarantees.\\
 
 Future work includes studying the behaviour of Boltzmann machines in relation to the final distribution of execution times.
 The large variance and stochastic behaviour most likely demands a study with access to large amounts of computational power.
 It is also interesting to study the influence of different temperature descent methods used in Boltzmann machines, with restarting being a suitable alternative to endlessly decreasing temperatures.
 The rule-based algorithm may be studied in more detail by adding additional rules and also varying the order in which the rules are applied.
-The backtrack algorithm may similarly be studied in more detail by adding additional variations on it, which primarly includes how it chooses which square to start each search tree with.
+The backtrack algorithm may similarly be studied in more detail by adding additional variations to it, which primarly includes how it chooses which square to start each search tree with.
 
 
 \begin{thebibliography}{99}

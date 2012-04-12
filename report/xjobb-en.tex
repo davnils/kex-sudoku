@@ -63,6 +63,8 @@ This is a list of responsibilities:
 
 \clearpage
 \tableofcontents*
+\clearpage
+\listoffigures*
 \mainmatter
 \pagestyle{newchap}
 
@@ -250,7 +252,7 @@ network of neurons and finally concluding with a discussion on simulation techni
 \begin{figure}[here] 
 \centering
 \includegraphics[width=10cm]{images/neuron.png}
-\caption{A single neuron showing weighted inputs from other neurons on the left. These form a summation of which the bias threshold $\theta$ is withdrawn. Finally the activation function \emph{s} decides if to set the binary output active.}
+\caption[A single neuron]{A single neuron showing weighted inputs from other neurons on the left. These form a summation of which the bias threshold $\theta$ is withdrawn. Finally the activation function \emph{s} decides if to set the binary output active.}
 \label{fig:neural-Neuron}
 \end{figure}
 The central part of an artificial neural network (ANN) is the neuron, as pictured in figure~\ref{fig:neural-Neuron}.
@@ -481,7 +483,7 @@ Guessing might ofcourse be used sparingly at or even before the peak, but the pe
     \includegraphics[width=15cm]{images/rulebased_histogram.png}
 \end{tabularx}}
 \vspace{-25pt}
-\caption{A histogram displaying the solving times for the rule-based solver. The x-axis showing solving time have a logaritmic scale to clearify the result. The reader shall note that this makes the bars in the histograms' widths different, but they still represent the same time interval. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\caption[Histogram with solving times for rule-based solver]{A histogram displaying the solving times for the rule-based solver. The x-axis showing solving time have a logaritmic scale to clearify the result. The reader shall note that this makes the bars in the histograms' widths different, but they still represent the same time interval. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedHistogram}
 \end{figure}
 
@@ -498,7 +500,7 @@ As can be seen most puzzles will have solving time less than 0.4 seconds.
     \includegraphics[width=16cm]{images/rulebased_histogram2.png}
 \end{tabularx}}
 \vspace{-40pt}
-\caption{A zoomed in view of the histogram in figure ~\ref{fig:rulebasedHistogram} showing the rule-based solvers time distribution among all 49151 puzzles. The bars represent half the time intervall compared to figure ~\ref{fig:rulebasedHistogram}. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\caption[Histogram with solving times for rule-based in a zoomed in view]{A zoomed in view of the histogram in figure ~\ref{fig:rulebasedHistogram} showing the rule-based solvers time distribution among all 49151 puzzles. The bars represent half the time intervall compared to figure ~\ref{fig:rulebasedHistogram}. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedHistogram2}
 \end{figure}
 
@@ -518,7 +520,7 @@ From that statement one can conclude that only a small portion of all sudoku puz
     \includegraphics[width=15cm]{images/rulebased_sortedindices.png}
 \end{tabularx}}
 \vspace{-25pt}
-\caption{The x-axis is the indices of the puzzles when sorted according to the solving time for the rule-based solver. The y-axis shows a logaritmic scale of the solving time for each puzzle. All 49151 puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
+\caption[Plot of solved puzzles using rule-based solver]{The x-axis is the indices of the puzzles when sorted according to the solving time for the rule-based solver. The y-axis shows a logaritmic scale of the solving time for each puzzle. All 49151 puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedIndices}
 \end{figure}
 
@@ -540,7 +542,7 @@ That is linear in the diagram as the y-axis is a logaritmic scale.
     \includegraphics[width=16cm]{images/backtrack_distribution.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{A plot similar to a histogram showing the results of the backtrack solver for all solved puzzles. The algorithm left $1150$ unsolved (time limit was 20 seconds) and 142 with unstable measured solving times out of all 49151 puzzles. Note that the y-axis is a logaritmic scale of the solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
+\caption[Plot of backtrack results]{A plot similar to a histogram showing the results of the backtrack solver for all solved puzzles. The algorithm left $1150$ unsolved (time limit was 20 seconds) and 142 with unstable measured solving times out of all 49151 puzzles. Note that the y-axis is a logaritmic scale of the solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
 \label{fig:backtrackDistribution}
 \end{figure}
 
@@ -561,7 +563,7 @@ There is however no reason to believe that this limit is close to 20 seconds so 
     \includegraphics[width=16cm]{images/backtrack_sortedindices.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{The backtrack algorithm's puzzles plotted against their solving times. The x-axis is the indices of the puzzles when sorted according to solving times. Note that this plot is different from figure~\ref{fig:rulebasedIndices} as this plot have a linear y-axis. The plot shows the distribution of the solved puzzles with stable measurements of their running times. There where $49151$ puzzles in total tested and $1150$ of those were unsolved (time limit was 20 seconds) and $142$ of those had unstable measurments of their solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
+\caption[Plot of backtrack solving times]{The backtrack algorithm's puzzles plotted against their solving times. The x-axis is the indices of the puzzles when sorted according to solving times. Note that this plot is different from figure~\ref{fig:rulebasedIndices} as this plot have a linear y-axis. The plot shows the distribution of the solved puzzles with stable measurements of their running times. There where $49151$ puzzles in total tested and $1150$ of those were unsolved (time limit was 20 seconds) and $142$ of those had unstable measurments of their solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
 \label{fig:backtrackIndices}
 \end{figure}
 
@@ -576,7 +578,7 @@ The figure instead shows that the distribution for the backtrack algorithm's sol
 \includegraphics[width=13cm]{images/backtrack_exponential.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{The distribution of the backtrack algorithm's solving times as a probability intensity function plotted together with a fitted exponential distribution. 
+\caption[Backtrack solving times as a probability intensity function]{The distribution of the backtrack algorithm's solving times as a probability intensity function plotted together with a fitted exponential distribution. 
 The fitted exponential distribution was obtained by using the reciprocal of the mean value of the solving times for the backtrack algorithm as $\lambda$ (which is the parameter used in the exponential distribution). 
 The $1150$ unsolved puzzles and the $142$ puzzles with unstable measurement out of the $49151$ puzzles was left out of this computation. 
 The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
@@ -595,7 +597,7 @@ All results share the time limit of 20 seconds, with worse results or unstable m
 \includegraphics[width=12cm]{images/boltzmann_fast.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a fast decline in temperature. All results belong to a 95\% confidence interval of 1 second. The image only contains puzzles being solved under the 20 second limit, which were 98.5\% of all tested puzzles.}
+\caption[Histogram with distribution of Boltzmann machine with fast decline]{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a fast decline in temperature. All results belong to a 95\% confidence interval of 1 second. The image only contains puzzles being solved under the 20 second limit, which were 98.5\% of all tested puzzles.}
 \label{fig:boltzmannFast}
 \end{figure}
 
@@ -609,7 +611,7 @@ These values were produced using a temperature decline constant of $K_t = -0.000
 \includegraphics[width=12cm]{images/boltzmann_medium.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a slow decline in temperature. All results belong to a 95\% confidence interval of 1 second. The image only contains puzzles being solved under the 20 second limit, which were 97.5\% of all tested puzzles. Another 2\% were unstable measurements.}
+\caption[Histogram with distribution of Boltzmann machine with slow decline]{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a slow decline in temperature. All results belong to a 95\% confidence interval of 1 second. The image only contains puzzles being solved under the 20 second limit, which were 97.5\% of all tested puzzles. Another 2\% were unstable measurements.}
 \label{fig:boltzmannMedium}
 \end{figure}
 
@@ -647,7 +649,7 @@ Since the guessing is equally implemented for both the only way the rule-based a
     \includegraphics[width=15cm]{images/comparison.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtracking algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
+\caption[Plot of puzzle difference between solvers]{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtracking algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
 The difference is the backtrack algorithm's solving time minus the rule-based algorithm's solving time. Note also that negative numbers are not included since it is a logaritmic scale.}
 \label{fig:comparison}
 \end{figure}
@@ -817,15 +819,6 @@ blargh
 \appendix
 \addappheadtotoc
 \chapter{RDF}\label{appA}
-
-\begin{figure}[ht]
-\begin{center}
-And here is a figure
-\caption{\small{Several statements describing the same resource.}}\label{RDF_4}
-\end{center}
-\end{figure}
-
-that we refer to here: \ref{RDF_4}
 
 \chapter{Source code}
 \lstset{language=C++}

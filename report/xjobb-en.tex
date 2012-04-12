@@ -174,7 +174,7 @@ The rule-based approach is a heuristic meaning that all puzzles cannot be solved
     The Boltzmann machine algorithm models Sudoku by using a constraint solving artificial neural network.
 Puzzles are seen as constraints describing which nodes that can not be connected to each other.
 These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits. 
-This algorithmic is a stochastic algorithm in contrast to the other two algorithms. Some theoretical background about neural networks is provided in section~\ref{sec:boltzmannBackground}.
+This algorithm is a stochastic algorithm in contrast to the other two algorithms. Some theoretical background about neural networks is provided in section~\ref{sec:boltzmannBackground}.
 \end{itemize}
 
 \FloatBarrier
@@ -244,31 +244,27 @@ Given however that one is presented with an easy enough puzzle where no more rul
 \FloatBarrier
 \subsection{Boltzmann machine}
 \label{sec:boltzmannBackground}
-%TODO DAVID
-% En hel del förklaringar måste förbättras i denna sektion.
-% Först och främst så rekommenderar jag att man börjar med att förklara helheten hur själva
-% neurala nätverket fungerar och hur lösningen representeras i den.
-
-% Va också noga med att förklara begrepp när de introduceras. Är tillexempelt rätt
-% förvirrande att första meningen nu bombar en med massa ord som man inte riktigt är
-% säker på vad de betyder.
-
 The concept of Boltzmann machines is gradually introduced by beginning with the neuron, 
 network of neurons and finally concluding with a discussion on simulation techniques.\\
 
 \begin{figure}[here] 
 \centering
 \includegraphics[width=10cm]{images/neuron.png}
-\caption{A single neuron showing weighted inputs from other neurons on the left. These form a summation of which the bias threshold $\theta$ is withdrawn. Finally the activation function \emph{s} decides if to fire.}
+\caption{A single neuron showing weighted inputs from other neurons on the left. These form a summation of which the bias threshold $\theta$ is withdrawn. Finally the activation function \emph{s} decides if to set the binary output active.}
 \label{fig:neural-Neuron}
 \end{figure}
 The central part of an artificial neural network (ANN) is the neuron, as pictured in figure~\ref{fig:neural-Neuron}.
-It decides if to fire an output signal by summing upp all inputs, tresholding the value and applying an activation function producing a binary output value.
+A neuron can be considered as a single computation unit.
+It begins by summing up all weighted inputs, and thresholding the value for some constant threshold $\theta$.
+Then a transfer function is applied which sets the binary output if the input value is over some limit.
+
 In the case of Boltzmann machines the activation function is stochastic and the probablility of a neuron being active is defined as follows:
 \[
 p_{i=on} = \frac{1}{1+e^{-\frac{\Delta E_{i}}{T}}}
 \]
 $E_i$ is the summed up energy of the whole network into neuron $i$, which is a fully connected to all other neurons.
+A neural network is simply a collection of nodes interconnected in some way.
+All weights are stored in a weight matrix, describing connections between all the neurons.
 T is a temperature constant controlling the rate of change during several evaluations with the probability $p_{i=on}$ during simulation.
 $E_i$ is defined as follows \cite{boltzmann2}:
 \[

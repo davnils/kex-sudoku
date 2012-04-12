@@ -28,19 +28,29 @@
 \selectlanguage{english}
 \begin{abstract}
 In this bachelor thesis three different Sudoku solving algorithms are studied.
-The study is primarly concerned with solving ability, but also includes the following: difficulty rating, generation ability, suitability for parallelizing.
-This aspect are both studied for individual algorithms but are also compared between the different algorithms.
-The algorithms that are studied are backtrack, rule-based and Boltzmann machine.
-Measurements was carried out by measuring the solving time of a database of 17-clue puzzles. The Boltzmann machine was tested on puzzels with 51 clues.
-The result is presented as a set of diagrams that displays each algorithms performance and also some relations between the algorithms. 
-We conclude that the rule-based algorithm is by far the most effiecent when it comes to solving Sudoku puzzles.
-We also conclude that there is a correlation in difficulty rating between the backtracking algorithm and the rule-based algorithm.
-%Generation and parallelizing TODO
+The study is primarly concerned with solving ability, but also includes the following: difficulty rating, generation ability, and suitability for parallelizing.
+These aspects are studied for individual algorithms but are also compared between the different algorithms.
+The evaluated algorithms are backtrack, rule-based and Boltzmann machines.
+Measurements are carried out by measuring the solving time on a database of 17-clue puzzles, with easier versions used for the Boltzmann machine.
+Results are presented as solving time distributions for every algorithm, but relations between the algorithms are also shown.
+We conclude that the rule-based algorithm is by far the most efficient algorithm when it comes to solving Sudoku puzzles.
+It is also shown that some correlation in difficulty rating exists between the backtrack and rule-based algorithms.
+Parallelization is applicable to all algorithms to a varying extent, with clear implementations for search-based solutions.
+Generation is shown to be suitable to implement using deterministic algorithms such as backtrack and rule-based.
 
 \end{abstract}
 \clearpage
 \begin{foreignabstract}{swedish}
-TODO: 
+Den här exjobbsrapporten på kandidatnivå presenterar tre olika lösningsalgoritmer för Sudoku.
+Studiens huvudsyfte är att studera lösningsprestanda men analyserar även rankning av svårighetsgrad, möjligheter till generering och parallelisering.
+Samtliga aspekter studeras för varje algoritm och jämförs sedan även mellan enskilda algoritmer.
+De utvalda algoritmerna är backtrack, regelbaserad och Boltzmann-maskiner.
+Samtliga mätningar görs på en databas med pussel som har 17 ledtrådar, med vissa anpassningar för Boltzmann-maskiner.
+Resultaten presenteras med fördelningar som visar lösningstider för varje algoritm separat. Även en översikt över korrelationer ges.
+Slutsatsen är att regelbaserade lösare är effektivast på att lösa Sudokupussel.
+Även korrelationer mellan regelbaserade och backtrack-baserade lösare visas.
+Parallelisering visas vara tillämpbart till olika grad för de olika algoritmerna och är enklast att tillämpa på sökbaserade lösare.
+Generering är lättast att implementera med deterministiska algoritmer som backtrack och rule-based.
 \end{foreignabstract}
 \clearpage
 \section{Statement of collaboration}

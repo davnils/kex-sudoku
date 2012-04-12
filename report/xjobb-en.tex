@@ -27,13 +27,13 @@
 \maketitle
 \selectlanguage{english}
 \begin{abstract}
-In this bachelor thesis three different sudoku solving algorithms are studied.
+In this bachelor thesis three different Sudoku solving algorithms are studied.
 The study is primarly concerned with solving ability, but also includes the following: difficulty rating, generation ability, suitability for parallelizing.
 This aspect are both studied for individual algorithms but are also compared between the different algorithms.
 The algorithms that are studied are backtrack, rule-based and Boltzmann machine.
 Measurements was carried out by measuring the solving time of a database of 17-clue puzzles. The Boltzmann machine was tested on puzzels with 51 clues.
 The result is presented as a set of diagrams that displays each algorithms performance and also some relations between the algorithms. 
-We conclude that the rule-based algorithm is by far the most effiecent when it comes to solving sudoku puzzles.
+We conclude that the rule-based algorithm is by far the most effiecent when it comes to solving Sudoku puzzles.
 We also conclude that there is a correlation in difficulty rating between the backtracking algorithm and the rule-based algorithm.
 %Generation and parallelizing TODO
 
@@ -69,7 +69,7 @@ Primarly the focus is to measure and analyse those after solving ability.
 There is however also other aspects that will be covered in this thesis.
 Those are difficulty rating, Sudoku puzzle generaton, and how well the algorithms is suited for parallelizing.
 The goal of this thesis is therefore to conclude how well each algorithm performs at these aspects, but also how they compare relative to one another.
-Another goal is to see if any conclusions regarding sudoku puzzles in general can be drawn.
+Another goal is to see if any conclusions regarding Sudoku puzzles in general can be drawn.
 The chosen algorithms for evaluation are backtrack, rule-based and Boltzmann machines.
 All algorithms with their respective implementation issues are further discussed in section~\ref{sec:background} (background).
 
@@ -100,42 +100,38 @@ One hope of this study is therefore to contribute to the discussion about how on
 
 \subsection{Definitions}
 \begin{description}
-    \item[Box:] A 3x3 grid inside the sudoku puzzle. It works the same as rows and columns, meaning it must contain the digits 1-9.
+    \item[Box:] A 3x3 grid inside the Sudoku puzzle. It works the same as rows and columns, meaning it must contain the digits 1-9.
     \item[Region:] This refers to a row, column or box.
-    \item[Candidate:] An empty square in a sudoku puzzle have a certain set of numbers that does not conflict with the row, column and box it is in. Those numbers are called candidates or candidate numbers.
+    \item[Candidate:] An empty square in a Sudoku puzzle have a certain set of numbers that does not conflict with the row, column and box it is in. Those numbers are called candidates or candidate numbers.
     \item[Clue:] A clue is defined as a number in the original Sudoku puzzle. Meaning that a Sudoku puzzle have a certain number of clues which is then used to fill in new squares. The numbers filled in by the solver is, however, not regarded as clues.
 \end{description}
 
 \chapter{Background}
 \label{sec:background}
-%TODO DAVID
-% kolla igenom då jag har reviderat hela denna sektionen
-% Speciellt avsnittet om boltzmann machines måste ses över då jag där har lämnat en del
-% kommentarer istället för att ändra direkt.
-The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers. It also introduces some theoretical background about sudoku puzzles which is of interest when discussing and chosing algorithms. Finally the algorithms that will be studied in this thesis is presented.
+The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers. It also introduces some theoretical background about Sudoku puzzles which is of interest when discussing and chosing algorithms. Finally the algorithms that will be studied in this thesis is presented.
 
 \FloatBarrier
 \section{Sudoku fundamentals}
 A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
 Initially a subset of the grid is revealed and the goal is to fill the remaining grid with valid numbers.
-The grid is devided into 9 boxes which each is a 3x3 grid.
-Sudoku has only one rule and that is that all regions, that is rows, columns, and boxes, contains the numbers 1-9 exactly ones.\cite{17clueProof}.
-In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by studying solving for all possible solutions.
+The grid is divided into 9 boxes of size 3x3.
+Sudoku has only one rule and that is that all regions, that is rows, columns, and boxes, contains the numbers 1-9 exactly once.\cite{17clueProof}
+In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by solving for all possible solutions.
 
 Different Sudoku puzzles are widely accepted to have different difficulty levels.
-Those are not always so easy to classify as there is no easy way of determining difficulty level by simply expecting a grid.
-One instead typically have to try to solve the puzzle to determine how difficult it is.
-A common misconception about sudoku is that the number of clues describes how difficult it is.
+The level of difficulty is not always easy to classify as there is no easy way of determining hardness by simply inspecting a grid.
+Instead the typical approach is trying to solve the puzzle in order to determine how difficult it is.
+A common misconception about Sudoku is that the number of clues describes how difficult it is.
 While this is true for the bigger picture it is far from true that all 17-clue puzzles are more difficult than say 30-clue puzzles.\cite{sudokuDifficulty}
-The difficulty of a puzzle is not only problematic as it is hard to determine, but also as it is not generally accepted how one rate puzzles.
-One might for instance ascertain that puzzles solvable with a set of rules classifies as easy, and that some additional rules gives the puzzles the rating moderate and advanced.
-In this study difficulty will however be defined as the solving time for a certain algorithm, meaning that higher solving times means a more difficult puzzle.
-Another interesting aspect related to difficulty ratings is that the minimal number of clues in a proper Sudoku puzzle is 17.\cite{17clueProof} 
-Since puzzles even if not individually becomes generally more difficult when the clues are reduced this means that some of the most difficult Sudoku puzzles probably is 17-clue puzzles. 
+The difficulty of a puzzle is not only problematic as it is hard to determine, but also as it is not generally accepted how puzzles are rated.
+One might for instance ascertain that puzzles solvable with a set of rules classifies as easy, and that some additional rules gives the puzzles the rating moderate or advanced.
+In this study difficulty will however be defined as the solving time for a certain algorithm, meaning that higher solving times implies a more difficult puzzle.
+Another interesting aspect related to difficulty ratings is that the minimum number of clues in a proper Sudoku puzzle is 17.\cite{17clueProof} 
+Since puzzles generally become more difficult to solve with an decreasing number of clues, it is highly probable that some of the most difficult are 17-clue puzzles. 
 
 \FloatBarrier
 \section{Computational perspective}
-Sudoku solving is a research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched.\cite{stochastic, sudokuConstruct, generation}%TODO vad är det här för källor till höger. Varför är de utkommenterade? \cite{sudokuConstruct} \cite{generation}.
+Sudoku solving is a research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched.\cite{stochastic, sudokuConstruct, generation}
 
 The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete.\cite{complexity}
 While being theoretically interesting as an result it has also motivated research into heurstics, resulting in a wide range of available solving methods.
@@ -242,26 +238,18 @@ Given however that one is presented with an easy enough puzzle where no more rul
 % En hel del förklaringar måste förbättras i denna sektion.
 % Först och främst så rekommenderar jag att man börjar med att förklara helheten hur själva
 % neurala nätverket fungerar och hur lösningen representeras i den.
-% Sen är det inte säkert man behöver gå in alltför mycket i detalj på alla formler och så
-% men något kanske behövs då man ju måste förstå hur temperaturen fungerar eftersom
-% vi använder just det i analysen sen.
-% Observera att det inte gör något om denna del blir längre heller då vi har utrymme för det
-% så skriv hellre övertydligt än att förvänta sig att läsaren förstår massa saker.
 
 % Va också noga med att förklara begrepp när de introduceras. Är tillexempelt rätt
 % förvirrande att första meningen nu bombar en med massa ord som man inte riktigt är
 % säker på vad de betyder.
 
 The concept of Boltzmann machines is gradually introduced by beginning with the neuron, 
-%Antar att du menar neural networks. Borde kanske stå
-network and finally concluding with a discussion on simulation techniques.\\
+network of neurons and finally concluding with a discussion on simulation techniques.\\
 
 \begin{figure}[here] 
 \centering
 \includegraphics[width=10cm]{images/neuron.png}
-\caption{A single neuron with showing weighted inputs from other neurons on the left, 
-%Vad innebär bias i detta sammanhang. Rätt oklart. Kanske bättre att stycka upp förklaringen i flera meningar så att det hela blir lite tydligare.
-a bias threshold $\theta$, and activation function \emph{s}.}
+\caption{A single neuron showing weighted inputs from other neurons on the left. These form a summation of which the bias threshold $\theta$ is withdrawn. Finally the activation function \emph{s} decides if to fire.}
 \label{fig:neural-Neuron}
 \end{figure}
 The central part of an artificial neural network (ANN) is the neuron, as pictured in figure~\ref{fig:neural-Neuron}.
@@ -515,7 +503,7 @@ The reader shall note that the diagram i stretched to $50000$ puzzles but there 
 This picture also more clearly illustrates the idea explored above.
 Namely that the algorithm will increase its solving times fast at a certain point.
 That point is as mentioned thought to be the point where the solver starts to rely more upon guessing then the logical rules, which is much faster.
-From that statement one can conclude that only a small portion of all sudoku puzzles are difficult in the sense that the logic rules that the rule-based solver uses is not enough.
+From that statement one can conclude that only a small portion of all Sudoku puzzles are difficult in the sense that the logic rules that the rule-based solver uses is not enough.
 \\
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
@@ -703,7 +691,7 @@ It is however applicable for generating easier puzzles from a difficult puzzle.
 
 \subsection{Parallelizing}
 Parallelization of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
-There is mainly two ways one can use parallelizing when it comes to sudoku solving algorithms.
+There is mainly two ways one can use parallelizing when it comes to Sudoku solving algorithms.
 The first and most obvious one is to solve multiple puzzles in parallel.
 That is however not parallelizing of the algorithms themselves and will therefore not be discussed.
 The other form of parallelizing is separating the algorithms into parts, which are then run in parallel and the result are then combined.

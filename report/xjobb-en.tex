@@ -561,27 +561,47 @@ The confidence level for the measured solving times was 95 \% at an intervall of
 
 \FloatBarrier
 \subsection{Boltzmann machine solver}
-%TODO: Update values and replace image with more significant results
 The Boltzmann machine solver did not perform as well as others and required to be run on puzzles of difficulty 46, in order to have reasonable execution times.
-Figure \ref{fig:boltzmannDistribution} shows all resulting execution times, belonging to a 95\% confidence interval of 1 second.
-Only puzzles being solved within the strict 20 second limit are shown, representing TODO\% of all tested puzzles.
-Given the requirement of a less strict confidence interval, due to higher variance within estimates of single puzzles, there is a higher margin of error in the results.
-Inspecting the resulting distribution implies that all solved puzzles are completed within a relativily small interval, with further conclusions being limited by the margin of error. \\
-
-A strong reason for the big representation of solutions around TODO seconds is the general layout of the Boltzmann solver.
-Given that solutions are more likely to be observed at lower temperatures, as explained in the background section, it is expected to have more solutions at the end of the spectrum.
-The value of TODO-TODO seconds is equivalent to a temperature of about 1\%, leading to a conclusion of this being a critical temperature for solutions to stabilze.
-After this temperature interval there were no puzzles being solved within the limit of 20 seconds.
+Two different parameter settings were simulated and the results demonstrates the differences.
+All results share the time limit of 20 seconds, with worse results or unstable measurements not being shown.
 
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.20\textwidth}{XX}
-\includegraphics[width=12cm]{images/boltzmanndistribution.png}
+\includegraphics[width=12cm]{images/boltzmann_fast.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption{Histogram showing distribution of Boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
-\label{fig:boltzmannDistribution}
+\caption{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a fast decline. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were 98.5\% of all tested puzzles.}
+\label{fig:boltzmannFast}
 \end{figure}
+
+Figure \ref{fig:boltzmannFast} shows all resulting execution times, belonging to a 95\% confidence interval of 1 second, when using a fast decline in temperature.
+The solved puzzles represent 98.5\% of all tested puzzles, with no measurements being unstable.
+These values were produced using a temperature decline constant of $K_t = -0.000035$.
+
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.20\textwidth}{XX}
+\includegraphics[width=12cm]{images/boltzmann_medium.png}
+\end{tabularx}}
+\vspace{-15pt}
+\caption{Histogram showing distribution of Boltzmann machine results running on 400 puzzles with 46 clues using a slow decline. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were 97.5\% of all tested puzzles. Another 2\% were unstable measurements.}
+\label{fig:boltzmannMedium}
+\end{figure}
+
+Figure \ref{fig:boltzmannMedium} show the corresponding histogram for a temperature constant of $K_t = -0.000025$.
+The resulting distribution if slightly shifted to higher solving times, indicating that less puzzles are solved at a lower temperature.
+A total of 97.5\% of all puzzles were solved.
+This slower temperature decline resulted in 2\% unstable measurements, which is an increase over the faster version. \\
+
+Given the requirement of a less strict confidence interval, due to higher variance within estimates of single puzzles, there is a higher margin of error in the results.
+Inspection of the two different distributions indicates that all solved puzzles are completed within their respective small intervals, with further conclusions being limited by the margin of error. \\
+
+A strong reason for the big representation of solutions clustered at a low temperature is the general layout of a Boltzmann solver.
+Given that solutions are more likely to be observed at lower temperatures, as explained in the background section, it is expected to have more solutions at the end of the spectrum.
+For example by studying the fast solver it is observable that the medium value of 8 seconds is equivalent to a temperature of about 0.5\%.
+This leads to a conclusion of this being a critical temperature for solutions to stabilze.
+Following the interval of critical temperatures there were no puzzles being solved within the limit of 20 seconds.
 
 \FloatBarrier
 \section{Comparison}

@@ -28,7 +28,7 @@
 \selectlanguage{english}
 \begin{abstract}
 In this bachelor thesis three different Sudoku solving algorithms are studied.
-The study is primarly concerned with solving ability, but also includes the following: difficulty rating, puzzle generation ability, and suitability for parallelizing.
+The study is primarily concerned with solving ability, but also includes the following: difficulty rating, puzzle generation ability, and suitability for parallelizing.
 These aspects are studied for individual algorithms but are also compared between the different algorithms.
 The evaluated algorithms are backtrack, rule-based and Boltzmann machines.
 Measurements are carried out by measuring the solving time on a database of 17-clue puzzles, with easier versions used for the Boltzmann machine.
@@ -348,9 +348,9 @@ This topic are mostly studied for each algorithm, but will also to some extent b
 \subsection{Puzzle difficulty}
 \label{sec:puzzleDifficulty}
 One can often find difficulty ratings associated to Sudoku puzzles in puzzle books etc. 
-Those are often based on the level of human solving techniques that are needed to solve the puzzle in question.\cite{difficulty} 
+Those are often based on the level of human solving techniques that are needed to solve the puzzle in question.
 This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
-The test will primarly consist of determining if certain puzzles are inherently difficult, meaning that all algorithms rate them as hard.
+The test will primarily consist of determining if certain puzzles are inherently difficult, meaning that all algorithms rate them as hard.
 During the implementation process it was discovered that the Boltzmann machine performed much worse than the other algorithms and could therefore not be tested on the same set of puzzles.
 The comparison of this aspect is therefore focused on the rule-based and backtrack algorithms.
 
@@ -360,7 +360,7 @@ This is a more theoretical aspect of the comparison and no tests will be done.
 It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelized. 
 Generation of puzzles is obviously interesting as that is what one has to do to get new Sudoku puzzles.
 One can generate Sudoku puzzles in multiple ways, but since this thesis is about Sudoku solving algorithms only generating methods involving such algorithms will be considered.
-The primarly way of generating Sudoku puzzles is then by inserting random numbers into an empty Sudoku grid and then attempting to solve the puzzle.
+The primarily way of generating Sudoku puzzles is then by inserting random numbers into an empty Sudoku grid and then attempting to solve the puzzle.
 
 Parallelization is however not entirely obvious why it is of interest. 
 Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelization those solvers. 
@@ -380,10 +380,6 @@ The reason for chosing this specific database is because the generation of the p
 The puzzles are therefore assumed to be represantative of all 17-clue puzzles. 
 This assumption is the main motivating factor for chosing this set of puzzles, but there is also other factors that makes this set of puzzles suitable. 
 As recently discovered by Tugemann and Civario, no 16-clue puzzle exists which means that puzzles must contain 17 clues to have unique solutions.\cite{17clueProof}  
-\label{sec:puzzleDifficulty}
-As discussed under section~\ref{sec:puzzleDifficulty}, difficulty rating is poorly measured by the number of clues in a puzzle, but one can however see a correlation between the number of clues and the difficulty.\cite{difficulty}
-This means that the chosen set of 17-clue puzzles shall contain some of the hardest Sudoku puzzles that exists.
-This is ofcourse a wanted feature since the algorithms are then tested on puzzles of all difficulty levels.
 
 As mentioned, the Boltzmann machine could not solve 17-clue puzzles effieciently enough which forced a change in test puzzles. The Boltzmann machine algorithm was therefore tested on 400 46-clue puzzles. Those where generated from a random set of the 17-clue puzzles used for the other algorithms and is therefore assumed that they are not biased towards giving a certain result.
 One problematic aspect is that they can probably not be said to represent all 46-clue puzzles.
@@ -392,7 +388,7 @@ Most 46-clue puzzles already have a lot of logical constraints due to the high n
 \FloatBarrier
 \section{Statistical analysis}
 \label{sec:statisticalAnalysis}
-Due to several reasons statistical analyses is required to make a rigouros statement about the results. 
+Due to several reasons statistical analysis is required to make a rigouros statement about the results. 
 This is mainly due to two reason.
 Firstly the results contain a very large dataset and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
 Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test. As described in section 3.4.2 some of the statistical tests have been limited by computational constraints and a lower confidence level in combination with a more inprecise result have therefore been needed for those tests.
@@ -474,7 +470,7 @@ Figure~\ref{fig:rulebasedHistogram} is a histogram on a logaritmic scale that sh
 As one can see there is a quite small time intervall at which most puzzles are solved.
 This is probably due to the use of logic rules with a polynomial time complexity.
 When the solver instead starts to use guessing the time complexity is changed to exponential time and it is therefore reasonable to believe that the solving time will then increase substantially.
-As will be seen in section~\ref{sec:backtrack} the backtrack algorithm have a similar behaviour which is also taken as a reason to believe that the rule-based solver starts to use guessing after the peak.
+As will be seen in section~\ref{sec:backtrack} the backtrack algorithm have a similar behavior which is also taken as a reason to believe that the rule-based solver starts to use guessing after the peak.
 Guessing might ofcourse be used sparingly at or even before the peak, but the peak is thought to decrease as a result of a more frequent use of guessing.
 \\
 \begin{figure}[here] 
@@ -727,16 +723,16 @@ All the algorithms can furthermore be parallelized without adding any considerab
 \chapter{Conclusion}
 Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.
 All solvers were tested using a test framework with statistically significant results being produced.
-They have shown to be dissimilar to each other in terms of performance and general behaviour.\\
+They have shown to be dissimilar to each other in terms of performance and general behavior.\\
 
 Backtrack search and rule-based solvers are deterministic and form execution time distributions that are precise with relatively low variance.
-Their excecution time was also shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deteministic behaviour.
+Their execution time was also shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deterministic behavior.
 Comparing the two algorithms leads to the conclusion that rule-based performs better overall.
 There were some exceptions at certain puzzles, but overall solution times were significantly lower.\\
 
-The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable timeframe.
-A suitable number of clues was found to be 46 with a 20 second execution time limit, resulting in vastly worse general capabilites than the other solvers.
-Due to stochastic behaviour, which is a central part of the Boltzmann solver, there was a relatively large variance when sampling the execution time of a single puzzle.
+The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable time frame.
+A suitable number of clues was found to be 46 with a 20 second execution time limit, resulting in vastly worse general capabilities than the other solvers.
+Due to stochastic behavior, which is a central part of the Boltzmann solver, there was a relatively large variance when sampling the execution time of a single puzzle.
 Another important aspect of the Boltzmann is the method of temperature descent, in this case selected to be simulated annealing with a single descent.
 This affected the resulting distribution times in a way that makes the probability of puzzles being solved under a certain critical temperature limit high.
 The critical temperature was found to be about 0.5\% of the starting temperature, with no puzzles being solved after this interval.
@@ -753,14 +749,14 @@ Parallel solving of individual puzzles requires extensive analysis of individual
 Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates of node states.\\
 
 Deterministic algorithms such as backtrack and rule-based have been discussed in the context of puzzle generation, and are considered to perform well.
-This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behaviour of Boltzmann machines, that only gives very weak guarantees.\\
+This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behavior of Boltzmann machines, that only gives very weak guarantees.\\
 
-Future work includes studying the behaviour of Boltzmann machines in relation to the final distribution of execution times.
-The large variance and stochastic behaviour most likely demands a study with access to large amounts of computational power.
+Future work includes studying the behavior of Boltzmann machines in relation to the final distribution of execution times.
+The large variance and stochastic behavior most likely demands a study with access to large amounts of computational power.
 It is also interesting to study the influence of different temperature descent methods used in Boltzmann machines, with restarting being a suitable alternative to endlessly decreasing temperatures.
 The rule-based algorithm may be studied in more detail by adding additional rules and also varying the order in which the rules are applied.
-The backtrack algorithm may similarly be studied in more detail by adding additional variations to it, which primarly includes how it chooses which square to start each search tree with.
-
+The backtrack algorithm may similarly be studied in more detail by adding additional variations to it, which primarily includes how it chooses which square to start each search tree with.
+Overall there is room for larger studies with more algorithms utilizing the same statistical approach that was taken in this report.
 
 \begin{thebibliography}{99}
 
@@ -769,9 +765,6 @@ Takayuki Y, Takahiro S. Complexity and Completeness of Finding Another Solution 
 
 \bibitem{17clueProof}
 Tugemann B, Civario G. There is no 16-Clue Sudoku: Solving the Sudoku Minimum Number of Clues Problem. [homepage on the Internet]. 2012 [cited 2012 Mar 8]. Available from: University College Dublin, Web site: http://www.math.ie/McGuire\_V1.pdf
-
-\bibitem{enumeration}
-Felgenhauer B, Jarvis F. Enumerating possible Sudoku grids. [homepage on the Internet]. 2005 [cited 2012 Mar 8]. Available from: University of Sheffield, Web site: http://www.afjarvis.staff.shef.ac.uk/sudoku/sudoku.pdf
 
 \bibitem{techniques}
 Astraware Limited. Techniques For Solving Sudoku. [homepage on the Internet]. 2008 [cited 2012 Mar 8]. Available from:, Web site: http://www.sudokuoftheday.com/pages/techniques-overview.php
@@ -782,17 +775,8 @@ Ekeberg. Boltzmann Machines. [homepage on the Internet]. 2012 [cited 2012 Mar 8]
 \bibitem{stochastic}
 Marwala T. Stochastic Optimization Approaches for Solving Sudoku. [homepage on the Internet]. 2008 [cited 2012 Mar 8]. Available from:, Web site: http://arxiv.org/abs/0805.0697
 
-\bibitem{review}
-. An Incomplete Review of Sudoku Solver Implementations. [homepage on the Internet]. 2011 [cited 2012 Mar 8]. Available from:, Web site: http://attractivechaos.wordpress.com/2011/06/19/an-incomplete-review-of-sudoku-solver-implementations/
-
-\bibitem{discrepancySearch}
-Harvey W, Ginsberg M. Limited discrepancy search. [homepage on the Internet]. No date [cited 2012 Mar 13]. Available from: University of Oregon, Web site: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.34.2426\&rep=rep1\&type=pdf
-
 \bibitem{searchBased}
 Cazenave Cazenave T. A search based Sudoku solver. [homepage on the Internet]. No date [cited 2012 Mar 13]. Available from: Université Paris, Dept. Informatique Web site: http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.64.459\&rep=rep1\&type=pdf
-
-\bibitem{culturalSwarms}
-Mantere T, Koljonen J. Sudoku Solving with Cultural Swarms. AI and Machine Consciousness [homepage on the Internet]. 2008 [cited 2012 Mar 13]. Available from: University of Vaasa, Department of Electrical Engineering and Automation Web site: http://www.stes.fi/step2008/proceedings/step2008proceedings.pdf\#page=60
 
 \bibitem{generation}
 Morrow J. Generating Sudoku Puzzles as an Inverse Problem. [homepage on the Internet]. 2008 [cited 2012 Mar 13]. Available from: University of Washington, Department of Mathematics Web site: http://www.math.washington.edu/~morrow/mcm/team2306.pdf
@@ -812,15 +796,10 @@ Mantere TM, Koljonen JK. Solving and Rating Sudoku Puzzles with Genetic Algorith
 \bibitem{simulatedAnnealing}
 Kirkpatrick SK, Gelatt CD, Vecchi MP. Optimization by Simulated Annealing. Science 1983; (13):671-680.
 
-\bibitem{difficulty}
-%TODO Patrik: fix this reference
-%http://www.sudokuwiki.org/Weekly_Sudoku.asp
-blargh
 \end{thebibliography}
 
 \appendix
 \addappheadtotoc
-\chapter{RDF}\label{appA}
 
 \chapter{Source code}
 \lstset{language=C++}

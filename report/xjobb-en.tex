@@ -57,94 +57,98 @@ This is a list of responsibilities:
 \pagestyle{newchap}
 
 \chapter{Introduction}
-Sudoku is a game that under recent years have gained popularity throughout the world.
-Many newspaper today contain Sudoku puzzles and there are also competitions devoted 
-to Sudoku solving.
-It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computers algorithms.
+Sudoku is a game that under recent years have gained popularity.
+Many newspaper today contain Sudoku puzzles and there are even competitions devoted to Sudoku solving.
+It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computer algorithms. This thesis explores these concepts for a three chosen algorithms.
 
 \FloatBarrier
 \section{Problem specification}
-There are multiple algorithms available for solving Sudoku puzzles.
-This report is limited to the study of three different algorithms, each demonstrating different properties and results.
-Primarly the focus is on solving ability, but some results regarding difficulty rating are also presented.
-Solving ability is studied by measuring solving times on a wide range of puzzles in order to determine the general behaviour.
-All results are presented with time distributions indicating more properties than only average solving time.
-There is also a discussion on parallelization abilities and an overlook on the area of puzzle generation.
-The chosen algorithms for evaulation are a backtrack, rule-based and Boltzmann machines.
-All algorithms with their respective implementations are further discussed in the background section.
+There exists multiple algorithms for solving Sudoku puzzles.
+This report is limited to the study of three different algorithms, each representing different solving approaches.
+Primarly the focus is to measure and analyse those after solving ability.
+There is however also other aspects that will be covered in this thesis.
+Those are difficulty rating, Sudoku puzzle generaton, and how well the algorithms is suited for parallelizing.
+The goal of this thesis is therefore to conclude how well each algorithm performs at these aspects, but also how they compare relative to one another.
+Another goal is to see if any conclusions regarding sudoku puzzles in general can be drawn.
+The chosen algorithms for evaluation are backtrack, rule-based and Boltzmann machines.
+All algorithms with their respective implementation issues are further discussed in section~\ref{sec:background} (background).
 
 \FloatBarrier
 \section{Scope}
-As this project is quite limited in time available and in expected scope, 
-there are several limitations on what can and will be done. 
-These are the limitations of the project:
+As this project is quite limited in time and in expected scope, 
+there are several limitations. The most noteable of those limitations are listed below: 
 \begin{itemize}
-    \item Limited number of algorithms: 
-Because of the time available is limited we have choosen to limit the number of algorithms studied to three. 
+    \item Limited number of algorithms:
+There are as mentioned several other Sudoku solving algorithms. The chosen algorithms can also be modified and studied to determine which variation gives what properties. We have as mentioned limited the number of algorithms to three and we are also very restrictive in which variations we study.  
     \item Optimization: 
 All algorithms are implemented by ourselfes and optimization is therefore an issue. 
 We have therefore only aimed for exploring the underlying ideas of the algorithms and not the algorithms themselfes.
-There is however the possibility that some dramatic optimization could have been done that affect the result, and we have therefore been quite cautios about this particular issue. There is however still a lot of things that can be determined with certainty.
+This means that some implementations may consciously be made in a certain way even if known optimizations are known.
 
     \item Special Sudokus: There are several variations of Sudoku including different sizes of the grid.
-This thesis will however be limited to the study of ordinary Sudoku, which is 9 by 9 grids.
-    \item The results of this thesis will be applicable to other areas apart from Sudoku related topics, but those will only be mentioned briefly and no extensive study regarding the use of the results in other areas will be done. 
+This thesis is, however, limited to the study of ordinary Sudoku, which is 9x9 grids.
 \end{itemize}
 
 \FloatBarrier
 \section{Purpose}
 As already mentioned, Sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
 As a result, it is of interest to find effective Sudoku solving and generating algorithms. 
-For most purposes there already exist satisfactory algorithms, and as a result one might struggle to see the use in studying Sudoku solving algorithms. 
-There is however still some value in studying Sudoku solving algorithms as it might reveal how one can deal with harder variations of Sudoku, such as puzzles with a 16 by 16 grid. 
-Sudoku is also, as will be discussed in section 2, an NP-Complete problem which means that it is one of many computational difficult problems. 
-One hope of this study is to contribute to the discussion about how one can deal with such puzzles. 
-We will as mentioned in section 1.2 not discuss how our algorithms could be used in other areas, but seen as many NP-Complete problems can frequently be transformed into others it is still plausible that our result could be valueable. 
-Sudoku is one of those NP-complete problems \cite{complexity} which briefly speaking means that 
+For most purposes there already exist satisfactory algorithms, and one might therefore struggle to see the use in studying Sudoku solving algorithms. 
+There is, however, still some value in studying Sudoku solving algorithms as it might reveal how one can deal with harder variations of Sudoku, such as puzzles with 16x16 grids. 
+Sudoku is also, as will be discussed in section~\ref{sec:background}, an NP-Complete problem which means that it is one of a set of computational difficult problems.\cite{complexity} 
+One hope of this study is therefore to contribute to the discussion about how one can deal with such puzzles. 
 
 \subsection{Definitions}
 \begin{description}
     \item[Box:] A 3x3 grid inside the sudoku puzzle. It works the same as rows and columns, meaning it must contain the digits 1-9.
     \item[Region:] This refers to a row, column or box.
-    \item[Candidate:] An empty square in a sudoku puzzle have a certain set of numbers that does not conflict with the row, column and box it is in. Those numbers are the candidates of that square.
+    \item[Candidate:] An empty square in a sudoku puzzle have a certain set of numbers that does not conflict with the row, column and box it is in. Those numbers are called candidates or candidate numbers.
+    \item[Clue:] A clue is defined as a number in the original Sudoku puzzle. Meaning that a Sudoku puzzle have a certain number of clues which is then used to fill in new squares. The numbers filled in by the solver is, however, not regarded as clues.
 \end{description}
 
-%Tänkte att vi kan lägga svåra ord här typ
-
 \chapter{Background}
-The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers.
+\label{sec:background}
+%TODO DAVID
+% kolla igenom då jag har reviderat hela denna sektionen
+% Speciellt avsnittet om boltzmann machines måste ses över då jag där har lämnat en del
+% kommentarer istället för att ändra direkt.
+The background gives an introduction to Sudoku solving and the various approaches to creating efficient solvers. It also introduces some theoretical background about sudoku puzzles which is of interest when discussing and chosing algorithms. Finally the algorithms that will be studied in this thesis is presented.
 
 \FloatBarrier
 \section{Sudoku fundamentals}
 A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
-Initially a subset of the grid is revealed and the goal is to fill the reamining grid with valid numbers.
-The grid is guarded by certain rules restricting which values that are valid insertions, with the initial subset always being valid.
-The three main rules are: rows and columns can only contain all 1-9 digits exactly once, which also applies to each one of the nine 3x3 subgrids \cite{17clueProof}.
-In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by studying the size of the initial subset and solving for all possible solutions.
+Initially a subset of the grid is revealed and the goal is to fill the remaining grid with valid numbers.
+The grid is devided into 9 boxes which each is a 3x3 grid.
+Sudoku has only one rule and that is that all regions, that is rows, columns, and boxes, contains the numbers 1-9 exactly ones.\cite{17clueProof}.
+In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by studying solving for all possible solutions.
 
-The size of the given subset, typically referred to as the number of clues, determine the difficulty of finding all grid values and thereby solving the Sudoku.
-Commonly the number of clues are reduced for increased difficulty with difficulty levels such as "easy", "medium" and "hard" being common ratings in newpapers.
-Rating puzzles is however not just that simple but requires more extensive analysis, something which has been studied \cite{sudokuDifficulty}.
-
-There is however a lower limit on the number of clues given that results in a unique solution.
-This limit was proven to be 17 \cite{17clueProof}, limiting the interesting number of clues to the range of 17-80.
+Different Sudoku puzzles are widely accepted to have different difficulty levels.
+Those are not always so easy to classify as there is no easy way of determining difficulty level by simply expecting a grid.
+One instead typically have to try to solve the puzzle to determine how difficult it is.
+A common misconception about sudoku is that the number of clues describes how difficult it is.
+While this is true for the bigger picture it is far from true that all 17-clue puzzles are more difficult than say 30-clue puzzles.\cite{sudokuDifficulty}
+The difficulty of a puzzle is not only problematic as it is hard to determine, but also as it is not generally accepted how one rate puzzles.
+One might for instance ascertain that puzzles solvable with a set of rules classifies as easy, and that some additional rules gives the puzzles the rating moderate and advanced.
+In this study difficulty will however be defined as the solving time for a certain algorithm, meaning that higher solving times means a more difficult puzzle.
+Another interesting aspect related to difficulty ratings is that the minimal number of clues in a proper Sudoku puzzle is 17.\cite{17clueProof} 
+Since puzzles even if not individually becomes generally more difficult when the clues are reduced this means that some of the most difficult Sudoku puzzles probably is 17-clue puzzles. 
 
 \FloatBarrier
 \section{Computational perspective}
-Sudoku solving is an research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched \cite{stochastic, sudokuConstruct, generation}.% \cite{sudokuConstruct} \cite{generation}.
+Sudoku solving is a research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched.\cite{stochastic, sudokuConstruct, generation}%TODO vad är det här för källor till höger. Varför är de utkommenterade? \cite{sudokuConstruct} \cite{generation}.
 
-The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete \cite{complexity}.
+The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete.\cite{complexity}
 While being theoretically interesting as an result it has also motivated research into heurstics, resulting in a wide range of available solving methods.
-Some of these algorithms include backtrack \cite{searchBased}, rule-based \cite{techniques}, cultural genetic with variations\cite{stochastic}, and Boltzmann machines \cite{boltzmann}.
+Some of the existing solving algorithms includes backtrack \cite{searchBased}, rule-based \cite{techniques}, cultural genetic with variations\cite{stochastic}, and Boltzmann machines \cite{boltzmann}.
 
 Given the large variety of solvers available it is interesting to group them together with similar features in mind and try to make generic statements about their performance and other aspects.
-One selection critiera is their underlying method of traversing the search space, in this case deterministic and stochastic methods.
+One of the important selection criterias for chosing algorithms for this thesis have therefore been the algorithms underlying method of traversing the search space, in this case deterministic and stochastic methods.
 Deterministic solvers include backtrack and rule-based.
 The typical layout of these is a predetermined selection of rules and a deterministic way of traversing all possible solutions.
 They can be seen as performing discrete steps and at every moment some transformation is applied in a deterministic way.
 Stochastic solvers include genetic algorithms and Boltzmann machines.
 They are typically based on a different stochastic selection criteria that decides how candidate solutions are constructed and how the general search path is built up.
-While providing more flexibility and more a more generic approach to Sudoku solving there are weaker guarantees surrounding execution time until completion, since a solution can become apparent at any moment, but also take longer time \cite{stochastic}.
+While providing more flexibility and a more generic approach to Sudoku solving there are weaker guarantees surrounding execution time until completion, since a solution can become apparent at any moment, but also take longer time \cite{stochastic}.
 
 \FloatBarrier
 \section{Evaluated algorithms}
@@ -159,10 +163,12 @@ It is a kind of a bruteforce method which tries different numbers and if it fail
     \item Rule-based:
     This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
 This method is very similar to how humans solve Sudoku and the rules used is in fact derived from human solving methods.
+The rule-based approach is a heuristic meaning that all puzzles cannot be solved by it. In this thesis the rule-based algorithm is instead a combination of a heuristic and a bruteforce algorithm as will be discussed more in section~\ref{sec:rulebasedBackground}.
     \item Boltzmann machine:
-    Modeling a Sudoku by using a constraint solving artificial neural network.
+    The Boltzmann machine algorithm models Sudoku by using a constraint solving artificial neural network.
 Puzzles are seen as constraints describing which nodes that can not be connected to each other.
-These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits.
+These constraints are encoded into weights of an artificial neural network and then solved until a valid solution appears, with active nodes indicating chosen digits. 
+This algorithmic is a stochastic algorithm in contrast to the other two algorithms. Some theoretical background about neural networks is provided in section~\ref{sec:boltzmannBackground}.
 \end{itemize}
 
 \FloatBarrier
@@ -172,6 +178,7 @@ One might view it as guessing which numbers goes where.
 When a deadend is reached, the algorithm backtracks to a earlier guess and tries something else.
 This means that the backtrack algorithm does an extensive search to find a solution, which means that a solution is guaranteed to be found if enough time is provided.
 Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as Sudoku. 
+One way to deal with such problems is with bruteforce algorithms provided that they are suffiently fast.
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
 As a result it could be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.\\
 There are several interesting variations of this algorithm that might prove to be more or less effiecent.
@@ -179,34 +186,32 @@ One must at each guess decide which square to use for the guess.
 The most trivial method would be to take the first empty square.
 This might however be very ineffiecent since there are worst case scenarios where the first squares have very many candidates.
 Another approach would be to take a random square and this would avoid the above mentioned problem with worst case scenarios.
-There is however a better approach.
-When dealing with search trees one greatly benefit from having as few branches at the rot of the search tree.
+There is, however, a still better approach.
+When dealing with search trees one generally benefits from having as few branches at the root of the search tree.
 To achieve this one shall therefore choose the square with least candidates.
-Note that this approach solves very easy puzzles without backtrack search.
-That is because very easy puzzles always have one square with only one candidate (Naked single).
+Note that this algorithm may solve puzzles very fast provided that they are easy enough.
+This is because it will always choose squares with only one candidate if such squares exists and all puzzles which are solvable by that method will therefore be solved immiediatly with no backtracking.
 
 \FloatBarrier
 \subsection{Rule-based}
-This algorithm builts on a heuristik for solving Sudoku puzzles.
-The algorithm consists of testing a puzzle for certain rules that fills in squares or eleminates candidates.
-Those rules are very similar to the ones human uses when solving Sudoku puzzles.
-The rules humans uses when solving Sudoku vary slightly and there are also different levels of those rules that are normally classified as beginner, intermediate and advanced rules.
-The algorithm that is used in this thesis is one that implements three of those rules.
+\label{sec:rulebasedBackground}
+This algorithm builts on a heuristic for solving Sudoku puzzles.
+The algorithm consists of testing a puzzle for certain rules that fills in squares or eleminates candidate numbers.
+This algorithm is similar to the one human solver uses, but lacks as only a few rules are implemented in the algorithm used in this thesis. Those rules are listed below:
 
 \begin{itemize}
     \item Naked Single: 
     This means that a square only have one candidate number.
     \item Hidden Single: 
-    If a row, column or box contains only one square which can hold a specific number then that number must go into that square.
+    If a region contains only one square which can hold a specific number then that number must go into that square.
     \item Naked pair:
-    If a row, column or box contains two squares which each only have two specific candidates.
-If one such pair exists, then all occurences of these two candidates may be removed from all squares that share a row, column or box with both of the squares in the pair.
+    If a region contains two squares which each only have two specific candidates.
+If one such pair exists, then all occurrences of these two candidates may be removed from all other squares in that region.
 This concept can also be extended to three or more squares.
     \item Hidden pair:
-    If a row, column or box contains only two squares which can hold two specific candidates, then those squares are a hidden pair.
+    If a region contains only two squares which can hold two specific candidates, then those squares are a hidden pair.
 It is hidden because those squares might also include several other candidates.
-Since one already know which two numbers have to go into the two squares one might remove other candidates for those two squares.
-Those squares will now be a naked pair and one could therefore apply the rule for removal of further candidates.
+Since one already know which two numbers have to go into the two squares one might remove the other candidates from those two squares.
 Similar to naked pairs this concept may also be extended to three or more squares.
 
     \item Guessing (Nishio):
@@ -217,30 +222,49 @@ Similar to naked pairs this concept may also be extended to three or more square
     The same method for choosing which square to begin with is also used.
 \end{itemize}
 
-Before continueing the reader shall note that naked tuples and hidden tuples actually are the same rules but inversed.
+Before continueing the reader shall note that naked tuples (pair, triple etc) and hidden tuples in fact are the same rules, but inverted.
 Consider for instance a row with five empty squares.
 If three of those form a naked triple the other two must form a hidden pair.
 The implemented rules therefore are naked single, naked tuples and guessing.
 Note that naked single and naked tuples are different as the naked single rule fills in numbers in squares whilst the naked tuple rule only deals with candidates for squares.
-The reason for choosing this rules is because none of them needs to search more than one region at once which could otherwise make the search space very big. It would however be of interest to study which rules is most effiecent, but as this thesis is not primarly about the rule-based algorithm only those rules are considered.
-\\
-At the beginning of this section it was stated that this algorithm was built on a heuristik which is true.
-It is however a combination between a bruteforce method and a heuristik.
+The hidden single is also included in this reasoning since one instead of filling in the number that the hidden single indicates can remove all other candidates in that square, as with hidden tuples, and creating a naked single.
+
+At the beginning of this section it was stated that this algorithm was built on a heuristic which is true.
+It is, however, a combination between a bruteforce method and a heuristic.
 This is because of the guess rule which is necessary to guarantee that the algorithm will find a solution.
 Without the guess rule one might end up with an unsolved puzzle where none of the other two rules are applicable.
-Given however that one is presented with an easy enough puzzle where no more rule than naked single and naked tuple are needed the algorithm will produce a solution in polynomial time.
+Given however that one is presented with an easy enough puzzle where no more rule than naked single and naked tuple are needed, the algorithm will produce a solution in polynomial time.
 
 \FloatBarrier
 \subsection{Boltzmann machine}
-The concept of Boltzmann machines is gradually introduced by beginning with the neuron, network and finally concluding with a discussion on simulation techniques.\\
+\label{sec:boltzmannBackground}
+%TODO DAVID
+% En hel del förklaringar måste förbättras i denna sektion.
+% Först och främst så rekommenderar jag att man börjar med att förklara helheten hur själva
+% neurala nätverket fungerar och hur lösningen representeras i den.
+% Sen är det inte säkert man behöver gå in alltför mycket i detalj på alla formler och så
+% men något kanske behövs då man ju måste förstå hur temperaturen fungerar eftersom
+% vi använder just det i analysen sen.
+% Observera att det inte gör något om denna del blir längre heller då vi har utrymme för det
+% så skriv hellre övertydligt än att förvänta sig att läsaren förstår massa saker.
+
+% Va också noga med att förklara begrepp när de introduceras. Är tillexempelt rätt
+% förvirrande att första meningen nu bombar en med massa ord som man inte riktigt är
+% säker på vad de betyder.
+
+The concept of Boltzmann machines is gradually introduced by beginning with the neuron, 
+%Antar att du menar neural networks. Borde kanske stå
+network and finally concluding with a discussion on simulation techniques.\\
 
 \begin{figure}[here] 
 \centering
 \includegraphics[width=10cm]{images/neuron.png}
-\caption{A single neuron with showing weighted inputs from other neurons on the left, a bias threshold $\theta$, and activation function \emph{s}.}
+\caption{A single neuron with showing weighted inputs from other neurons on the left, 
+%Vad innebär bias i detta sammanhang. Rätt oklart. Kanske bättre att stycka upp förklaringen i flera meningar så att det hela blir lite tydligare.
+a bias threshold $\theta$, and activation function \emph{s}.}
 \label{fig:neural-Neuron}
 \end{figure}
-The central part of an artificial neural network (ANN) is the neuron, as pictured in \ref{fig:neural-Neuron}.
+The central part of an artificial neural network (ANN) is the neuron, as pictured in figure~\ref{fig:neural-Neuron}.
 It decides if to fire an output signal by summing upp all inputs, tresholding the value and applying an activation function producing a binary output value.
 In the case of Boltzmann machines the activation function is stochastic and the probablility of a neuron being active is defined as follows:
 \[

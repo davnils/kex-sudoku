@@ -287,7 +287,6 @@ With a low temperature the temperature difference will be scaled and produce a w
 This motivates the choice of an exponential decline in temperature over time; allowing solutions at lower temperatures to appear earlier.
 
 \chapter{Method}
-%TODO, pabergg
 Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
 Those sections will also describe in detail how the results was generated. 
 Section 3.1 is devoted to explaining the test setup which includes hardware specifications but also an overview picture of the setup. 
@@ -428,7 +427,6 @@ The allowed tranformations are those that preserve the solution. Relabelling the
 Exchanging two boxes is however not allowed since this will change the solution or even make the puzzle invalid.
 
 \chapter{Analysis}
-%TODO, davnils/pabergg
 In this section multiple results are presented together with a discussion about how the results could be interpreted. 
 Section~\ref{sec:timeDistributions} is devoted to presenting how different algorithms perform. 
 Section~\ref{sec:comparisonAnalysis} show how the algorithms performs relative to the others and discusses different aspect of comparison.
@@ -641,11 +639,11 @@ Another interesting aspect of figure~\ref{fig:comparison} is that some puzzles t
 This means that the rule-based algorithm makes use of the naked tuple rule.
 This can be deduced from the fact that the naked single rule is implicitly applied by the backtracking algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
 
-
 \FloatBarrier
 \section{Puzzle difficulty}
 \label{sec:difficultyAnalysis}
-Both the backtrack solver and the rule-based solver was runned on the same set of puzzles. One interesting aspect to study is to see if some of those puzzles is difficult for both algorithms or if the algorithms are independent when it comes to which puzzles they perform good/bad at.
+Both the backtrack solver and the rule-based solver was runned on the same set of puzzles.
+One interesting aspect to study is to see if some of those puzzles are difficult for both algorithms or if the algorithms are independent when it comes to which puzzles they perform well at.
 Even if the rule-based solver uses backtrack search as a last resort it is not clear whetever the most difficult puzzles correlates between the two algorithms.
 The reason for this is because a puzzle can be very hard for the backtrack algorithm, but still trivial for the rule-based solver. 
 This has to do with the naked tuple rule in the rule-based solver that quickly can reduce the number of candidates in each square.
@@ -654,9 +652,10 @@ To test for independence the statistical method described in section~\ref{sec:st
 The measurements shows that about 20\% of the worst 10\% puzzles is common for the two algorithms. 
 This hints that some puzzles indeed are inherently difficult regardless of which of the two algorithms are used.
 If that would not have been the case only 10\% of the worst puzzles for one algorithm shall have been among the 10\% worst puzzles.
-The statistical test also confirms this with a very high confidence level (greater than 99.9\%).
-%TODO some comment about Boltzmann machine
-
+The statistical test also confirms this with a high confidence level of 99.9\%.
+\\
+While there is interest to correlate results of the Boltzmann machine solver with others, there are difficulties with doing this.
+Considering the large variance in running time for individual puzzles there is little room for statistical significance in the results.
 
 \section{Generation and parallelization}
 \label{sec:generation}
@@ -665,10 +664,10 @@ Those are however qualities that can be discussed purely theoretically.
 \subsection{Generation}
 When generating puzzle one has to make sure that the generated puzzle is valid and has a unique solution.
 Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle. The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
-The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
-Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
-The rule-based solver does this much faster since it can apply logical rules to roll out some part of the search three.
-Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and is therefore not as suitable for generation.
+The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If successful the puzzle is valid and one would then want to find out if the solution is unique. 
+Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions were considered.
+The rule-based solver does this much faster since it can apply logical rules to rule out some part of the search three.
+Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and are therefore not considered suitable for generation.
 If one attempted to use the Boltzmann machine for checking validity and backtracking for checking uniqueness, the result would be that the backtracking would have to exhaust all possible solutions anyway and no improvement would have been made.
 Another problem with generation with the Boltzmann machine solver is that it can not know if it is ever going to find a solution.
 The solver might therefore end up in a situation where it can not proceed, but where a solution for the puzzle still exists.
@@ -679,14 +678,11 @@ This is a kind of generation even if it is not generally considered as generatio
 It is however applicable for generating easier puzzles from a difficult puzzle.
 
 \subsection{Parallelizing}
-%TODO DAVID
-%Känner inte att jag har stenkoll på parallelisering så du får gärna gå igenom denna sektion
-%Extra noga för att se om det finns bristande resonemang etc.
-Parallelizing of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
+Parallelization of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
 There is mainly two ways one can use parallelizing when it comes to sudoku solving algorithms.
-The first and most obvious one is to solve multiple puzzles in parallell.
-That is however not parallelizing of the algorithms themselfes and will therefore not be discussed.
-The other form of parallelizing is to separate the algorithms into parts. Those parts are then run in parallel and the result are then combined.
+The first and most obvious one is to solve multiple puzzles in parallel.
+That is however not parallelizing of the algorithms themselves and will therefore not be discussed.
+The other form of parallelizing is separating the algorithms into parts, which are then run in parallel and the result are then combined.
 This might be easy to do for some algorithms, but the separation into parts that whose results could then be combined is not necessarily something that can be done for all algorithms.
 All the algorithms in this study does however have some possibilities when it comes to parallelizing them.
 The rule-based algorithm could for instance check multiple rules for multiple regions at once.
@@ -694,43 +690,51 @@ This is unproblematic since the result can easily be combined by applying the re
 Since it may be separated into one thread for each rule for each region (if more advanced rules are used they may require the whole puzzle instead of just one region) one will likely have more then enough separation to perform parallelizing at required level.
 \\
 The backtracking algorithm may be parallelized by separating the search three and searching each branch in parallel.
-One can then simply combine the results by the knowledge that only one branch can succed if the puzzle is unique and valid.
+One can then simply combine the results by the knowledge that only one branch can succeed if the puzzle is unique and valid.
 Depending on the branching factor in the puzzle it might not always be easy to parallelize the algorithm.
 One might however choose a square with the number of candidates wanted to get enough parts for parallelizing.
 \\
-%TODO DAVID
-%Vill minnas att du har sagt att det går utmärkt att parallelisera neurala nätverk
-%Men är definitivt bäst om du skriver om detta
-The Boltzmann machine is also parallelizable.
-This can be done by %blargh blargh
+The Boltzmann machine can also be run in parallel to some extent.
+On a high level the solving process goes through all nodes and updates their respective states.
+This is done sequentially since the network is fully connected.
+By splitting up updating of individual neurons it is possible to have constant number of actions being performed in parallel.
+Typically these operations are additions of conflicting nodes and are calculated by traversing the whole Sudoku grid.
 \\
-The conclusion one may draw from this is that all algorithms in this thesis may effectively be parallelized with more or less effort.
-All the algorithms can furthurmore be parallelized without considerably increasing the total computation power needed, meaning that the solving times will be reduced by the same factor one parallelizes the algorithms into.
+The conclusion that can be drawn from this is that all algorithms in this thesis may effectively be parallelized with more or less effort.
+All the algorithms can furthermore be parallelized without adding any considerable overhead, meaning that the solving times could be linearly decreasing over the number of threads, up to some amount.
 
 \chapter{Conclusion}
-%TODO: Verify all content after new data
-%General structure: (1) Results (2) Conclusion (3) Future work
-
 Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.
 All solvers were tested using a test framework with statistically significant results being produced.
 They have shown to be dissimilar to each other in terms of performance and general behaviour.
 
-Backtrack search and rule-based solvers are deterministic and form execution time distributions that conform to standard distributions, namely TODO and TODO.
-Their excecution time was shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deteministic behaviour.
+Backtrack search and rule-based solvers are deterministic and form execution time distributions that are precise with relatively low variance.
+Their excecution time was also shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deteministic behaviour.
 
 The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable timeframe.
 A suitable number of clues was found to be 46 with a 20 second execution time limit, resulting in vastly worse general capabilites than the other solvers.
 Due to stochastic behaviour, which is a central part of the Boltzmann solver, there was a relatively large variance when sampling the execution time of a single puzzle.
 Another important aspect of the Boltzmann is the method of temperature descent, in this case selected to be simulated annealing with a single descent.
 This affected the resulting distribution times in a way that makes the probability of puzzles being solved under a certain critical temperature limit high.
-The temperature was found to be about TODO\% of the starting temperature, with very no puzzles being solved after this interval.
+The critical temperature was found to be about 0.5\% of the starting temperature, with no puzzles being solved after this interval.
+
+Additionaly two different methods of temperature descent were studied.
+The results demonstrates that a slower descent solves more puzzles, even though the execution times are clustered closer to the 20 second execution limit.
 
 All results indicate that deterministic solvers based on a set of rules perform well and are capable of solving Sudokus with a low amount of clues.
 Boltzmann machines were found to be relatively complex and requires implementation of temperature descent and adjustment of parameters.
 
+With regards to parallelization it is possible to implement to a varying extent in all algorithms.
+The most obvious way of solving several different puzzles in parallel has been used in the test framework.
+Parallel solving of individual puzzles require extensive analysis of individual algorithms, but both backtrack and rule-based have shown to inhibit parallelizable properties.
+Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates.
+
+Deterministic algorithms such as backtrack and rule-based have been discussed in the context of puzzle generation, and are considered to perform well.
+This follows by their search structure which easily rules out certain candidates, in opposite of the general stochastic behaviour of Boltzmann machines, that only gives very weak guarantees.
+
 Future work includes studying the behaviour of Boltzmann machines in relation to the final distribution of execution times.
 The large variance and stochastic behaviour most likely demands a study with access to large amounts of computational power.
-It is also interesting to study the influence of different temperature descents used in Boltzmann machines, with restarting being a suitable alternative to endlessly decreasing temperatures.
+It is also interesting to study the influence of different temperature descent methods used in Boltzmann machines, with restarting being a suitable alternative to endlessly decreasing temperatures.
 
 \begin{thebibliography}{99}
 
@@ -804,9 +808,10 @@ that we refer to here: \ref{RDF_4}
 \chapter{Source code}
 \lstset{language=C++}
 
-%TODO:
-%Här skulle vi kanske kunna inkludera information om vilken kompilator/kompileringsflaggor som användes eftersom denna section ju framförallt är till för att göra så att andra kan återupprepa våra resultat.
-%Vi skulle också kunna skriva att koden är tillgänglig via request också. Och att man typ får använda koden hur man vill
+All source code used in the project is included below.
+Requests for archives can be made over email.
+All files are released with the GNU GPLv2 license.
+
 \section{Test Framework}
 \subsection{TestFramework.cpp}
 \lstinputlisting{../src/test/TestFramework.cpp}

@@ -628,15 +628,15 @@ After the intervals of critical temperatures there were no puzzles being solved 
 \FloatBarrier
 \section{Comparison}
 \label{sec:comparisonAnalysis}
-As the reader have already seen in section~\ref{sec:timeDistributions} the algorithms performances relative to each other seems quite clear.
+As the reader have already seen in section~\ref{sec:timeDistributions} the algorithms performance relative to each other seems quite clear.
 The rule-based algorithm performed best, the backtrack algorithm was next and the Boltzmann machine performed worst.
 It is however still interesting to see plots of the differences between the algorithms.
 Figure~\ref{fig:comparison} is one such plot which in this case shows the difference between the backtrack algorithm and the rule-based algorithm. The differences in solving time are sorted and plotted with the sorted differences indices as the x-axis. Note also that the y-axis is a logaritmic scale of the solving time differences.
-This also means that zero and negative numbers is not included which in turn means that one cannot see the puzzles where the backtracking algorithm performed better than the rule-based algorithm.
+This also means that zero and negative numbers are not included, which in turn means that it is not possible to see puzzles where backtrack performed better than rule-based.
 The backtrack did however perform better than the rule-based algorithm at $2324$ puzzles.
-This is interesting as that means that the rule-based algorithm is wasting time checking logic rules which will not be of any use.
-The reason why this can be concluded is because the rule-based and backtracking algorithm is in fact implemented as the same algorithm with the only difference that the rule-based algorithm uses two additional rules in addition to guessing.
-Since the guessing is equally implemented for both the only way the rule-based algorithm can be slower is by checking rules in situations where they cannot be applied.
+This is interesting since it means that the rule-based algorithm is wasting time checking logic rules which will not be of any use.
+The reason why this can be concluded is because the rule-based and backtracking algorithm are in fact implemented as the same algorithm, with the only difference being that the rule-based algorithm uses two additional rules in addition to guessing.
+Since the guessing is equally implemented for both, the only way the rule-based algorithm can be slower is by checking rules in situations where they cannot be applied.
 \\
 
 \begin{figure}[here] 
@@ -645,29 +645,29 @@ Since the guessing is equally implemented for both the only way the rule-based a
     \includegraphics[width=15cm]{images/comparison.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption[Plot of puzzle difference between solvers]{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtracking algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
+\caption[Plot of puzzle difference between solvers]{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtrack algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
 The difference is the backtrack algorithm's solving time minus the rule-based algorithm's solving time. Note also that negative numbers are not included since it is a logaritmic scale.}
 \label{fig:comparison}
 \end{figure}
 
 Even if figure~\ref{fig:comparison} is quite clear on the matter one might want to do a statistical test for determining that the rule-based algorithm is indeed better than the backtrack algorithm.
-If one does this with the proposed method in section~\ref{sec:statisticalTests}, namely Wilcoxons sign test, one obtain a confidence level much higher than 99.9\% meaning that one with certainty can say that the rule-based algorithm is better than the backtrack algorithm as expected.
-Another interesting aspect of figure~\ref{fig:comparison} is that some puzzles that are very difficult for the backtracking algorithm are easy for the rule-based algorithm.
+If this is performed with the proposed method in section~\ref{sec:statisticalTests}, namely Wilcoxons sign test, one obtain a confidence level much higher than 99.9\%, meaning that with certainty the rule-based algorithm is better than the backtrack algorithm, as expected.
+Another interesting aspect of figure~\ref{fig:comparison} is that some puzzles that are very difficult for the backtrack algorithm are easy for the rule-based algorithm.
 This means that the rule-based algorithm makes use of the naked tuple rule.
-This can be deduced from the fact that the naked single rule is implicitly applied by the backtracking algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
+This can be deduced from the fact that the naked single rule is implicitly applied by the backtrack algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
 
 \FloatBarrier
 \section{Puzzle difficulty}
 \label{sec:difficultyAnalysis}
-Both the backtrack solver and the rule-based solver was runned on the same set of puzzles.
-One interesting aspect to study is to see if some of those puzzles are difficult for both algorithms or if the algorithms are independent when it comes to which puzzles they perform well at.
-Even if the rule-based solver uses backtrack search as a last resort it is not clear whetever the most difficult puzzles correlates between the two algorithms.
+Both the backtrack solver and the rule-based solver were executed on the same set of puzzles.
+One interesting aspect to study is to see if some of those puzzles are difficult for both algorithms or if they are independent when it comes to which puzzles they perform well at.
+Even if the rule-based solver uses backtrack search as a last resort it is not clear if the most difficult puzzles correlate between the two algorithms.
 The reason for this is because a puzzle can be very hard for the backtrack algorithm, but still trivial for the rule-based solver. 
 This has to do with the naked tuple rule in the rule-based solver that quickly can reduce the number of candidates in each square.
 \\
 To test for independence the statistical method described in section~\ref{sec:statisticalTests} is used.
-The measurements shows that about 20\% of the worst 10\% puzzles is common for the two algorithms. 
-This hints that some puzzles indeed are inherently difficult regardless of which of the two algorithms are used.
+The measurements shows that about 20\% of the worst 10\% puzzles are common for both algorithms. 
+This hints at some puzzles being inherently difficult regardless of which of the two algorithms are used.
 If that would not have been the case only 10\% of the worst puzzles for one algorithm shall have been among the 10\% worst puzzles.
 The statistical test also confirms this with a high confidence level of 99.9\%.
 \\
@@ -676,38 +676,40 @@ Considering the large variance in running time for individual puzzles there is l
 
 \section{Generation and parallelization}
 \label{sec:generation}
-As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallelized.
-Those are however qualities that can be discussed purely theoretically.
+As already mentioned, no tests were performed to measure the algorithms puzzle generating abilities or their improvement when parallelized.
+Those are however qualities that will be discussed purely theoretically.
 \subsection{Generation}
 When generating puzzle one has to make sure that the generated puzzle is valid and has a unique solution.
-Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle. The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
+Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers, since one must guess during the solving process in order to complete the puzzle.
+The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
 The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If successful the puzzle is valid and one would then want to find out if the solution is unique. 
-Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions were considered.
-The rule-based solver does this much faster since it can apply logical rules to rule out some part of the search three.
+Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found.
+In practice this means that they can search the whole search tree to guarantee that all possible solutions were considered.
+The rule-based solver does this much faster since it can apply logical rules to rule out some part of the search tree.
 Stochastic algorithms such as the Boltzmann machine solver can not do this as easily and are therefore not considered suitable for generation.
 If one attempted to use the Boltzmann machine for checking validity and backtracking for checking uniqueness, the result would be that the backtracking would have to exhaust all possible solutions anyway and no improvement would have been made.
-Another problem with generation with the Boltzmann machine solver is that it can not know if it is ever going to find a solution.
+Another problem with generation using a Boltzmann machine solver is that it can not know if it is ever going to find a solution.
 The solver might therefore end up in a situation where it can not proceed, but where a solution for the puzzle still exists.
 If the solver was allowed to continue it will eventually find the solution, but as the solver will have to have a limit to function practically it is not suitable for generation.
 As described the Boltzmann machine uses puzzles generated from already existing puzzles.
 Empty squares in a valid puzzle is filled in by the correct numbers by looking at the solution of the puzzle that have been obtained previously with any algorithm.
 This is a kind of generation even if it is not generally considered as generation.
-It is however applicable for generating easier puzzles from a difficult puzzle.
+It is however applicable to generating easier puzzles from a difficult puzzle.
 
 \subsection{Parallelizing}
 Parallelization of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
-There is mainly two ways one can use parallelizing when it comes to Sudoku solving algorithms.
+There are mainly two ways when it comes to parallelizing Sudoku solving algorithms.
 The first and most obvious one is to solve multiple puzzles in parallel.
 That is however not parallelizing of the algorithms themselves and will therefore not be discussed.
-The other form of parallelizing is separating the algorithms into parts, which are then run in parallel and the result are then combined.
-This might be easy to do for some algorithms, but the separation into parts that whose results could then be combined is not necessarily something that can be done for all algorithms.
+The other form of parallelizing is separating the algorithms into parts, which are then run in parallel and combined to form the result.
+This might be easy to do for some algorithms, but the separation into subproblems is not necessarily something that can be done for all algorithms.
 All the algorithms in this study does however have some possibilities when it comes to parallelizing them.
 The rule-based algorithm could for instance check multiple rules for multiple regions at once.
-This is unproblematic since the result can easily be combined by applying the results of all rules on the original puzzle.
-Since it may be separated into one thread for each rule for each region (if more advanced rules are used they may require the whole puzzle instead of just one region) one will likely have more then enough separation to perform parallelizing at required level.
+This is not problematic since the result can easily be combined by applying the results of all rules on the original puzzle.
+Since it may be separated into one thread for each rule for each region (if more advanced rules are used they may require the whole puzzle instead of just one region) one will likely have more than enough separation to perform parallelizing at required level.
 \\
-The backtracking algorithm may be parallelized by separating the search three and searching each branch in parallel.
-One can then simply combine the results by the knowledge that only one branch can succeed if the puzzle is unique and valid.
+The backtracking algorithm may be parallelized by separating the search tree and searching each branch in parallel.
+Then the results can be combined since only one branch can succeed if the puzzle is unique and valid.
 Depending on the branching factor in the puzzle it might not always be easy to parallelize the algorithm.
 One might however choose a square with the number of candidates wanted to get enough parts for parallelizing.
 \\
@@ -715,10 +717,10 @@ The Boltzmann machine can also be run in parallel to some extent.
 On a high level the solving process goes through all nodes and updates their respective states.
 This is done sequentially since the network is fully connected.
 By splitting up updating of individual neurons it is possible to have constant number of actions being performed in parallel.
-Typically these operations are additions of conflicting nodes and are calculated by traversing the whole Sudoku grid.
+Typically these operations are additions of conflicting node offsets and are calculated by traversing the whole Sudoku grid.
 \\
 The conclusion that can be drawn from this is that all algorithms in this thesis may effectively be parallelized with more or less effort.
-All the algorithms can furthermore be parallelized without adding any considerable overhead, meaning that the solving times could be linearly decreasing over the number of threads, up to some amount.
+All the algorithms can furthermore be parallelized without adding any considerable overhead.
 
 \chapter{Conclusion}
 Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.

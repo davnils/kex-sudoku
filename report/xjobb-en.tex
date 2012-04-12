@@ -307,13 +307,13 @@ With a low temperature the temperature difference will be scaled and produce a w
 This motivates the choice of an exponential decline in temperature over time; allowing solutions at lower temperatures to appear earlier.
 
 \chapter{Method}
-Since this report have several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
-Those sections will also describe in detail how the results was generated. 
+Since this report has several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
+Those sections will also describe in detail how the results were generated. 
 Section~\ref{sec:testSetupMethod} is devoted to explaining the test setup which includes hardware specifications but also an overview picture of the setup. 
 Section~\ref{sec:comparisonMethod} focuses on how and what aspects of the algorithms where analyzed.
 Section~\ref{sec:benchmarkPuzzles} explains the process of choosing test data.
 The last section (\ref{sec:statisticalAnalysis}) gives an overview of the statistical analysis which was performed on the test data.
-This also includes what computational limitations was present and how this effected the results. 
+This also includes what computational limitations were present and how this effected the results. 
 
 \FloatBarrier
 \section{Test setup}
@@ -322,7 +322,7 @@ The central part of the test setup is the test framework which extracts timing a
 In order to provide flexibility, the test framework was implemented as a separate part, which made it possible to guarantee correct timing and also solving correctness of the algorithms.
 All execution times were measured and logged for further analysis.
 Since there might be variations in processor performance and an element of randomness in stochastic algorithms, multiple tests were performed on each puzzle. 
-Lastly when all values satisfied the given confidence intervals a single value (the mean value) was recorded, gradually building up the solving time distribution.
+Lastly when all values satisfied the given confidence intervals, a single value (the mean value) was recorded, gradually building up the solving time distribution.
 
 All tests were run on a system using a Intel Q9550 quad core processor @ 2.83 GHz, 4 GB of RAM running on Ubuntu 10.04 x64.
 Both the test framework and all solvers were compiled using GNU GCC with optimizations enabled on the \emph{-O2} level.
@@ -330,7 +330,7 @@ Both the test framework and all solvers were compiled using GNU GCC with optimiz
 \FloatBarrier
 \section{Comparison Methods}
 \label{sec:comparisonMethod}
-Multiple aspects of the results was considered when analyzing and comparing the algorithms. The following three sections describes those aspects in more detail. 
+Multiple aspects of the results were considered when analyzing and comparing the algorithms. The following three sections describes those aspects in more detail. 
 
 \FloatBarrier
 \subsection{Solving}
@@ -342,7 +342,7 @@ An algorithm might for instance be equally good at all puzzles and one algorithm
 They can still have the same mean value which illustrates why that is not a good enough representation of the algorithms effectiveness.
 The representation of the algorithms performances are therefore presented in the form of histograms, which shows the frequency at which puzzles fall into a set of time intervals.
 This does not only depict a more interesting view of the Sudoku solvers performance, but also shows possible underlying features such as if the Sudoku solver solves the puzzle with an already known distribution.
-This topic are mostly studied for each algorithm, but will also to some extent be compared between the algorithms.
+This topic is mostly studied for each algorithm, but will also to some extent be compared between the algorithms.
 
 \FloatBarrier
 \subsection{Puzzle difficulty}
@@ -356,26 +356,26 @@ The comparison of this aspect is therefore focused on the rule-based and backtra
 
 \FloatBarrier
 \subsection{Generation and parallelization}
-This is a more theoretical aspect of the comparison and no tests will be done.
+This is a more theoretical aspect of the comparison and no tests were done.
 It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelized. 
 Generation of puzzles is obviously interesting as that is what one has to do to get new Sudoku puzzles.
 One can generate Sudoku puzzles in multiple ways, but since this thesis is about Sudoku solving algorithms only generating methods involving such algorithms will be considered.
-The primarily way of generating Sudoku puzzles is then by inserting random numbers into an empty Sudoku grid and then attempting to solve the puzzle.
+The main way of generating Sudoku puzzles is then by inserting random numbers into an empty Sudoku grid and then attempting to solve the puzzle.
 
 Parallelization is however not entirely obvious why it is of interest. 
 Normal Sudoku puzzles can be solved in a matter of milliseconds by the best Sudoku solvers and one might therefore struggle to see the need for parallelization those solvers. 
 This topic is indeed quite irrelevant for normal Sudoku puzzles, but the discussion that will be held about the algorithms might still hold some value.
-One might for instance attempt to construct a Sudoku solver for NxN puzzles and as those can quickly get very complex as N increases, one are likely to be in need of computational improvements.  
+One might for instance attempt to construct a Sudoku solver for NxN puzzles and as those can quickly get very complex as N increases, it is likely that computational improvements are needed.
 Since the algorithms to some extent also can be applied to other NP-complete problems, the discussion could also be relevant in determining which type of algorithms are useful for similar problems. 
 
 \FloatBarrier
 \section{Benchmark puzzles}
 \label{sec:benchmarkPuzzles}
-The test data consisted of multiple puzzles that was chosen beforehand.
+The test data consisted of multiple puzzles that were chosen beforehand.
 Since the set of test puzzles can affect the outcome of this thesis it is appropriate to motivate the choice of puzzles.
 As was discovered during the study the Boltzmann machine algorithm did not perform as well as the other algorithms and some modifications to which puzzles was used was therefore done.
-The backtrack and rule-based algorithms was however both tested on a set of 49151 17-clue puzzles. 
-Those was found on \cite{database} and is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
+The backtrack and rule-based algorithms were however both tested on a set of 49151 17-clue puzzles. 
+They were found on \cite{database} and it is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
 The reason for choosing this specific database is because the generation of the puzzles does not involve a specific algorithm but is rather a collection of puzzles found by different puzzle generating algorithms.  
 The puzzles are therefore assumed to be representative of all 17-clue puzzles. 
 This assumption is the main motivating factor for choosing this set of puzzles, but there is also other factors that makes this set of puzzles suitable. 
@@ -391,7 +391,9 @@ Most 46-clue puzzles already have a lot of logical constraints due to the high n
 Due to several reasons statistical analysis is required to make a rigorous statement about the results. 
 This is mainly due to two reason.
 Firstly the results contain a very large data set and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
-Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test. As described in section 3.4.2 some of the statistical tests have been limited by computational constraints and a lower confidence level in combination with a more imprecise result have therefore been needed for those tests.
+Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test.
+As described in section 3.4.2 some of the statistical tests have been limited by computational constraints.
+This leads to a lower confidence level being required for those tests.
 
 \FloatBarrier
 \subsection{Statistical tests}
@@ -399,7 +401,7 @@ Most statistical tests give a confidence in the results to depict how surely one
 This section explains which statistical tests and methods are used in the study.
 The first statistical method that is applied is to make sure that variance in processor performance does not affect the results considerable. 
 This is done by measuring a specific algorithms solving time for a specific puzzle multiple times. 
-The mean value of those times are then calculated and bootstrapping are used to attain a 95\% confidence interval of 0.05 seconds. 
+The mean value of those times is then calculated and bootstrapping are used to attain a 95\% confidence interval of 0.05 seconds. 
 The reason bootstrapping is used is because it does not require the stochastic variable to be a certain distribution. 
 This is necessary since the distribution of the processor performance is unknown and also since the distribution might vary between different puzzles. The solving time may also vary greatly if the algorithm uses a stochastic approach, such as the Boltzmann machine algorithm.
 
@@ -418,7 +420,7 @@ The tests uses the binomial distribution to see if the sign of the difference is
 The null hypothesis is that the two algorithms perform equally and to attain a confidence for the result one compute the probability that one falsely rejects the null hypothesis given the test results.
 \\
 Difficulty distribution among the puzzles can be seen by looking at the histograms for each algorithm.
-One aspect that is of interest is if some of the puzzles are inherently difficult, or easy, independent on which algorithm is used for solving it.
+One aspect that is of interest is if some of the puzzles are inherently difficult, or easy, independent of which algorithm is used for solving it.
 The method used for determining this is built on the fact that independent events, say A and B, must follow the following property:
 \[
 P(A \cap B) = P(A) P(B)
@@ -436,13 +438,13 @@ The computational constraints of the computations done in relation to this thesi
 This was as above described handled by running multiple tests on the same algorithm with each puzzle.
 The problem is that bootstrapping which was used to determine confidence levels of the measured mean value, requires a large data set to attain a high confidence level. 
 At the same time the puzzle set was very big which required a compromise which lead to a confidence interval of 0.05 seconds to a confidence level of 95\%. The number of tests that was allowed for each puzzle was also limited to 100 tries.
-The puzzles that could not pass the requirements for the confidence interval was marked as unstable measurement.
+The puzzles that could not pass the requirements for the confidence interval were marked as unstable measurements.
 \\
 Another problematic aspect concerning computational constraints is the running time for each algorithm.
 During the implementation phase it was discovered that the backtrack algorithm was slow for some puzzle with 17 clues and the Boltzmann machine was discovered to be much to slow for all 17 clue puzzle.
 The way this was handled was by setting a running time limit of 20 seconds for each test run for the backtrack solver.
-The Boltzmann machine required a more dramatic solution and the test puzzles was exchanged with ones with 51 clues instead of 17. 
-This was quite unfortunate as this leaves some of the comparison aspects with only two algorithms.
+The Boltzmann machine required a more dramatic solution and the test puzzles were exchanged with ones with 46 clues instead of 17. 
+This was quite unfortunate as this leaves some of the comparison aspects to only two algorithms.
 
 \chapter{Analysis}
 In this section multiple results are presented together with a discussion about how the results could be interpreted. 
@@ -645,7 +647,7 @@ Since the guessing is equally implemented for both, the only way the rule-based 
     \includegraphics[width=15cm]{images/comparison.png}
 \end{tabularx}}
 \vspace{-15pt}
-\caption[Plot of puzzle difference between solvers]{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtrack algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
+\caption[Plot of puzzle difference between solvers]{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtrack algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence interval of 0.05 seconds to the confidence level of 95\%.
 The difference is the backtrack algorithm's solving time minus the rule-based algorithm's solving time. Note also that negative numbers are not included since it is a logaritmic scale.}
 \label{fig:comparison}
 \end{figure}

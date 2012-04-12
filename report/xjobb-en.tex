@@ -103,6 +103,12 @@ We will as mentioned in section 1.2 not discuss how our algorithms could be used
 Sudoku is one of those NP-complete problems \cite{complexity} which briefly speaking means that 
 
 \subsection{Definitions}
+\begin{description}
+    \item[Box:] A 3x3 grid inside the sudoku puzzle. It works the same as rows and columns, meaning it must contain the digits 1-9.
+    \item[Region:] This refers to a row, column or box.
+    \item[Candidate:] An empty square in a sudoku puzzle have a certain set of numbers that does not conflict with the row, column and box it is in. Those numbers are the candidates of that square.
+\end{description}
+
 %Tänkte att vi kan lägga svåra ord här typ
 
 \chapter{Background}
@@ -370,7 +376,7 @@ After the histogram are displayed one can easily compare the results between dif
 The first thing one might think of looking for is how the different algorithms compare in solving ability. 
 This means that one want to find out if one algorithm is better than other algorithms. 
 Since the distribution is unknown one has to rely on more general statistical tests. 
-One of those are wilcoxons sign test. 
+One of those are Wilcoxons sign test. 
 This makes use of the fact that the difference in solving times between two algorithms will have a mean value of 0 if there is no difference between the two algorithms. 
 The tests uses the binomial distribution to see if the sign of the difference is unevenly distributed.
 The null hypothesis is that the two algorithms perform equally and to attain a confidence for the result one compute the probability that one falsely rejects the null hypothesis given the test results.
@@ -420,7 +426,7 @@ In this section multiple results are presented together with a discussion about 
 Section~\ref{sec:timeDistributions} is devoted to presenting how different algorithms perform. 
 Section~\ref{sec:comparisonAnalysis} show how the algorithms performs relative to the others and discusses different aspect of comparison.
 Section~\ref{sec:difficultyAnalysis} explains how different puzzles can be can be correlated in terms of difficulty of solving.
-Section~\ref{sec:generation} compares the algorithms in there ability to generate puzzles and how well they are suited for parallellising.
+Section~\ref{sec:generation} compares the algorithms in there ability to generate puzzles and how well they are suited for parallelizing.
 
 \FloatBarrier
 \section{Time distributions}
@@ -431,64 +437,126 @@ Both of those are of interest however since they can reveal different things abo
 
 \FloatBarrier
 \subsection{Rule-based solver}
-The rule-based solver was by far the fastest algorithm in the study and also had the lowest standard deviation. 
-The result was a mean value of 0.02 seconds and a standard deviation of 0.02 seconds as well. 
-The time distribution for the rule-based solver can be seen in 
-figure ~\ref{fig:rulebasedHistogram}, ~\ref{fig:rulebasedHistogram2} and ~\ref{fig:rulebasedIndices}.
-
+The rule-based solver was by far the fastest algorithm in the study with a mean solving time of 0.02 seconds.
+Variation in solving time was also small with a standard deviation of 0.02 seconds. 
+It solved all 49151 17-clue puzzles that was in the puzzle database used for testing and none of the puzzles resulted in a unstable measurement of the solving time.
+\\
+%The time distribution for the rule-based solver can be seen in 
+%figure ~\ref{fig:rulebasedHistogram}, ~\ref{fig:rulebasedHistogram2} and ~\ref{fig:rulebasedIndices}.
+Figure~\ref{fig:rulebasedHistogram} is a histogram on a logaritmic scale that shows how the rule-based solver performed over all test puzzles.
+As one can see there is a quite samll time intervall at which most puzzles are solved.
+This is probably due to the use of logic rules with a polynomial time complexity.
+When the solver instead starts to use guessing the time complexity is changed to exponential time and it is therefore reasonable to believe that the solving time will then increase substantially.
+As will be seen in section~\ref{sec:backtrack} the backtrack algorithm have a similar behaviour which is also taken as a reason to believe that the rule-based solver starts to use guessing after the peak.
+Guessing might ofcourse be used sparingly at or even before the peak, but the peak is thought to decrease as a result of a more frequent use of guessing.
+\\
 \begin{figure}[here] 
-\centering
-\includegraphics[width=15cm]{images/rulebased_histogram.png}
-\caption{A histogram displaying the solving times for the rule-based solver. The x-axis showing solving time have a logaritmic scale to clearify the result. The reader shall note that this makes the bars in the histograms' widths different, but they still represent the same time interval.
-A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.25\textwidth}{XX}
+    \includegraphics[width=15cm]{images/rulebased_histogram.png}
+\end{tabularx}}
+\vspace{-25pt}
+\caption{A histogram displaying the solving times for the rule-based solver. The x-axis showing solving time have a logaritmic scale to clearify the result. The reader shall note that this makes the bars in the histograms' widths different, but they still represent the same time interval. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedHistogram}
 \end{figure}
 
-The figure is a closed in view of the histogram showing the rule-based solvers time distribution with all 49151 puzzles. 
-All puzzles were solved and all measurements were stable. The solving times was measured to be within 0.05 seconds of the recorded time with a confidence level of 95 \%. 
-
+Figure~\ref{fig:rulebasedHistogram2} shows a zoomed in view of figure~\ref{fig:rulebasedHistogram} but with a linear time scale.
+The histogram's bars also has half the width compared to figure~\ref{fig:rulebasedHistogram}.
+As one can see the histogram begins at the end of the peak that is illustrated in figure~\ref{fig:rulebasedHistogram}.
+This is to illustrate that the histogram continues to decrease.
+The histogram also illustrates that the maximum time was 1.36 seconds, but that only very few puzzles have a solving time close to that.
+As can be seen most puzzles will have solving time less than 0.4 seconds.
+\\
 \begin{figure}[here] 
-\centering
-\includegraphics[width=16cm]{images/rulebased_histogram2.png}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.25\textwidth}{XX}
+    \includegraphics[width=16cm]{images/rulebased_histogram2.png}
+\end{tabularx}}
+\vspace{-40pt}
 \caption{A zoomed in view of the histogram in figure ~\ref{fig:rulebasedHistogram} showing the rule-based solvers time distribution among all 49151 puzzles. The bars represent half the time intervall compared to figure ~\ref{fig:rulebasedHistogram}. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedHistogram2}
 \end{figure}
 
+\FloatBarrier
+Another way to visualize the result is shown in figure~\ref{fig:rulebasedIndices}.
+The figure have plotted the puzzle indices sorted after solving time against their solving times.
+Note that the y-axis is a logaritmic scale of the solving time.
+As in figure~\ref{fig:rulebasedHistogram2} one can see that only a few puzzles had relatively high solving times.
+The reader shall note that the diagram i stretched to $50000$ puzzles but there was only $49151$ test puzzles.   
+This picture also more clearly illustrates the idea explored above.
+Namely that the algorithm will increase its solving times fast at a certain point.
+That point is as mentioned thought to be the point where the solver starts to rely more upon guessing then the logical rules, which is much faster.
+From that statement one can conclude that only a small portion of all sudoku puzzles are difficult in the sense that the logic rules that the rule-based solver uses is not enough.
+\\
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
-\begin{tabularx}{1.5\textwidth}{XX}
-  \includegraphics[width=20cm]{images/rulebased_sortedindices.png}
+\begin{tabularx}{1.1\textwidth}{XX}
+    \includegraphics[width=15cm]{images/rulebased_sortedindices.png}
 \end{tabularx}}
-\caption{The x-axis is the indices of the puzzles when sorted according to the solving time for the rule-based solver. The y-axis shows a logaritmic scale of the solving time for each puzzle. All 49151 puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\vspace{-25pt}
+\caption{The x-axis is the indices of the puzzles when sorted according to the solving time for the rule-based solver. The y-axis shows a logaritmic scale of the solving time for each puzzle. All 49151 puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
 \label{fig:rulebasedIndices}
 \end{figure}
 
-The maximum solution time was 1.36 seconds but as only very few measurements exceeded 0.2 seconds, those have been removed from the figure to make it clearer.
-As the figure displays, the solution times increase up to a peak at about 0.17 seconds.
-
 \FloatBarrier
 \subsection{Backtrack solver}
+\label{sec:backtrack}
+The backtrack algorithm was the second most effiecent algorithm of the tested algorithms.
+It had a mean solving time of 1.66 seconds and a standard deviation of 3.04 seconds.
+The backtrack algorithm was tested on the same set of puzzles as the rule-based algorithm, but did not manage to solve all puzzles within the time limit that was set to 20 seconds.
+It had $142$ puzzles with unstable measurments and was unable to solve $1150$ puzzles out of all $49151$ puzzles.
+In figure~\ref{fig:backtrackDistribution} the solving time is plotted against the number of occurrences within each time intervall.
+Each data point represents 0.5 seconds and one shall also note that the y-axis is a logaritmic scale of the time.
+With that said one can see that the solving times seems to be decreasing at a approximately exponential rate.
+That is linear in the diagram as the y-axis is a logaritmic scale.
 
 \begin{figure}[here] 
-\centering
-\includegraphics[width=16cm]{images/backtrack_distribution.png}
-\caption{A plot similar to a histogram showing the results of the backtrack solver for all solved puzzles (47859 solved, 1150 unsolved and 142 with unstable measured running time out of all 49151 puzzles). Note that the y-axis is a logaritmic scale of the solving times. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.20\textwidth}{XX}
+    \includegraphics[width=16cm]{images/backtrack_distribution.png}
+\end{tabularx}}
+\vspace{-15pt}
+\caption{A plot similar to a histogram showing the results of the backtrack solver for all solved puzzles. The algorithm left $1150$ unsolved (time limit was 20 seconds) and 142 with unstable measured solving times out of all 49151 puzzles. Note that the y-axis is a logaritmic scale of the solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
 \label{fig:backtrackDistribution}
 \end{figure}
 
+\FloatBarrier
+One might also plot the indices of the puzzles sorted according to solution time against their solution times, as in figur~\ref{fig:rulebasedIndices} showing the corresponding result for the rule-based solver.
+As one can see in figure~\ref{fig:backtrackIndices} the solving times increase in a similar fasion to the rule-based solver.
+Note that figure~\ref{fig:rulebasedIndices} uses a logaritmic scale while this figure (figure~\ref{fig:backtrackIndices}) does not.
+The solving times are higher thought, and the increase is not as abrupt as for the rule-based algorithm.
+One can also see that the solving times reach the time limit of 20 seconds.
+This probably means that the solving times would have continued to increase for the last $1150$ unsolved puzzles.
+If one uses extrapolation, the time it would take to solve the last puzzle would be very large seen as the slope is very large at the last solved puzzles. 
+As this is a deterministic algorithm one knows that their is a limit to how long a puzzle may take to solve, but as that limit is not known it is impossible to know what the solving times of the last puzzle would be.
+There is however no reason to believe that this limit is close to 20 seconds so the solving times of the last puzzles may very well be multiple hours or worse.
+\\
 \begin{figure}[here] 
-\centering
-\includegraphics[width=16cm]{images/backtrack_sortedindices.png}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
-\label{fig:rule-basedDistribution}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.20\textwidth}{XX}
+    \includegraphics[width=16cm]{images/backtrack_sortedindices.png}
+\end{tabularx}}
+\vspace{-15pt}
+\caption{The backtrack algorithm's puzzles plotted against their solving times. The x-axis is the indices of the puzzles when sorted according to solving times. Note that this plot is different from figure~\ref{fig:rulebasedIndices} as this plot have a linear y-axis. The plot shows the distribution of the solved puzzles with stable measurements of their running times. There where $49151$ puzzles in total tested and $1150$ of those were unsolved (time limit was 20 seconds) and $142$ of those had unstable measurments of their solving times. The confidence level for the measured solving times was 95\% at an intervall of 0.05 seconds.}
+\label{fig:backtrackIndices}
 \end{figure}
 
+\FloatBarrier
+From figure~\ref{fig:backtrackDistribution} and figure~\ref{fig:backtrackIndices} one may think that the solution times are exponentially distributed since both of those figures hinted that the probability of finding puzzles with higher solving times decreased exponentially.
+As figure~\ref{fig:backtrackExponential} shows this is not the case.
+The figure instead shows that the distribution for the backtrack algorithm's solving times seems to have a higher concavity than the fitted exponential distribution have.
 
 \begin{figure}[here] 
-\centering
-\includegraphics[width=16cm]{images/backtrack_exponential.png}
-\caption{A zoomed in view of the histogram showing the rule-based solvers time distribution among all 49151 puzzles. All puzzles was solved and none had an unstable measurment in running time. The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
-\label{fig:rule-basedDistribution}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1\textwidth}{XX}
+\includegraphics[width=13cm]{images/backtrack_exponential.png}
+\end{tabularx}}
+\vspace{-15pt}
+\caption{The distribution of the backtrack algorithm's solving times as a probability intensity function plotted together with a fitted exponential distribution. 
+The fitted exponential distribution was obtained by using the reciprocal of the mean value of the solving times for the backtrack algorithm as $\lambda$ (which is the parameter used in the exponential distribution). 
+The $1150$ unsolved puzzles and the $142$ puzzles with unstable measurement out of the $49151$ puzzles was left out of this computation. 
+The confidence level for the measured solving times was 95 \% at an intervall of 0.05 seconds.}
+\label{fig:backtrackExponential}
 \end{figure}
 
 \FloatBarrier
@@ -506,8 +574,11 @@ The value of TODO-TODO seconds is equivalent to a temperature of about 1\%, lead
 After this temperature interval there were no puzzles being solved within the limit of 20 seconds.
 
 \begin{figure}[here] 
-\centering
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.20\textwidth}{XX}
 \includegraphics[width=12cm]{images/boltzmanndistribution.png}
+\end{tabularx}}
+\vspace{-15pt}
 \caption{Histogram showing distribution of Boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
 \label{fig:boltzmannDistribution}
 \end{figure}
@@ -515,13 +586,34 @@ After this temperature interval there were no puzzles being solved within the li
 \FloatBarrier
 \section{Comparison}
 \label{sec:comparisonAnalysis}
+As the reader have already seen in section~\ref{sec:timeDistributions} the algorithms performances relative to each other seems quite clear.
+The rule-based algorithm performed best, the backtrack algorithm was next and the Boltzmann machine performed worst.
+It is however still interesting to see plots of the differences between the algorithms.
+Figure~\ref{fig:comparison} is one such plot which in this case shows the difference between the backtrack algorithm and the rule-based algorithm. The differences in solving time are sorted and plotted with the sorted differences indices as the x-axis. Note also that the y-axis is a logaritmic scale of the solving time differences.
+This also means that zero and negative numbers is not included which in turn means that one cannot see the puzzles where the backtracking algorithm performed better than the rule-based algorithm.
+The backtrack did however perform better than the rule-based algorithm at $2324$ puzzles.
+This is interesting as that means that the rule-based algorithm is wasting time checking logic rules which will not be of any use.
+The reason why this can be concluded is because the rule-based and backtracking algorithm is in fact implemented as the same algorithm with the only difference that the rule-based algorithm uses two additional rules in addition to guessing.
+Since the guessing is equally implemented for both the only way the rule-based algorithm can be slower is by checking rules in situations where they cannot be applied.
+\\
 
 \begin{figure}[here] 
-\centering
-\includegraphics[width=15cm]{images/comparison.png}
-\caption{Histogram showing distribution of Boltzmann machine results running on TODO puzzles with 46 clues. All results belong to a 95\% confidence interval of 1 s. The image only contains puzzles being solved under the 20 second limit, which were TODO\% of all tested puzzles.}
-\label{fig:boltzmannDistribution}
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.20\textwidth}{XX}
+    \includegraphics[width=15cm]{images/comparison.png}
+\end{tabularx}}
+\vspace{-15pt}
+\caption{Plot of the difference for each puzzle that was solved by both the backtrack algorithm and the rule-based algorithm. Since the rule-based algorithm solved all puzzles with no unstable measurement, it was the backtrack algorithm that limited the puzzles used in this plot. The backtracking algorithm did not solve $1150$ puzzles and had $142$ unstable measurements of its solving time. Both algorithm was tested on a total of $49151$ puzzles with a measurement of their solving time with a confidence intervall of 0.05 seconds to the confidence level of 95\%.
+The difference is the backtrack algorithm's solving time minus the rule-based algorithm's solving time. Note also that negative numbers are not included since it is a logaritmic scale.}
+\label{fig:comparison}
 \end{figure}
+
+Even if figure~\ref{fig:comparison} is quite clear on the matter one might want to do a statistical test for determining that the rule-based algorithm is indeed better than the backtrack algorithm.
+If one does this with the proposed method in section~\ref{sec:statisticalTests}, namely Wilcoxons sign test, one obtain a confidence level much higher than 99.9\% meaning that one with certainty can say that the rule-based algorithm is better than the backtrack algorithm as expected.
+Another interesting aspect of figure~\ref{fig:comparison} is that some puzzles that are very difficult for the backtracking algorithm are easy for the rule-based algorithm.
+This means that the rule-based algorithm makes use of the naked tuple rule.
+This can be deduced from the fact that the naked single rule is implicitly applied by the backtracking algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
+
 
 \FloatBarrier
 \section{Puzzle difficulty}
@@ -541,12 +633,11 @@ The statistical test also confirms this with a very high confidence level (great
 
 \section{Generation and parallelization}
 \label{sec:generation}
-As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallellised.
+As already mentioned no tests was performed to measure the algorithms puzzlegenerating abilities or their improvement when parallelized.
 Those are however qualities that can be discussed purely theoretically.
-To start of with generation one has to make sure that the generated puzzle is valid and has a unique solution.
-Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle.
-\\
-The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
+\subsection{Generation}
+When generating puzzle one has to make sure that the generated puzzle is valid and has a unique solution.
+Puzzles with multiple solutions are often disregarded as Sudoku puzzles and are also unpractical for human solvers since one must guess during the solving process to be able to complete the puzzle. The generation process can be implemented multiple ways, but since this thesis is about Sudoku solving algorithms only this viewpoint is presented.
 The way one generates a puzzle is by randomly inserting numbers into an empty Sudoku board and then trying to solve the puzzle. If succesfull the puzzle is valid and one would then want to find out if the solution is unique. 
 Both the rule-based solver and backtrack solver can do this by backtracking even thought a solution was found. This practically means that they can search the whole search three to guarantee that all possible solutions was considered.
 The rule-based solver does this much faster since it can apply logical rules to roll out some part of the search three.
@@ -559,9 +650,35 @@ As described the Boltzmann machine uses puzzles generated from already existing 
 Empty squares in a valid puzzle is filled in by the correct numbers by looking at the solution of the puzzle that have been obtained previously with any algorithm.
 This is a kind of generation even if it is not generally considered as generation.
 It is however applicable for generating easier puzzles from a difficult puzzle.
-\\
-Parallellising of algorithms is interesting mainly because one might want to use similar algorithms in other problems. 
 
+\subsection{Parallelizing}
+%TODO DAVID
+%Känner inte att jag har stenkoll på parallelisering så du får gärna gå igenom denna sektion
+%Extra noga för att se om det finns bristande resonemang etc.
+Parallelizing of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
+There is mainly two ways one can use parallelizing when it comes to sudoku solving algorithms.
+The first and most obvious one is to solve multiple puzzles in parallell.
+That is however not parallelizing of the algorithms themselfes and will therefore not be discussed.
+The other form of parallelizing is to separate the algorithms into parts. Those parts are then run in parallel and the result are then combined.
+This might be easy to do for some algorithms, but the separation into parts that whose results could then be combined is not necessarily something that can be done for all algorithms.
+All the algorithms in this study does however have some possibilities when it comes to parallelizing them.
+The rule-based algorithm could for instance check multiple rules for multiple regions at once.
+This is unproblematic since the result can easily be combined by applying the results of all rules on the original puzzle.
+Since it may be separated into one thread for each rule for each region (if more advanced rules are used they may require the whole puzzle instead of just one region) one will likely have more then enough separation to perform parallelizing at required level.
+\\
+The backtracking algorithm may be parallelized by separating the search three and searching each branch in parallel.
+One can then simply combine the results by the knowledge that only one branch can succed if the puzzle is unique and valid.
+Depending on the branching factor in the puzzle it might not always be easy to parallelize the algorithm.
+One might however choose a square with the number of candidates wanted to get enough parts for parallelizing.
+\\
+%TODO DAVID
+%Vill minnas att du har sagt att det går utmärkt att parallelisera neurala nätverk
+%Men är definitivt bäst om du skriver om detta
+The Boltzmann machine is also parallelizable.
+This can be done by %blargh blargh
+\\
+The conclusion one may draw from this is that all algorithms in this thesis may effectively be parallelized with more or less effort.
+All the algorithms can furthurmore be parallelized without considerably increasing the total computation power needed, meaning that the solving times will be reduced by the same factor one parallelizes the algorithms into.
 
 \chapter{Conclusion}
 %TODO: Verify all content after new data
@@ -659,33 +776,46 @@ that we refer to here: \ref{RDF_4}
 
 \chapter{Source code}
 \lstset{language=C++}
-\section{TestFramework.cpp}
+
+%TODO:
+%Här skulle vi kanske kunna inkludera information om vilken kompilator/kompileringsflaggor som användes eftersom denna section ju framförallt är till för att göra så att andra kan återupprepa våra resultat.
+%Vi skulle också kunna skriva att koden är tillgänglig via request också. Och att man typ får använda koden hur man vill
+\section{Test Framework}
+\subsection{TestFramework.cpp}
 \lstinputlisting{../src/test/TestFramework.cpp}
-\section{TestFramework.h}
+\subsection{TestFramework.h}
 \lstinputlisting{../src/test/TestFramework.h}
 
-\section{SodukuSolver.cpp}
+\subsection{SodukuSolver.cpp}
 \lstinputlisting{../src/test/SudokuSolver.cpp}
-\section{SodukuSolver.h}
+\subsection{SodukuSolver.h}
 \lstinputlisting{../src/test/SudokuSolver.h}
 
-\section{Randomizer.cpp}
+\subsection{Randomizer.cpp}
 \lstinputlisting{../src/test/Randomizer.cpp}
-\section{Randomizer.h}
+\subsection{Randomizer.h}
 \lstinputlisting{../src/test/Randomizer.h}
 
-\section{Boltzmann.cpp}
+\section{Boltzmann machine}
+\subsection{Boltzmann.cpp}
 \lstinputlisting{../src/neural/Boltzmann.cpp}
-\section{Boltzmann.h}
+\subsection{Boltzmann.h}
 \lstinputlisting{../src/neural/Boltzmann.h}
 
-\section{Square.cpp}
+\subsection{Square.cpp}
 \lstinputlisting{../src/neural/Square.cpp}
-\section{Square.h}
+\subsection{Square.h}
 \lstinputlisting{../src/neural/Square.h}
 
-\section{Rulebased.cpp / Backtrack}
+\section{Rule-based / Backtrack}
+The backtracking algorithm and the rule-based algorithm uses the same implementation with one exception. When using only backtracking the whileloop in the applyRules function in Rulebased.cpp is commented out.
+\subsection{Rulebased.cpp}
 \lstinputlisting{../src/rulebased/rulebased2/Rulebased.cpp}
-\section{Rulebased.h / Backtrack}
+\subsection{Rulebased.h}
 \lstinputlisting{../src/rulebased/rulebased2/Rulebased.h}
+\subsection{Board.cpp}
+\lstinputlisting{../src/rulebased/rulebased2/Board.cpp}
+\subsection{Board.h}
+\lstinputlisting{../src/rulebased/rulebased2/Board.h}
+
 \end{document}

@@ -267,16 +267,23 @@ For every step, all probabilites are evaluated and states are assigned active wi
 Finally the grid is checked for conflicts and no conflicts implies a valid solution, which is gathered by inspecting which nodes are in a active state.
 
 Even though the procedure detailed above eventually will find a solution, there are enhanced techniques used in order to converge faster to a valid solution.
-The temperature, $T$, can be controlled over time and is used to adjust the rate of change in the network while still allowing larger mutations to occur.
+The temperature, $T$, can be controlled over time and is used to adjust the rate of change in the network while still allowing larger state changes to occur.
 A typical scheme being used is simulated annealing \cite{simulatedAnnealing}.
-By starting off with a high temperature (typically $T = 100$) and gradually decreasing the value as time progresses, it is possible to reach a global minima.
+By starting off with a high temperature (typically $T_0 = 100$) and gradually decreasing the value as time progresses, it is possible to reach a global minima.
 Due to practical constraints it is not possible to guarantee a solution but simulated annealing provides a good foundation which was used.\\
+
+The temperature descent is described by the following function, where $i$ is the current iteration:
+\[
+T(i) = T_0 * exp(K_t * i)
+\]
+$K_t$ controls the steepnes of the temperature descent and can be adjusted in order to make sure that low temperatures are not reached too early.
+The result section describes two different decline rates and their respective properties.
 
 There are some implications of using a one-pass temperature descent which was chosen to fit puzzles as best as possible.
 Typically solutions are much less likely to appear in a Boltzmann machine before the temperature has been lowered enough to a critical level.
 This is due to the scaling of probabilites in the activation function.
 At a big temperature all probabilites are more or less equal, even though the energy is vastly different.
-With a low temperature the exponential function will produce a wider range of values, resulting in increasing probability of ending up with less conflicts.
+With a low temperature the temperature difference will be scaled and produce a wider range of values, resulting in increasing probability of ending up with less conflicts.
 This motivates the choice of an exponential decline in temperature over time; allowing solutions at lower temperatures to appear earlier.
 
 \chapter{Method}
@@ -561,8 +568,8 @@ The confidence level for the measured solving times was 95 \% at an intervall of
 
 \FloatBarrier
 \subsection{Boltzmann machine solver}
-The Boltzmann machine solver did not perform as well as others and required to be run on puzzles of difficulty 46, in order to have reasonable execution times.
-Two different parameter settings were simulated and the results demonstrates the differences.
+The Boltzmann machine solver did not perform as well as others and required to be run on puzzles with 46 clues, in order to have reasonable execution times.
+Two different parameter settings were simulated and the results demonstrates some important differences in solving capabilities.
 All results share the time limit of 20 seconds, with worse results or unstable measurements not being shown.
 
 \begin{figure}[here] 
@@ -601,7 +608,7 @@ A strong reason for the big representation of solutions clustered at a low tempe
 Given that solutions are more likely to be observed at lower temperatures, as explained in the background section, it is expected to have more solutions at the end of the spectrum.
 For example by studying the fast solver it is observable that the medium value of 8 seconds is equivalent to a temperature of about 0.5\%.
 This leads to a conclusion of this being a critical temperature for solutions to stabilze.
-Following the interval of critical temperatures there were no puzzles being solved within the limit of 20 seconds.
+After the intervals of critical temperatures there were no puzzles being solved within the limit of 20 seconds.
 
 \FloatBarrier
 \section{Comparison}

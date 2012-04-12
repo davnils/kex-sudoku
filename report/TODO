@@ -6,7 +6,6 @@ Fixa referenser, bara en på slutet. Ta bort oanvända referenser. <- Patrik
 Positionering och storlek av bilder. Även positioner relativt text.
 Rule-based i analysis ej klar
 Backtrack ej klar
-Lägg in tempfunktion med konstanter i Boltzmann-förklaring.
 Comparison ej klar
 Generation och parallellizing. Parallellizing ej klar
 Fixa stavning.

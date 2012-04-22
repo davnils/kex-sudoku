@@ -1,0 +1,45 @@
+Bakgrund:
+    Sudokuregler
+    Komplexitet - NP-fullständigt
+        vilket leder till heuristiker (tex mänskliga regler)
+        Bra bruteforce
+        Stokastiska lösningar
+
+    Svårighet på pussel
+        Svårbedömnt
+        Svag korrelation
+        Slutsats: 17-pussel borde innehålla några utav de svåraste Sudokupusslena
+
+
+
+Deterministiska algoritmer
+    Backtrack
+        Är en bruteforce algoritm
+        Skapar stor tidskomplexitet, men är simpel och garanterar en lösning.
+        Man kan välja rot på olika sätt. Vad borde vara bäst?
+            Första bästa
+            Random
+            Minst kandidater
+        Välja kandidater på random eller deterministiskt?
+    Regelbaserad
+        Mänsklig metod
+        Våran är något förenklad
+        Innehåller även bruteforce så är en blanding på heuristik och bruteforce
+        Utan backtrack så finns olösbara pussel
+
+
+
+Resultat backtrack
+    Bild 1:
+        Förklara diagramaxlar. Logaritmisk skala på y-axeln.
+        Nästan som ett histogram.
+        Medelvärde 1.6 sekunder.
+        Flesta löses snabbt.
+        Några få skenar dock iväg.
+        Ser ut som exponentialt avtagande.
+    Bild 2:
+        Förklara diagram. Kontinuerliga Sannolikhetsfördelningar.
+        Mer konkav än exponentialfördelningen
+
+
+

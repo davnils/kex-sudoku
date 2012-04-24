@@ -7,20 +7,14 @@ Bakgrund:
 
     Svårighet på pussel
         Svårbedömnt
-        Svag korrelation
-        Slutsats: 17-pussel borde innehålla några utav de svåraste Sudokupusslena
-
-
+        Därför har vi testpussel från en pusseldatabas på internet med 17-clue pussel.
 
 Deterministiska algoritmer
     Backtrack
         Är en bruteforce algoritm
         Skapar stor tidskomplexitet, men är simpel och garanterar en lösning.
         Man kan välja rot på olika sätt. Vad borde vara bäst?
-            Första bästa
-            Random
             Minst kandidater
-        Välja kandidater på random eller deterministiskt?
     Regelbaserad
         Mänsklig metod
         Våran är något förenklad
@@ -36,10 +30,14 @@ Resultat backtrack
         Medelvärde 1.6 sekunder.
         Flesta löses snabbt.
         Några få skenar dock iväg.
-        Ser ut som exponentialt avtagande.
-    Bild 2:
-        Förklara diagram. Kontinuerliga Sannolikhetsfördelningar.
-        Mer konkav än exponentialfördelningen
 
+Regelbaserad resultat
+    Mycket snabbare (medel 0.02 sek)
+    Låg varians
 
+Jämförelse
+    Man förväntar sig att regelbaserad ska vara överlägsen
+    och det är den för många fall, men det finns några undantag
+    2000/50000
+    Svårighetskorrelation
 

@@ -16,10 +16,21 @@
 \title{A study of Sudoku solving algorithms}
 \subtitle{}
 \foreigntitle{En studie om Sudokulösningsalgoritmer}
-\author{Patrik Berggren \and David Nilsson}
+\preauthor{\begin{flushleft}%
+           \large \lineskip 0.5em%
+           \begin{tabular}[t]{@{}l}}
+\postauthor{\end{tabular}\end{flushleft}}
+\renewcommand*\and{%
+  \end{tabular}%
+  \hskip 1em \relax
+  \begin{tabular}[t]{l}}
+\renewcommand*{\andnext}{%
+  \end{tabular}\\ \begin{tabular}[t]{@{}l}}
+
+\author{Patrik Berggren \\ pabergg@kth.se \\ Gotlandsgatan 46 lgh 1104 \\ 116 65 Stockholm \\--- \\ David Nilsson \\ davnils@kth.se \\ Kungshamra 48 lgh 1010 \\ 170 70 Solna }
 \date{April 2012}
 \blurb{Bachelor's Thesis at NADA\\Supervisor: Alexander Baltatzis\\Examiner: Mårten Björkman}
-\trita{TRITA xxx yyyy-nn}
+\trita{}
 \begin{document}
 \frontmatter
 \pagestyle{empty}
@@ -71,7 +82,7 @@ This is a list of responsibilities:
 \chapter{Introduction}
 Sudoku is a game that under recent years has gained popularity.
 Many newspapers today contain Sudoku puzzles and there are even competitions devoted to Sudoku solving.
-It is therefore of interest to study how one can solve, generate and rate such puzzles by the help of computer algorithms. This thesis explores these concepts for three chosen algorithms.
+It is therefore of interest to study how to solve, generate and rate such puzzles by the help of computer algorithms. This thesis explores these concepts for three chosen algorithms.
 
 \FloatBarrier
 \section{Problem specification}
@@ -82,7 +93,7 @@ However there are also other aspects that will be covered in this thesis.
 Those are difficulty rating, Sudoku puzzle generation, and how well the algorithms are suited for parallelizing.
 The goal of this thesis is to conclude how well each of those algorithms performs from these aspects and how they relate to one another.
 Another goal is to see if any general conclusions regarding Sudoku puzzles can be drawn.
-The chosen algorithms for evaluation are backtrack, rule-based and Boltzmann machines.
+The evaluated algorithms are backtrack, rule-based and Boltzmann machines.
 All algorithms with their respective implementation issues are further discussed in section~\ref{sec:background} (background).
 
 \FloatBarrier
@@ -95,7 +106,7 @@ There are as mentioned several other Sudoku solving algorithms. The chosen algor
     \item Optimization: 
 All algorithms are implemented by ourselves and optimization is therefore an issue. 
 We have therefore only aimed for exploring the underlying ideas of the algorithms and not the algorithms themselves.
-This means that some implementations may consciously be made in a certain way even if known optimizations are known.
+This means that some implementations are consciously made in a certain way even if optimizations exists.
 
     \item Special Sudokus: There are several variations of Sudoku including different sizes of the grid.
 This thesis is, however, limited to the study of ordinary Sudoku, which is 9x9 grids.
@@ -106,9 +117,9 @@ This thesis is, however, limited to the study of ordinary Sudoku, which is 9x9 g
 As already mentioned, Sudoku is today a popular game throughout the world and it appears in multiple medias, including websites, newspapers and books. 
 As a result, it is of interest to find effective Sudoku solving and generating algorithms. 
 For most purposes there already exist satisfactory algorithms, and one might therefore struggle to see the use in studying Sudoku solving algorithms. 
-There is, however, still some value in studying Sudoku solving algorithms as it might reveal how one can deal with harder variations of Sudoku, such as puzzles with 16x16 grids. 
+There is, however, still some value in studying Sudoku solving algorithms as it might reveal how to deal with difficult variations of Sudoku, such as puzzles with 16x16 grids. 
 Sudoku is also, as will be discussed in section~\ref{sec:background}, an NP-Complete problem which means that it is one of a set of computational difficult problems.\cite{complexity} 
-One hope of this study is therefore to contribute to the discussion about how one can deal with such puzzles. 
+One goal of this study is therefore to contribute to the discussion, about how such puzzles can be dealt with. 
 
 \section{Definitions}
 \begin{description}
@@ -124,32 +135,32 @@ The background gives an introduction to Sudoku solving and the various approache
 
 \FloatBarrier
 \section{Sudoku fundamentals}
-A Sudoku game consists of a 9x9 grid of numbers, each belonging to the range 1-9.
+A Sudoku game consists of a 9x9 grid of numbers, where each number belong to the range 1-9.
 Initially a subset of the grid is revealed and the goal is to fill the remaining grid with valid numbers.
 The grid is divided into 9 boxes of size 3x3.
 Sudoku has only one rule and that is that all regions, that is rows, columns, and boxes, contains the numbers 1-9 exactly once.\cite{17clueProof}
-In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be analyzed by solving for all possible solutions.
+In order to be regarded as a proper Sudoku puzzle it is also required that a unique solution exists, a property which can be determined by solving for all possible solutions.
 
-Different Sudoku puzzles are widely accepted to have different difficulty levels.
+Different Sudoku puzzles are widely accepted to have varying difficulty levels.
 The level of difficulty is not always easy to classify as there is no easy way of determining hardness by simply inspecting a grid.
 Instead the typical approach is trying to solve the puzzle in order to determine how difficult it is.
 A common misconception about Sudoku is that the number of clues describes how difficult it is.
-While this is true for the bigger picture it is far from true that all 17-clue puzzles are more difficult than say 30-clue puzzles.\cite{sudokuDifficulty}
+While this is true for the bigger picture it is far from true that specific 17-clue puzzles are more difficult than for instance 30-clue puzzles.\cite{sudokuDifficulty}
 The difficulty of a puzzle is not only problematic as it is hard to determine, but also as it is not generally accepted how puzzles are rated.
 One might for instance ascertain that puzzles solvable with a set of rules classifies as easy, and that some additional rules gives the puzzles the rating moderate or advanced.
 In this study difficulty will however be defined as the solving time for a certain algorithm, meaning that higher solving times implies a more difficult puzzle.
 Another interesting aspect related to difficulty ratings is that the minimum number of clues in a proper Sudoku puzzle is 17.\cite{17clueProof} 
-Since puzzles generally become more difficult to solve with an decreasing number of clues, it is highly probable that some of the most difficult are 17-clue puzzles. 
+Since puzzles generally become more difficult to solve with an decreasing number of clues, due to the weak correlation in difficulty, it is probable that some of the most difficult puzzles have 17 clues. 
 
 \FloatBarrier
 \section{Computational perspective}
-Sudoku solving is a research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation being researched.\cite{stochastic, sudokuConstruct, generation}
+Sudoku solving is a research area in computer science and mathematics, with areas such as solving, puzzle difficulty rating and puzzle generation.\cite{stochastic, sudokuConstruct, generation}
 
 The problem of solving $n^2 * n^2$ Sudoku puzzles is NP-complete.\cite{complexity}
 While being theoretically interesting as an result it has also motivated research into heuristics, resulting in a wide range of available solving methods.
-Some of the existing solving algorithms includes backtrack \cite{searchBased}, rule-based \cite{techniques}, cultural genetic with variations\cite{stochastic}, and Boltzmann machines \cite{boltzmann}.
+Some of the existing solving algorithms are backtrack \cite{searchBased}, rule-based \cite{techniques}, cultural genetic with variations\cite{stochastic}, and Boltzmann machines \cite{boltzmann}.
 
-Given the large variety of solvers available it is interesting to group them together with similar features in mind and try to make generic statements about their performance and other aspects.
+Given the large variety of solvers available, it is interesting to group them together with similar features in mind, and try to make generic statements about their performance and other aspects.
 One of the important selection criterion for choosing algorithms for this thesis have therefore been the algorithms underlying method of traversing the search space, in this case deterministic and stochastic methods.
 Deterministic solvers include backtrack and rule-based.
 The typical layout of these is a predetermined selection of rules and a deterministic way of traversing all possible solutions.
@@ -167,11 +178,11 @@ A short description is given below with further in depth studies in the followin
 \begin{itemize}
     \item Backtrack:
     Backtrack is probably the most basic Sudoku solving strategy for computer algorithms.
-It is a kind of a brute-force method which tries different numbers and if it fails it backtracks and try a different number.
+This algorithm is a brute-force method which tries different numbers, and if it fails it backtracks and tries a different number.
     \item Rule-based:
-    This method consists of using several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
-This method is very similar to how humans solve Sudoku and the rules used is in fact derived from human solving methods.
-The rule-based approach is a heuristic meaning that all puzzles cannot be solved by it. In this thesis the rule-based algorithm is instead a combination of a heuristic and a brute-force algorithm as will be discussed more in section~\ref{sec:rulebasedBackground}.
+    This method uses several rules that logically proves that a square either must have a certain number or roles out numbers that are impossible (which for instance could lead to a square with only one possible number).
+This method is very similar to how humans solve Sudoku and the rules used are in fact derived from human solving methods.
+The rule-based approach is a heuristic, meaning that all puzzles cannot be solved by it. In this thesis, the rule-based algorithm is instead a combination of a heuristic and a brute-force algorithm, which will be discussed more in section~\ref{sec:rulebasedBackground}.
     \item Boltzmann machine:
     The Boltzmann machine algorithm models Sudoku by using a constraint solving artificial neural network.
 Puzzles are seen as constraints describing which nodes that can not be connected to each other.
@@ -188,9 +199,10 @@ This means that the backtrack algorithm does an extensive search to find a solut
 Even thought this algorithm runs in exponential time, it is plausible to try it since it is widely thought that no polynomial time algorithms exists for NP-complete problem such as Sudoku. 
 One way to deal with such problems is with brute-force algorithms provided that they are sufficiently fast.
 This method may also be used to determine if a solution is unique for a puzzle as the algorithm can easily be modified to continue searching after finding one solution.
-As a result it could be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.\\
+It follows that the algorithm can be used to generate valid Sudoku puzzles (with unique solutions), which will be discussed in section~\ref{sec:generation}.
+
 There are several interesting variations of this algorithm that might prove to be more or less efficient.
-One must at each guess decide which square to use for the guess.
+At every guess, a square is chosen.
 The most trivial method would be to take the first empty square.
 This might however be very inefficient since there are worst case scenarios where the first squares have very many candidates.
 Another approach would be to take a random square and this would avoid the above mentioned problem with worst case scenarios.
@@ -280,7 +292,7 @@ The resulting $81*9=729$ nodes are fully connected and have a binary state which
 Some of these nodes will have predetermined outputs since the initial puzzle will fix certain grid values and simplify the problem.
 In order to produce valid solutions it is necessary to insert weights describing known relations.
 This is done by inserting negative weights, making the interconnected nodes less likely to fire at the same time, resulting in reduced probability of conflicts.
-Negative weights are placed in rows, columns, boxes, and between nodes in the same square, since a single square should only contain a single active digit.\\
+Negative weights are placed in rows, columns, boxes, and between nodes in the same square, since a single square should only contain a single active digit.
 
 In order to produce a solution the network is simulated in discrete time steps.
 For every step, all probabilities are evaluated and states are assigned active with the given probability.
@@ -290,7 +302,7 @@ Even though the procedure detailed above eventually will find a solution, there 
 The temperature, $T$, can be controlled over time and is used to adjust the rate of change in the network while still allowing larger state changes to occur.
 A typical scheme being used is simulated annealing \cite{simulatedAnnealing}.
 By starting off with a high temperature (typically $T_0 = 100$) and gradually decreasing the value as time progresses, it is possible to reach a global minimum.
-Due to practical constraints it is not possible to guarantee a solution but simulated annealing provides a good foundation which was used.\\
+Due to practical constraints it is not possible to guarantee a solution but simulated annealing provides a good foundation which was used.
 
 The temperature descent is described by the following function, where $i$ is the current iteration:
 \[
@@ -336,7 +348,7 @@ Multiple aspects of the results were considered when analyzing and comparing the
 \subsection{Solving}
 The solving ability of the algorithm is the main interest of this thesis.
 This is measured by measuring the time it takes for each Sudoku solver algorithm to solve different puzzles.
-By doing that on a representative set of puzzles one can determine which algorithms are more effective.
+By doing that on a representative set of puzzles, it is possible to determine which algorithms are more effective.
 Solving ability is often given in the form of a mean value, but since puzzles vary greatly in difficulty this misses the bigger picture.
 An algorithm might for instance be equally good at all puzzles and one algorithm might be really good for one special kind of puzzles while performing poorly at others.
 They can still have the same mean value which illustrates why that is not a good enough representation of the algorithms effectiveness.
@@ -352,11 +364,11 @@ Those are often based on the level of human solving techniques that are needed t
 This study will similarly measure the puzzles difficulty, but will not rely on which level of human solving techniques that are needed, but instead on how well each algorithm performs at solving each puzzle. 
 The test will primarily consist of determining if certain puzzles are inherently difficult, meaning that all algorithms rate them as hard.
 During the implementation process it was discovered that the Boltzmann machine performed much worse than the other algorithms and could therefore not be tested on the same set of puzzles.
-The comparison of this aspect is therefore focused on the rule-based and backtrack algorithms.
+This aspect of comparison is therefore limited to the rule-based and backtrack algorithms.
 
 \FloatBarrier
 \subsection{Generation and parallelization}
-This is a more theoretical aspect of the comparison and no tests were done.
+This is a more theoretical aspect of the comparison, with only a discussion rather than actual implementations.
 It is however still possible to discuss how well the algorithms are suited for generating puzzle and how well they can be parallelized. 
 Generation of puzzles is obviously interesting as that is what one has to do to get new Sudoku puzzles.
 One can generate Sudoku puzzles in multiple ways, but since this thesis is about Sudoku solving algorithms only generating methods involving such algorithms will be considered.
@@ -375,7 +387,7 @@ The test data consisted of multiple puzzles that were chosen beforehand.
 Since the set of test puzzles can affect the outcome of this thesis it is appropriate to motivate the choice of puzzles.
 As was discovered during the study the Boltzmann machine algorithm did not perform as well as the other algorithms and some modifications to which puzzles was used was therefore done.
 The backtrack and rule-based algorithms were however both tested on a set of 49151 17-clue puzzles. 
-They were found on \cite{database} and it is claimed by the author Royle to be a collection of all 17-clue puzzles that he has been able to find on the Internet. 
+They were found by Royle and it is claimed to be a collection of all 17-clue puzzles that he has been able to find on the Internet.\cite{database} 
 The reason for choosing this specific database is because the generation of the puzzles does not involve a specific algorithm but is rather a collection of puzzles found by different puzzle generating algorithms.  
 The puzzles are therefore assumed to be representative of all 17-clue puzzles. 
 This assumption is the main motivating factor for choosing this set of puzzles, but there is also other factors that makes this set of puzzles suitable. 
@@ -391,7 +403,9 @@ Most 46-clue puzzles already have a lot of logical constraints due to the high n
 Due to several reasons statistical analysis is required to make a rigorous statement about the results. 
 This is mainly due to two reason.
 Firstly the results contain a very large data set and secondly there are some randomness in the test results which can only be dealt with by using statistical models. 
-Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. Naturally a higher confidence and more precise results leads to higher requirements on the statistical test.
+%TODO
+Most statistical tests give a confidence in the results to depict how surely one can be about the results of the statistical test. 
+Naturally a higher confidence and more precise results leads to higher requirements on the statistical test.
 As described in section 3.4.2 some of the statistical tests have been limited by computational constraints.
 This leads to a lower confidence level being required for those tests.
 
@@ -410,7 +424,8 @@ It is now that the real analysis of the algorithms begins.
 Even if the representation of the results does not really classify as a statistical method it is appropriate to mention that the results are displayed as histograms which means that the data are sorted and divided into bars of equal width. 
 For this study this means each bar represents a fixed size solution time interval. 
 The height of the bars are proportional to the frequency data points falls into that bar's time interval.
-After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms.\\
+After the histogram are displayed one can easily compare the results between different algorithms and also consider the distribution of the solution times of individual algorithms.
+
 The first thing one might think of looking for is how the different algorithms compare in solving ability. 
 This means that one want to find out if one algorithm is better than other algorithms. 
 Since the distribution is unknown one has to rely on more general statistical tests. 
@@ -418,7 +433,7 @@ One of those are Wilcoxons sign test.
 This makes use of the fact that the difference in solving times between two algorithms will have a mean value of 0 if there is no difference between the two algorithms. 
 The tests uses the binomial distribution to see if the sign of the difference is unevenly distributed.
 The null hypothesis is that the two algorithms perform equally and to attain a confidence for the result one compute the probability that one falsely rejects the null hypothesis given the test results.
-\\
+
 Difficulty distribution among the puzzles can be seen by looking at the histograms for each algorithm.
 One aspect that is of interest is if some of the puzzles are inherently difficult, or easy, independent of which algorithm is used for solving it.
 The method used for determining this is built on the fact that independent events, say A and B, must follow the following property:
@@ -439,7 +454,7 @@ This was as above described handled by running multiple tests on the same algori
 The problem is that bootstrapping which was used to determine confidence levels of the measured mean value, requires a large data set to attain a high confidence level. 
 At the same time the puzzle set was very big which required a compromise which lead to a confidence interval of 0.05 seconds to a confidence level of 95\%. The number of tests that was allowed for each puzzle was also limited to 100 tries.
 The puzzles that could not pass the requirements for the confidence interval were marked as unstable measurements.
-\\
+
 Another problematic aspect concerning computational constraints is the running time for each algorithm.
 During the implementation phase it was discovered that the backtrack algorithm was slow for some puzzle with 17 clues and the Boltzmann machine was discovered to be much to slow for all 17 clue puzzle.
 The way this was handled was by setting a running time limit of 20 seconds for each test run for the backtrack solver.
@@ -465,7 +480,7 @@ Both of those are of interest however since they can reveal different things abo
 The rule-based solver was by far the fastest algorithm in the study with a mean solving time of 0.02 seconds.
 Variation in solving time was also small with a standard deviation of 0.02 seconds. 
 It solved all 49151 17-clue puzzles that was in the puzzle database used for testing and none of the puzzles resulted in a unstable measurement of the solving time.
-\\
+
 %The time distribution for the rule-based solver can be seen in 
 %figure ~\ref{fig:rulebasedHistogram}, ~\ref{fig:rulebasedHistogram2} and ~\ref{fig:rulebasedIndices}.
 Figure~\ref{fig:rulebasedHistogram} is a histogram on a logarithmic scale that shows how the rule-based solver performed over all test puzzles.
@@ -474,7 +489,7 @@ This is probably due to the use of logic rules with a polynomial time complexity
 When the solver instead starts to use guessing the time complexity is changed to exponential time and it is therefore reasonable to believe that the solving time will then increase substantially.
 As will be seen in section~\ref{sec:backtrack} the backtrack algorithm have a similar behavior which is also taken as a reason to believe that the rule-based solver starts to use guessing after the peak.
 Guessing might of course be used sparingly at or even before the peak, but the peak is thought to decrease as a result of a more frequent use of guessing.
-\\
+
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.25\textwidth}{XX}
@@ -490,8 +505,8 @@ The histogram's bars also has half the width compared to figure~\ref{fig:rulebas
 As one can see the histogram begins at the end of the peak that is illustrated in figure~\ref{fig:rulebasedHistogram}.
 This is to illustrate that the histogram continues to decrease.
 The histogram also illustrates that the maximum time was 1.36 seconds, but that only very few puzzles have a solving time close to that.
-As can be seen most puzzles will have solving time less than 0.4 seconds.
-\\
+As can be seen most puzzles, over $99\%$, will have solving time less than 0.4 seconds.
+
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.25\textwidth}{XX}
@@ -511,7 +526,7 @@ This picture also more clearly illustrates the idea explored above.
 Namely that the algorithm will increase its solving times fast at a certain point.
 That point is as mentioned thought to be the point where the solver starts to rely more upon guessing then the logical rules.
 From that statement one can conclude that only a small portion of all Sudoku puzzles are difficult in the sense that the logic rules that the rule-based solver uses is not enough.
-\\
+
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
 \begin{tabularx}{1.1\textwidth}{XX}
@@ -553,7 +568,7 @@ One can also see that the solving times reach the time limit of 20 seconds.
 This probably means that the solving times would have continued to increase for the last $1150$ unsolved puzzles.
 If one uses extrapolation, the time it would take to solve the last puzzle would be very large since the slope is very large at the last solved puzzles. 
 As this is a deterministic algorithm one knows that their is a limit to how long a puzzle may take to solve, but as that limit is not known it is impossible to know what the solving times of the last puzzle would be.
-There is however no reason to believe that this limit is close to 20 seconds so the solving times of the last puzzles may very well be multiple hours or worse.
+There has however been no reason identified to believe that the limit is close to 20 seconds. 
 \\
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%
@@ -616,10 +631,10 @@ These values were produced using a temperature decline constant of $K_t = -0.000
 Figure \ref{fig:boltzmannMedium} show the corresponding histogram for a temperature constant of $K_t = -0.000025$.
 The resulting distribution if slightly shifted to higher solving times, indicating that less puzzles are solved at a lower temperature.
 A total of 97.5\% of all puzzles were solved.
-This slower temperature decline resulted in 2\% unstable measurements, which is an increase over the faster version. \\
+This slower temperature decline resulted in 2\% unstable measurements, which is an increase over the faster version. 
 
 Given the requirement of a less strict confidence interval, due to higher variance within estimates of single puzzles, there is a higher margin of error in the results.
-Inspection of the two different distributions indicates that all solved puzzles are completed within their respective small intervals, with further conclusions being limited by the margin of error. \\
+Inspection of the two different distributions indicates that all solved puzzles are completed within their respective small intervals, with further conclusions being limited by the margin of error. 
 
 A strong reason for the big representation of solutions clustered at a low temperature is the general layout of a Boltzmann solver.
 Given that solutions are more likely to be observed at lower temperatures, as explained in the background section, it is expected to have more solutions at the end of the spectrum.
@@ -666,13 +681,13 @@ One interesting aspect to study is to see if some of those puzzles are difficult
 Even if the rule-based solver uses backtrack search as a last resort it is not clear if the most difficult puzzles correlate between the two algorithms.
 The reason for this is because a puzzle can be very hard for the backtrack algorithm, but still trivial for the rule-based solver. 
 This has to do with the naked tuple rule in the rule-based solver that quickly can reduce the number of candidates in each square.
-\\
+
 To test for independence the statistical method described in section~\ref{sec:statisticalTests} is used.
 The measurements shows that about 20\% of the worst 10\% puzzles are common for both algorithms. 
 This hints at some puzzles being inherently difficult regardless of which of the two algorithms are used.
 If that would not have been the case only 10\% of the worst puzzles for one algorithm shall have been among the 10\% worst puzzles.
 The statistical test also confirms this with a high confidence level of 99.9\%.
-\\
+
 While there is interest to correlate results of the Boltzmann machine solver with others, there are difficulties with doing this.
 Considering the large variance in running time for individual puzzles there is little room for statistical significance in the results.
 
@@ -698,7 +713,7 @@ Empty squares in a valid puzzle is filled in by the correct numbers by looking a
 This is a kind of generation even if it is not generally considered as generation.
 It is however applicable to generating easier puzzles from a difficult puzzle.
 
-\subsection{Parallelizing}
+\subsection{Parallelization}
 Parallelization of algorithms is interesting mainly because one might want to use similar algorithms in other problems.
 There are mainly two ways when it comes to parallelizing Sudoku solving algorithms.
 The first and most obvious one is to solve multiple puzzles in parallel.
@@ -709,30 +724,30 @@ All the algorithms in this study does however have some possibilities when it co
 The rule-based algorithm could for instance check multiple rules for multiple regions at once.
 This is not problematic since the result can easily be combined by applying the results of all rules on the original puzzle.
 Since it may be separated into one thread for each rule for each region (if more advanced rules are used they may require the whole puzzle instead of just one region) one will likely have more than enough separation to perform parallelizing at required level.
-\\
+
 The backtracking algorithm may be parallelized by separating the search tree and searching each branch in parallel.
 Then the results can be combined since only one branch can succeed if the puzzle is unique and valid.
 Depending on the branching factor in the puzzle it might not always be easy to parallelize the algorithm.
 One might however choose a square with the number of candidates wanted to get enough parts for parallelizing.
-\\
+
 The Boltzmann machine can also be run in parallel to some extent.
 On a high level the solving process goes through all nodes and updates their respective states.
 This is done sequentially since the network is fully connected.
 By splitting up updating of individual neurons it is possible to have constant number of actions being performed in parallel.
 Typically these operations are additions of conflicting node offsets and are calculated by traversing the whole Sudoku grid.
-\\
+
 The conclusion that can be drawn from this is that all algorithms in this thesis may effectively be parallelized with more or less effort.
 All the algorithms can furthermore be parallelized without adding any considerable overhead.
 
 \chapter{Conclusion}
 Three different Sudoku solvers have been studied; backtrack search, rule-based solver and Boltzmann machines.
-All solvers were tested using a test framework with statistically significant results being produced.
-They have shown to be dissimilar to each other in terms of performance and general behavior.\\
+All solvers were tested with statistically significant results being produced.
+They have shown to be dissimilar to each other in terms of performance and general behavior.
 
 Backtrack search and rule-based solvers are deterministic and form execution time distributions that are precise with relatively low variance.
 Their execution time was also shown to have rather low variance when sampling the same puzzle repeatedly, which is believed to result from the highly deterministic behavior.
 Comparing the two algorithms leads to the conclusion that rule-based performs better overall.
-There were some exceptions at certain puzzles, but overall solution times were significantly lower.\\
+There were some exceptions at certain puzzles, but overall solution times were significantly lower.
 
 The Boltzmann machine solver was not capable of solving harder puzzles with less clues within a reasonable time frame.
 A suitable number of clues was found to be 46 with a 20 second execution time limit, resulting in vastly worse general capabilities than the other solvers.
@@ -742,18 +757,18 @@ This affected the resulting distribution times in a way that makes the probabili
 The critical temperature was found to be about 0.5\% of the starting temperature, with no puzzles being solved after this interval.
 
 Additionally two different methods of temperature descent were studied.
-The results demonstrates that a slower descent solves more puzzles, even though the execution times are clustered closer to the 20 second execution limit.\\
+The results demonstrates that a slower descent solves more puzzles, even though the execution times are clustered closer to the 20 second execution limit.
 
 All results indicate that deterministic solvers based on a set of rules perform well and are capable of solving Sudokus with a low amount of clues.
-Boltzmann machines were found to be relatively complex and requires implementation of temperature descent and adjustment of parameters.\\
+Boltzmann machines were found to be relatively complex and requires implementation of temperature descent and adjustment of parameters.
 
 With regards to parallelization it is possible to implement to a varying extent in all algorithms.
 The most obvious way of solving several different puzzles in parallel has been used in the test framework.
 Parallel solving of individual puzzles requires extensive analysis of individual algorithms, but both backtrack and rule-based have shown to inhibit parallelizable properties.
-Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates of node states.\\
+Boltzmann machines can be made parallel on a more fine grain level but are somewhat limited due to synchronous updates of node states.
 
 Deterministic algorithms such as backtrack and rule-based have been discussed in the context of puzzle generation, and are considered to perform well.
-This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behavior of Boltzmann machines, that only gives very weak guarantees.\\
+This follows by their search structure which can guarantee a unique solution, in opposite of the general stochastic behavior of Boltzmann machines, that only gives very weak guarantees.
 
 Future work includes studying the behavior of Boltzmann machines in relation to the final distribution of execution times.
 The large variance and stochastic behavior most likely demands a study with access to large amounts of computational power.

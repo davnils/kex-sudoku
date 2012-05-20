@@ -358,6 +358,31 @@ At a big temperature all probabilities are more or less equal, even though the e
 With a low temperature the temperature difference will be scaled and produce a wider range of values, resulting in increasing probability of ending up with less conflicts.
 This motivates the choice of an exponential decline in temperature over time; allowing solutions at lower temperatures to appear earlier.
 
+An overview of the Boltzmann machine is given here in pseudocode.
+\begin{verbatim}
+boltzmann(puzzle):
+  temperature = T_0
+  i = 0
+  //encode puzzle
+  nodes <- {0}
+  for each square in puzzle
+    //TODO: fill in constraints
+  while(checkSudoku(nodes) != VALID)
+    for each node in nodes
+      node.offset = countConflicts(nodes, node)
+      node.active = 1/(1 + exp(temperature * node.offset))
+    i++;
+    temperature = T_0 * exp(TEMP_DECLINE * i);
+  return(nodes)
+
+checkSudoku(nodes):
+  //TODO 
+
+countConflicts(nodes):
+  //TODO
+
+\end{verbatim}
+
 \chapter{Method}
 Since this report has several aims, this section have been divided into different parts to clearly depict what aspects have been considered regarding the different aims. 
 Those sections will also describe in detail how the results were generated. 
@@ -714,13 +739,15 @@ This means that the rule-based algorithm makes use of the naked tuple rule.
 This can be deduced from the fact that the naked single rule is implicitly applied by the backtrack algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
 
 To sum up all the solving algorithms, a figure with all the algorithms plotted alongside each other would be usefull. 
-This is, however, not as easy as it sounds as the algorithms have dramatic differences in solving time distribution. By displaying the solving times as cumulative distribution functions, this can however be done, see figure~\ref{fig:allTogether}. 
+This is, however, not as easy as it sounds as the algorithms have dramatic differences in solving time distributions. By displaying the solving times as cumulative distribution functions, this can however be done, see figure~\ref{fig:allTogether}. 
 Note that the x-axis is logarithmic as the rulebased algorithm plot would otherwise not be observable. 
 In figure~\ref{fig:allTogether} the three algorithms including the two variations of the boltzmann machine are plotted. The plots are colored red, blue, black and magenta for boltzmann machine with slow temperature decline, boltzmann machine with fast temperature decline, backtrack algorithm and rulebased algorithm respectively. 
-This figure is however not very useful when it comes to qualitevly compare the algorithms, mainly because the algorithms where measured on different puzzles, with different unstable and unsolved measurements.
-To add to that, the confidence intervalls of the solving times also varied.
+This figure is however not very useful when it comes to quantitatively comparing the algorithms, mainly because the algorithms were measured on different puzzles, with different number of unstable measurements and unsolved puzzles.
+To add to that, the confidence intervals of the solving times also varied.
 This figure is however useful in getting an overview of the algorithms. 
-Before the figures comparative properties are totally dismissed, it shall however be mentioned that the backtrack algorithm and the rulebased algorithm may be compared using this figure as they was tested under similar circumstances. This figure for instance shows that the backtrack algorithm is more likely to solve puzzles very fast, that is in less than 0.01 seconds, than the rulebased solver are. Apart from that it also shows what has already been observed regarding the deviations in solving times.
+Before the figures comparative properties are totally dismissed, it shall however be mentioned that the backtrack algorithm and the rulebased algorithm may be compared using this figure as they were tested under similar circumstances.
+This figure for instance shows that the backtrack algorithm is more likely to solve puzzles very fast, that is in less than 0.01 seconds, compared to the rulebased solver.
+Apart from that it also shows what has already been observed regarding deviations in solving times.
 
 \begin{figure}[here] 
 \noindent\makebox[\textwidth]{%

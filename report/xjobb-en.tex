@@ -713,6 +713,30 @@ Another interesting aspect of figure~\ref{fig:comparison} is that some puzzles t
 This means that the rule-based algorithm makes use of the naked tuple rule.
 This can be deduced from the fact that the naked single rule is implicitly applied by the backtrack algorithm because of the way it chooses which square to guess at (it chooses the square with least candidates and in the case of a naked single there is only one candidate).
 
+To sum up all the solving algorithms, a figure with all the algorithms plotted alongside each other would be usefull. 
+This is, however, not as easy as it sounds as the algorithms have dramatic differences in solving time distribution. By displaying the solving times as cumulative distribution functions, this can however be done, see figure~\ref{fig:allTogether}. 
+Note that the x-axis is logarithmic as the rulebased algorithm plot would otherwise not be observable. 
+In figure~\ref{fig:allTogether} the three algorithms including the two variations of the boltzmann machine are plotted. The plots are colored red, blue, black and magenta for boltzmann machine with slow temperature decline, boltzmann machine with fast temperature decline, backtrack algorithm and rulebased algorithm respectively. 
+This figure is however not very useful when it comes to qualitevly compare the algorithms, mainly because the algorithms where measured on different puzzles, with different unstable and unsolved measurements.
+To add to that, the confidence intervalls of the solving times also varied.
+This figure is however useful in getting an overview of the algorithms. 
+Before the figures comparative properties are totally dismissed, it shall however be mentioned that the backtrack algorithm and the rulebased algorithm may be compared using this figure as they was tested under similar circumstances. This figure for instance shows that the backtrack algorithm is more likely to solve puzzles very fast, that is in less than 0.01 seconds, than the rulebased solver are. Apart from that it also shows what has already been observed regarding the deviations in solving times.
+
+\begin{figure}[here] 
+\noindent\makebox[\textwidth]{%
+\begin{tabularx}{1.25\textwidth}{XX}
+    \includegraphics[width=16cm]{images/allTogether.png}
+\end{tabularx}}
+\vspace{-10pt}
+\caption[Cumulative probability functions of solving times for the studied algorithms:]{The plot shows cumulative probability functions of the three algorithms studied, including the two variations of the boltzmann machine. The red line is the boltzmann machine with fast declining temperature and the blue line is the boltzmann machine with slow temperature decline. The black and magenta line is the backtracking algorithm and rulebased algorithm respectively.
+The reader shall note that the x-axis is a logarithmic scale of the solving times. 
+It shall also be noted that the boltzmann machine runned on different puzzles and that all algorithms had different amounts of puzzles which was unsolved or with unstable measurements. 
+The confidence intervall for the solving times also varied between the algorithms.
+This comparison is therefore concluded to be of minimal value when it comes to qualitevly say something about the algorithms. 
+It is however included as it provides a good overview of the algorithms performances.}
+\label{fig:allTogether}
+\end{figure}
+
 \FloatBarrier
 \section{Puzzle difficulty}
 \label{sec:difficultyAnalysis}

@@ -213,6 +213,20 @@ To achieve this the square with least candidates may be chosen.
 Note that this algorithm may solve puzzles very fast provided that they are easy enough.
 This is because it will always choose squares with only one candidate if such squares exists and all puzzles which are solvable by that method will therefore be solved immediately with no backtracking.
 
+A better understanding of the behaviour of the algorithm might be achieved by examining the psuedocode below.
+
+\begin{verbatim}
+Puzzle Backtrack(puzzle)
+    (x,y) = findSquare(puzzle) //Find square with least candidates
+    for i in puzzle[y][x].possibilities() //Loop through possible candidates
+        puzzle[y][x] = i //Assign guess
+        puzzle' = Backtrack(puzzle) //Recursion step 
+        if(isValidAndComplete(puzzle')) //Check if guess lead to solution
+            return puzzle'
+        //else continue with the guessing
+    return null //No solution was found
+\end{verbatim}
+
 \FloatBarrier
 \subsection{Rule-based}
 \label{sec:rulebasedBackground}
@@ -254,6 +268,32 @@ It is, however, a combination between a brute-force method and a heuristic.
 This is because of the guess rule which is necessary to guarantee that the algorithm will find a solution.
 Without the guess rule it is possible to end up with an unsolved puzzle where none of the other two rules are applicable.
 The algorithm will produce a solution in polynomial time given that no backtracking is required.
+
+The psuedocode for this algorithm is presented below.
+\begin{verbatim}
+puzzle Rulebased(puzzle)
+    while(true){
+        //Apply the rules and restart the loop if the rule
+        //was applicable. Meaning that the advanced rules
+        //are only applied when the simple rules failes.
+        //Note also that applyNakedSingle/Tuple takes a reference
+        //to the puzzle and therefore changes the puzzle directly
+        if(applyNakedSingle(puzzle))
+            continue
+        if(applyNakedTuple(puzzle))
+            continue
+        break
+    }
+    //Resort to backtrack as no rules worked
+    (x,y) = findSquare(puzzle) //Find square with least candidates
+    for i in puzzle[y][x].possibilities() //Loop through possible candidates
+        puzzle[y][x] = i //Assign guess
+        puzzle' = Rulebased(puzzle) //Recursion step 
+        if(isValidAndComplete(puzzle')) //Check if guess lead to solution
+            return puzzle'
+        //else continue with the guessing
+    return null //No solution was found
+\end{verbatim}
 
 \FloatBarrier
 \subsection{Boltzmann machine}

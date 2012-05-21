@@ -366,20 +366,47 @@ boltzmann(puzzle):
   //encode puzzle
   nodes <- {0}
   for each square in puzzle
-    //TODO: fill in constraints
+    nodes[same row as square][square] = -10
+    nodes[same column as square][square] = -10
+    nodes[sharing the same node][square] = -20
+
+  //iterate until a valid solution is found
   while(checkSudoku(nodes) != VALID)
+    //update the state of all nodes
     for each node in nodes
-      node.offset = countConflicts(nodes, node)
-      node.active = 1/(1 + exp(temperature * node.offset))
-    i++;
-    temperature = T_0 * exp(TEMP_DECLINE * i);
-  return(nodes)
+      node.offset = calculateOffset(nodes, node)
+      probability = 1/(1 + exp(temperature * node.offset))
+      node.active = rand() < probability
+
+    //perform temperature decline
+    i++
+    temperature = T_0 * exp(TEMP_DECLINE * i)
+  return nodes
 
 checkSudoku(nodes):
-  //TODO 
+  //begin by building the Sudoku grid
+  grid = {0}
+  for each node in nodes:
+   //check if this node should be used
+   //for the current square
+   if(node.offset > nodes[same square])
+     grid.add(node)
+ 
+  //check constraints on grid
+  if unique rows &&
+     unique columns &&
+     unique subsquares
+    return true
+  return false
 
-countConflicts(nodes):
-  //TODO
+calculateOffset(nodes, selected):
+  offset = 0
+  //iterates over all nodes and calculates the summed weights
+  //many negative connections implies a large negative offset
+  for each node in nodes
+      offset += nodes[node][selected]
+
+  return offset
 
 \end{verbatim}
 
@@ -755,12 +782,13 @@ Apart from that it also shows what has already been observed regarding deviation
     \includegraphics[width=16cm]{images/allTogether.png}
 \end{tabularx}}
 \vspace{-10pt}
-\caption[Cumulative probability functions of solving times for the studied algorithms:]{The plot shows cumulative probability functions of the three algorithms studied, including the two variations of the boltzmann machine. The red line is the boltzmann machine with fast declining temperature and the blue line is the boltzmann machine with slow temperature decline. The black and magenta line is the backtracking algorithm and rulebased algorithm respectively.
+\caption[Cumulative probability functions of solving times]{The plot shows cumulative probability functions of the three algorithms studied, including the two variations of the boltzmann machine.
+The red line is the boltzmann machine with fast declining temperature and the blue line is the boltzmann machine with slow temperature decline.
+The black and magenta line is the backtracking algorithm and rulebased algorithm respectively.
 The reader shall note that the x-axis is a logarithmic scale of the solving times. 
-It shall also be noted that the boltzmann machine runned on different puzzles and that all algorithms had different amounts of puzzles which was unsolved or with unstable measurements. 
-The confidence intervall for the solving times also varied between the algorithms.
-This comparison is therefore concluded to be of minimal value when it comes to qualitevly say something about the algorithms. 
-It is however included as it provides a good overview of the algorithms performances.}
+It shall also be noted that the boltzmann machine was executed on different puzzles and that all algorithms had different amounts of puzzles which were unsolved or with unstable measurements. 
+The confidence interval for solving times also varied between the algorithms.
+Primarily this graph is included in order to provide an overview of the algorithms performances, without any specific details or conclusions being drawn.}
 \label{fig:allTogether}
 \end{figure}
 
